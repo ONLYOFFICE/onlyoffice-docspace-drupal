@@ -1,7 +1,7 @@
 onlyoffice_docspace.settings_form:
   path: '/admin/config/system/onlyoffice-settings'
   defaults:
-    _title: 'ONLYOFFICE Connector settings'
+    _title: 'ONLYOFFICE DocSpace Connector settings'
     _form: 'Drupal\onlyoffice_docspace\Form\SettingsForm'
   requirements:
     _permission: 'administer onlyoffice_docspace configuration'
