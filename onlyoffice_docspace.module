@@ -25,10 +25,8 @@
  */
 
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\onlyoffice_docspace\OnlyofficeDocumentHelper;
 use Drupal\onlyoffice_docspace\OnlyofficeAppConfig;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\onlyoffice_docspace\OnlyofficeUrlHelper;
 
 /**
  * Implements hook_help().
@@ -59,49 +57,6 @@ function onlyoffice_docspace_theme($existing, $type, $theme, $path) {
         'config' => '{}',
         'error' => NULL,
       ],
-    ],
-  ];
-}
-
-/**
- * Implements hook_entity_operation().
- */
-function onlyoffice_docspace_entity_operation(EntityInterface $entity) {
-  if ($entity->getEntityTypeId() != "media") {
-    return [];
-  }
-  /** @var \Drupal\media\Entity\Media $media */
-  $media = $entity;
-  $pluginId = $media->getSource()->getPluginId();
-
-  if ($pluginId != "file" && $pluginId != "onlyoffice_m_form" && $pluginId != "onlyoffice_form") {
-    return [];
-  }
-
-  $account = \Drupal::currentUser()->getAccount();
-
-  if (!$media->access("view", $account)) {
-    return [];
-  }
-
-  $file = $media->get(OnlyofficeDocumentHelper::getSourceFieldName($media))->entity;
-  $extension = OnlyofficeDocumentHelper::getExtension($file->getFilename());
-
-  if (OnlyofficeDocumentHelper::getDocumentType($extension) == NULL) {
-    return [];
-  }
-
-  $title = t("View in ONLYOFFICE");
-
-  if ((OnlyofficeDocumentHelper::isEditable($media) || OnlyofficeDocumentHelper::isFillForms($media)) && $media->access("update", $account)) {
-    $title = t("Edit in ONLYOFFICE");
-  }
-
-  return [
-    'onlyoffice' => [
-      'title' => $title,
-      'weight' => 50,
-      'url' => OnlyofficeUrlHelper::getEditorUrl($media),
     ],
   ];
 }
