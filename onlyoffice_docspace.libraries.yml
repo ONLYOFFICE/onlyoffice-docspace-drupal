@@ -1,8 +1,7 @@
-onlyoffice_docspace.editor:
+onlyoffice_docspace.page:
   js:
-    js/onlyoffice-editor.js: {}
-  css:
-    base:
-      css/onlyoffice-preview.css: { }
+    assets/js/docspace-component-api.js: {}
+    js/onlyoffice-docspace-page.js: {}
   dependencies:
     - core/drupal
+    - core/drupalSettings

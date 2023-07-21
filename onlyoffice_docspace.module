@@ -49,14 +49,10 @@ function onlyoffice_docspace_help($route_name, RouteMatchInterface $route_match)
  */
 function onlyoffice_docspace_theme($existing, $type, $theme, $path) {
   return [
-    'onlyoffice_editor' => [
+    'onlyoffice_docspace_page' => [
       'variables' => [
-        'filename' => 'noname',
-        'favicon_path' => 'none',
-        'doc_server_url' => 'http://127.0.0.1/',
-        'config' => '{}',
-        'error' => NULL,
       ],
+      'template' => 'onlyoffice-docspace-page'
     ],
   ];
 }

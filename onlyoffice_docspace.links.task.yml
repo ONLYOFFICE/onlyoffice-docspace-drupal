@@ -1,0 +1,4 @@
+onlyoffice_docspace.admin_content_files:
+  title: ONLYOFFICE DocSpace
+  route_name: onlyoffice_docspace.page
+  base_route: system.admin_content

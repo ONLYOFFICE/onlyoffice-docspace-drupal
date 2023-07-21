@@ -5,3 +5,15 @@ onlyoffice_docspace.settings_form:
     _form: 'Drupal\onlyoffice_docspace\Form\SettingsForm'
   requirements:
     _permission: 'administer onlyoffice_docspace configuration'
+
+
+onlyoffice_docspace.page:
+  path: '/admin/content/onlyoffice-docspace'
+  options:
+    _admin_route: TRUE
+  defaults:
+    _controller: '\Drupal\onlyoffice_docspace\Controller\OODSPPageController::getOnlyofficeDocSpacePage'
+    _title: 'File browser'
+    scheme: null
+  requirements:
+    _permission: 'administer onlyoffice_docspace configuration'
