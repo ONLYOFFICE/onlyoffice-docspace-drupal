@@ -1,0 +1,39 @@
+onlyoffice_docspace.settings_form:
+  path: '/admin/config/system/onlyoffice-settings'
+  defaults:
+    _title: 'ONLYOFFICE Connector settings'
+    _form: 'Drupal\onlyoffice_docspace\Form\SettingsForm'
+  requirements:
+    _permission: 'administer onlyoffice_docspace configuration'
+
+onlyoffice_docspace.editor:
+  path: '/admin/media/{media}/onlyoffice-editor'
+  defaults:
+    _title: 'ONLYOFFICE'
+    _controller: '\Drupal\onlyoffice_docspace\Controller\OnlyofficeEditorController::editor'
+  methods: [GET]
+  options:
+    parameters:
+      media:
+        type: entity:media
+  requirements:
+    _permission: 'view media,access media overview'
+    media: '\d+'
+
+onlyoffice_docspace.callback:
+  path: '/onlyoffice-callback/{key}'
+  defaults:
+    _controller: '\Drupal\onlyoffice_docspace\Controller\OnlyofficeCallbackController::callback'
+  methods: [POST]
+  requirements:
+    # Don't use standard access restriction because document editor service use jwt authorization.
+    _access: 'TRUE'
+
+onlyoffice_docspace.download:
+  path: '/onlyoffice-download/{key}'
+  defaults:
+    _controller: '\Drupal\onlyoffice_docspace\Controller\OnlyofficeDownloadController::download'
+  methods: [ GET ]
+  requirements:
+    # Don't use standard access restriction because document editor service use jwt authorization.
+    _access: 'TRUE'

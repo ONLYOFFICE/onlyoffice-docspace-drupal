@@ -1,0 +1,4 @@
+administer onlyoffice_docspace configuration:
+  title: 'Administer ONLYOFFICE connector'
+  description: 'Optional description.'
+  restrict access: true

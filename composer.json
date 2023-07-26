@@ -1,0 +1,33 @@
+{
+    "name": "onlyoffice/onlyoffice-drupal",
+    "type": "drupal-module",
+    "description": "The ONLYOFFICE module enables users to edit files in the Media module from Drupal using ONLYOFFICE Docs packaged as Document Server",
+    "keywords": ["onlyoffice", "drupal"],
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.onlyoffice.com",
+    "authors": [
+        {
+            "name": "Ascensio System SIA",
+            "email": "integration@onlyoffice.com",
+            "homepage": "https://www.onlyoffice.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ONLYOFFICE/onlyoffice-drupal/issues",
+        "source": "https://github.com/ONLYOFFICE/onlyoffice-drupal",
+        "email": "support@onlyoffice.com",
+        "forum": "https://forum.onlyoffice.com/"
+    },
+    "require": {
+        "drupal/core": "^9 || ^10",
+        "firebase/php-jwt": "^6.0"
+    },
+    "require-dev": {
+        "drupal/coder": "^8.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    }
+}

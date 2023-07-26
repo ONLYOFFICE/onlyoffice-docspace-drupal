@@ -1,0 +1,3 @@
+services:
+  onlyoffice_docspace.document_helper:
+    class: Drupal\onlyoffice_docspace\OnlyofficeDocumentHelper
