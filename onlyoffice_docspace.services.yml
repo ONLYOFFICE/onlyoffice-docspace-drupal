@@ -1,1 +1,4 @@
 services:
+  onlyoffice_docspace.request_manager:
+    class: Drupal\onlyoffice_docspace\RequestManager\RequestManager
+    arguments: ['@config.factory', '@http_client']
