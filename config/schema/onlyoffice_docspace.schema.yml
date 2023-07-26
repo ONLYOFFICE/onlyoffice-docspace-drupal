@@ -1,11 +1,17 @@
 # Schema for the configuration files of the ONLYOFFICE Connector module.
 onlyoffice_docspace.settings:
   type: config_object
-  label: 'ONLYOFFICE Connector settings'
+  label: 'ONLYOFFICE DocSpace Connector settings'
   mapping:
-    doc_server_url:
+    url:
       type: string
-      label: 'Document Editing Service address'
-    doc_server_jwt:
+      label: 'DocSpace Service Address'
+    login:
       type: string
-      label: 'Secret key (leave blank to disable)'
+      label: 'Login'
+    password:
+      type: string
+      label: 'Password'
+    token:
+      type: string
+      label: 'Token'

@@ -22,12 +22,53 @@ namespace Drupal\onlyoffice_docspace\Form;
  */
 
 use Drupal\Core\Form\ConfigFormBase;
+use Drupal\Core\Config\ConfigFactoryInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface;
 
 /**
  * Configure ONLYOFFICE Connector settings for this site.
  */
 class SettingsForm extends ConfigFormBase {
+
+  /**
+   * The request manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface
+   */
+  protected $requestManager;
+
+  /**
+   * A logger instance.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
+   * Constructs a \Drupal\onlyoffice_docspace\SettingsForm object.
+   *
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The factory for configuration objects.
+   * @param \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface $request_manager
+   *   The aggregator fetcher plugin manager.
+   */
+  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager) {
+    parent::__construct($config_factory);
+    $this->requestManager = $request_manager;
+    $this->logger = $this->getLogger('onlyoffice');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('config.factory'),
+      $container->get('onlyoffice_docspace.request_manager'),
+    );
+  }
 
   /**
    * {@inheritdoc}
@@ -81,6 +122,33 @@ class SettingsForm extends ConfigFormBase {
 
     return parent::buildForm($form, $form_state);
   }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function validateForm(array &$form, FormStateInterface $form_state) {
+
+    $url = $form_state->getValue('url');
+    $login = $form_state->getValue('login');
+    $password = $form_state->getValue('password');
+
+    $url = '/' === substr( $url, -1 ) ? $url : $url . '/';
+
+    $res_login =$this->requestManager->login($url, $login, $password);
+
+		if ( $this->requestManager::UNAUTHORIZED === $res_login['error'] ) {
+      $form_state->setErrorByName('', $this->t('Invalid credentials. Please try again!'));
+		}
+		if ( $this->requestManager::USER_NOT_FOUND === $res_login['error'] ) {
+      $form_state->setErrorByName('', $this->t('Error getting data user. Please try again!'));
+		}
+		if ( $this->requestManager::FORBIDDEN === $res_login['error'] ) {
+      $form_state->setErrorByName('', $this->t('The specified user is not a DocSpace administrator!'));
+		}
+
+    parent::validateForm($form, $form_state);
+  }
+
 
   /**
    * {@inheritdoc}
