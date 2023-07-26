@@ -5,3 +5,15 @@ onlyoffice_docspace.page:
   dependencies:
     - core/drupal
     - core/drupalSettings
+
+onlyoffice_docspace.widget:
+  css:
+    base:
+      css/onlyoffice-docspace-widget.css: {}
+  js:
+    assets/js/docspace-component-api.js: {}
+    js/onlyoffice-docspace-widget.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings

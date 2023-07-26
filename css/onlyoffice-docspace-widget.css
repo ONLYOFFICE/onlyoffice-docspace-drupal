@@ -1,0 +1,25 @@
+#oodspModalDialog {
+    padding: 0;
+    height: 500px!important;
+    min-height: unset!important;
+    max-height: unset!important;
+}
+
+.oodsp-container-inline {
+    display: inline-block;
+}
+
+.oodsp-image {
+    margin: auto 20px;
+    border-radius: 18px;
+}
+
+.oodsp-fields {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+.hidden {
+    display: none!important;
+}
