@@ -33,31 +33,52 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function getFormId() {
-    return 'onlyoffice_settings';
+    return 'onlyoffice_docspace_settings';
   }
 
   /**
    * {@inheritdoc}
    */
   protected function getEditableConfigNames() {
-    return ['onlyoffice.settings'];
+    return ['onlyoffice_docspace.settings'];
   }
 
   /**
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $form['doc_server_url'] = [
+    $form['url'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Document Editing Service address'),
-      '#default_value' => $this->config('onlyoffice.settings')->get('doc_server_url'),
+      '#title' => $this->t('DocSpace Service Address'),
+      '#default_value' => $this->config('onlyoffice_docspace.settings')->get('url'),
       '#required' => TRUE,
     ];
-    $form['doc_server_jwt'] = [
+    $form['login'] = [
       '#type' => 'textfield',
-      '#title' => $this->t('Secret key (leave blank to disable)'),
-      '#default_value' => $this->config('onlyoffice.settings')->get('doc_server_jwt'),
+      '#title' => $this->t('Login'),
+      '#default_value' => $this->config('onlyoffice_docspace.settings')->get('login'),
+      '#required' => TRUE,
     ];
+    $form['password'] = [
+      '#type' => 'password',
+      '#title' => $this->t('Password'),
+      '#default_value' => $this->config('onlyoffice_docspace.settings')->get('password'),
+      '#required' => TRUE,
+    ];
+
+    $form['export_users'] = [
+      '#type' => 'fieldset',
+      '#title' =>  $this->t('DocSpace Users'),
+      'description' => [
+        '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press Export Now. Users who don’t have an account in DocSpace will have Drupal Viewer with View Only access to content.') . '</p>',
+      ],
+    ];
+
+    $form['export_users']['export'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Export Now')
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -65,9 +86,10 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
-    $this->config('onlyoffice.settings')
-      ->set('doc_server_url', $form_state->getValue('doc_server_url'))
-      ->set('doc_server_jwt', $form_state->getValue('doc_server_jwt'))
+    $this->config('onlyoffice_docspace.settings')
+      ->set('url', $form_state->getValue('url'))
+      ->set('login', $form_state->getValue('login'))
+      ->set('password', $form_state->getValue('password'))
       ->save();
     parent::submitForm($form, $form_state);
   }
