@@ -75,3 +75,12 @@ function onlyoffice_docspace_library_info_build() {
     ];
   }
 }
+
+/**
+ * Implements hook_ENTITY_TYPE_delete() for user entities.
+ */
+  function onlyoffice_docspace_user_delete($account) {
+    \Drupal::database()->delete('users_docspace')
+      ->condition('uid', $account->id())
+      ->execute();
+  }
