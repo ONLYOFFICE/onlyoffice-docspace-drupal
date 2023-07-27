@@ -9,9 +9,9 @@ onlyoffice_docspace.settings:
     login:
       type: string
       label: 'Login'
-    password:
+    passwordHash:
       type: string
-      label: 'Password'
+      label: 'Password hash'
     token:
       type: string
       label: 'Token'

@@ -88,6 +88,10 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form['#attached'] = [
+      'library' => ['onlyoffice_docspace/onlyoffice_docspace.settings'],
+    ];
+
     $form['url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('DocSpace Service Address'),
@@ -103,8 +107,12 @@ class SettingsForm extends ConfigFormBase {
     $form['password'] = [
       '#type' => 'password',
       '#title' => $this->t('Password'),
-      '#default_value' => $this->config('onlyoffice_docspace.settings')->get('password'),
       '#required' => TRUE,
+    ];
+
+    $form['passwordHash'] = [
+      '#type' => 'hidden',
+      '#default_value' => NULL
     ];
 
     $form['export_users'] = [
@@ -120,6 +128,40 @@ class SettingsForm extends ConfigFormBase {
       '#value' => $this->t('Export Now')
     ];
 
+    $form['oodsp-settings-hidden-block'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'class' => ['hidden']
+      ],
+    ];
+
+    $form['oodsp-settings-hidden-block']['div'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'id' => 'oodsp-settings-frame'
+      ]
+    ];
+
+    $form['loader'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'id' => 'oodsp-settings-loader',
+        'class' => ['ui-widget-overlay'],
+        'hidden' => TRUE,
+      ]
+    ];
+
+    $form['loader']['div']= [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'class' => ['loader']
+      ]
+    ];
+
     return parent::buildForm($form, $form_state);
   }
 
@@ -130,19 +172,19 @@ class SettingsForm extends ConfigFormBase {
 
     $url = $form_state->getValue('url');
     $login = $form_state->getValue('login');
-    $password = $form_state->getValue('password');
+    $passwordHash = $form_state->getValue('passwordHash');
 
     $url = '/' === substr( $url, -1 ) ? $url : $url . '/';
 
-    $res_login =$this->requestManager->login($url, $login, $password);
+    $responceConnect =$this->requestManager->connectDocSpace($url, $login, $passwordHash);
 
-		if ( $this->requestManager::UNAUTHORIZED === $res_login['error'] ) {
+		if ( $this->requestManager::UNAUTHORIZED === $responceConnect['error'] ) {
       $form_state->setErrorByName('', $this->t('Invalid credentials. Please try again!'));
 		}
-		if ( $this->requestManager::USER_NOT_FOUND === $res_login['error'] ) {
+		if ( $this->requestManager::USER_NOT_FOUND === $responceConnect['error'] ) {
       $form_state->setErrorByName('', $this->t('Error getting data user. Please try again!'));
 		}
-		if ( $this->requestManager::FORBIDDEN === $res_login['error'] ) {
+		if ( $this->requestManager::FORBIDDEN === $responceConnect['error'] ) {
       $form_state->setErrorByName('', $this->t('The specified user is not a DocSpace administrator!'));
 		}
 
@@ -157,7 +199,7 @@ class SettingsForm extends ConfigFormBase {
     $this->config('onlyoffice_docspace.settings')
       ->set('url', $form_state->getValue('url'))
       ->set('login', $form_state->getValue('login'))
-      ->set('password', $form_state->getValue('password'))
+      ->set('passwordHash', $form_state->getValue('passwordHash'))
       ->save();
     parent::submitForm($form, $form_state);
   }

@@ -68,65 +68,58 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
 	/**
 	 * {@inheritdoc}
 	 */
-	public function connectDocSpace( $url = null, $login = null, $pass = null ) {
+	public function connectDocSpace( $url = null, $login = null, $passwordHash = null ) {
 		$result = array(
 			'error' => null,
 			'data'  => null,
 		);
 
-		$current_url = $this->config('onlyoffice_docspace.settings')->get('url');
-		$current_login = $this->config('onlyoffice_docspace.settings')->get('login');
-		$current_pass  = $this->config('onlyoffice_docspace.settings')->get('password');
+		$currentUrl = $this->config('onlyoffice_docspace.settings')->get('url');
+		$currentLogin = $this->config('onlyoffice_docspace.settings')->get('login');
+		$currentPasswordHash  = $this->config('onlyoffice_docspace.settings')->get('passwordHash');
 
 		// Try authentication with current credintails, if new credintails equals null or new credintails equals current credintails.
-		if (
-			( 	null === $url
-				&& null === $login
-				&& null === $pass )
-			|| (
-				$current_url === $url
-				&& $current_login === $login
-				&& $current_pass === $pass
-			) ) {
+		if ((null === $url && null === $login && null === $passwordHash)
+			|| ($currentUrl === $url && $currentLogin === $login && $currentPasswordHash === $passwordHash)) {
 
-			$current_docspace_token = $this->config('onlyoffice_docspace.settings')->get('token');
+			$currentToken = $this->config('onlyoffice_docspace.settings')->get('token');
 
-			if (!empty($current_docspace_token)) {
+			if (!empty($currentToken)) {
 				// Check is admin with current token.
-				$res_docspace_user = $this->getDocSpaceUser($current_url, $current_login, $current_pass);
+				$responseDocSpaceUser = $this->getDocSpaceUser($currentUrl, $currentLogin, $currentPasswordHash);
 
-				if (!$res_docspace_user['error']) {
-					if (!$res_docspace_user['data']['isAdmin']) {
+				if (!$responseDocSpaceUser['error']) {
+					if (!$responseDocSpaceUser['data']['isAdmin']) {
 						$result['error'] = self::FORBIDDEN; // Error user is not admin.
 						return $result;
 					}
 
-					$result['data'] = $current_docspace_token; // Return current token.
+					$result['data'] = $currentToken; // Return current token.
 					return $result;
 				}
 			}
 
-			$url = $current_url;
-			$login = $current_login;
-			$pass = $current_pass;
+			$url = $currentUrl;
+			$login = $currentLogin;
+			$passwordHash = $currentPasswordHash;
 		}
 
 		// Try authentication with new credintails.
 		// Try get new token.
-		$res_authentication = $this->getDocSpaceToken( $url, $login, $pass );
+		$responseDocSpaceToken = $this->getDocSpaceToken( $url, $login, $passwordHash );
 
-		if ( $res_authentication['error'] ) {
-			return $res_authentication; // Error authentication.
+		if ( $responseDocSpaceToken['error'] ) {
+			return $responseDocSpaceToken; // Error authentication.
 		}
 
 		// Check is admin with new token.
-		$res_docspace_user = $this->getDocSpaceUser( $url, $login, $res_authentication['data'] );
+		$responseDocSpaceUser = $this->getDocSpaceUser( $url, $login, $responseDocSpaceToken['data'] );
 
-		if ( $res_docspace_user['error'] ) {
-			return $res_docspace_user; // Error getting user data.
+		if ( $responseDocSpaceUser['error'] ) {
+			return $responseDocSpaceUser; // Error getting user data.
 		}
 
-		if ( ! $res_docspace_user['data']['isAdmin'] ) {
+		if ( ! $responseDocSpaceUser['data']['isAdmin'] ) {
 			$result['error'] = self::FORBIDDEN; // Error user is not admin.
 			return $result;
 		}
@@ -135,7 +128,7 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
       	// 	->set('token', $res_authentication['data'])
       	// 	->save();
 
-		$result['data'] = $res_authentication['data']; // Return new current token.
+		$result['data'] = $responseDocSpaceToken['data']; // Return new current token.
 		return $result;
 	}
   
@@ -151,7 +144,7 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
 		try {
 			$response = $this->httpClient->request(
 				'GET',
-				$url . 'api/2.0/people/email1?email=' . $login,
+				$url . 'api/2.0/people/email?email=' . $login,
 				array(
 					'cookies' => $this->createCookieJar(
 						array('asc_auth_key' => $token),
@@ -182,7 +175,7 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
 	 * @param string $login DocSpace User login.
 	 * @param string $pass DocSpace User password.
 	 */
-	private function getDocSpaceToken( $url, $login, $pass ) {
+	private function getDocSpaceToken( $url, $login, $passwordHash ) {
 		$result = array(
 			'error' => null,
 			'data'  => null,
@@ -197,7 +190,7 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
 					'body'    =>Json::encode(
 						array(
 							'userName'     => $login,
-							'passwordHash' => $pass,
+							'passwordHash' => $passwordHash,
 						)
 					),
 					'method'  => 'POST',
