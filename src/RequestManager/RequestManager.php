@@ -25,7 +25,6 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use GuzzleHttp\ClientInterface;
 use Drupal\Component\Serialization\Json;
 use GuzzleHttp\Cookie\CookieJar;
-use GuzzleHttp\Exception\ClientException;
 
 class RequestManager extends RequestManagerBase implements RequestManagerInterface {
 
@@ -162,8 +161,52 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
 			$result['data'] = $body['response'];
 
 			return $result;
-		} catch (ClientException $e) {
+		} catch (\Exception $e) {
 			$result['error'] = self::USER_NOT_FOUND;
+			return $result;
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function getDocSpaceUsers() {
+		$result = array(
+			'error' => null,
+			'data'  => null,
+		);
+
+		$responseConnect = $this->connectDocSpace();
+
+		if ( $responseConnect['error'] ) {
+			return $responseConnect;
+		}
+
+		$url = $this->config('onlyoffice_docspace.settings')->get('url');
+
+		try {
+			$response = $this->httpClient->request(
+				'GET',
+				$url . 'api/2.0/people',
+				array(
+					'cookies' => $this->createCookieJar(
+						array('asc_auth_key' => $responseConnect['data']),
+						$url
+					),
+				)
+			);
+
+			if ($response->getStatusCode() !== 200) {
+				$result['error'] = self::ERROR_GET_USERS;
+				return $result;
+			}
+
+			$body = Json::decode((string) $response->getBody());
+			$result['data'] = $body['response'];
+			
+			return $result;
+		} catch (\Exception $e) {
+			$result['error'] = self::ERROR_GET_USERS;
 			return $result;
 		}
 	}
@@ -206,7 +249,7 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
 
 			$result['data'] = $body['response']['token'];
 			return $result;
-		} catch (ClientException $e) {
+		} catch (\Exception $e) {
 			$result['error'] = self::UNAUTHORIZED;
 			return $result;
 		}

@@ -160,7 +160,7 @@ class SettingsForm extends ConfigFormBase {
       ],
     ];
 
-    $url = Url::fromRoute('onlyoffice_docspace.users_export');
+    $url = Url::fromRoute('onlyoffice_docspace.user_form');
     $url_options = [
       'attributes' => [
         'class' => [
@@ -190,15 +190,15 @@ class SettingsForm extends ConfigFormBase {
 
     $url = '/' === substr( $url, -1 ) ? $url : $url . '/';
 
-    $responceConnect =$this->requestManager->connectDocSpace($url, $login, $passwordHash);
+    $responseConnect =$this->requestManager->connectDocSpace($url, $login, $passwordHash);
 
-		if ( $this->requestManager::UNAUTHORIZED === $responceConnect['error'] ) {
+		if ( $this->requestManager::UNAUTHORIZED === $responseConnect['error'] ) {
       $form_state->setErrorByName('', $this->t('Invalid credentials. Please try again!'));
 		}
-		if ( $this->requestManager::USER_NOT_FOUND === $responceConnect['error'] ) {
+		if ( $this->requestManager::USER_NOT_FOUND === $responseConnect['error'] ) {
       $form_state->setErrorByName('', $this->t('Error getting data user. Please try again!'));
 		}
-		if ( $this->requestManager::FORBIDDEN === $responceConnect['error'] ) {
+		if ( $this->requestManager::FORBIDDEN === $responseConnect['error'] ) {
       $form_state->setErrorByName('', $this->t('The specified user is not a DocSpace administrator!'));
 		}
 

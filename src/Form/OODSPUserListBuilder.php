@@ -21,7 +21,13 @@ namespace Drupal\onlyoffice_docspace\Form;
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityInterface;
+use Drupal\Core\Entity\EntityStorageInterface;
+use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Routing\RedirectDestinationInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface;
 use Drupal\user\UserListBuilder;
 
 /**
@@ -30,7 +36,61 @@ use Drupal\user\UserListBuilder;
  * @see \Drupal\user\Entity\User
  */
 class OODSPUserListBuilder extends UserListBuilder {
-  
+
+  /**
+   * Is connected to DocSpace.
+   *
+   * @var boolean
+   */
+  private $isConnectedToDocSpace = FALSE;
+
+  /**
+   * List DocSpace Users.
+   *
+   * @var array
+   */
+  private $listDocSpaceUsers = [];
+
+  /**
+   * The ONLYOFFICE DocSpace request manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface
+   */
+  protected $requestManager;
+
+  /**
+   * Constructs a new OODSPUserListBuilder object.
+   *
+   * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
+   *   The entity type definition.
+   * @param \Drupal\Core\Entity\EntityStorageInterface $storage
+   *   The entity storage class.
+   * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
+   *   The date formatter service.
+   * @param \Drupal\Core\Routing\RedirectDestinationInterface $redirect_destination
+   *   The redirect destination service.
+   * @param \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface $request_manager
+   *   The ONLYOFFICE DocSpace request manager.
+   */
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, DateFormatterInterface $date_formatter, RedirectDestinationInterface $redirect_destination, RequestManagerInterface $request_manager) {
+    parent::__construct($entity_type, $storage, $date_formatter, $redirect_destination);
+
+    $this->requestManager = $request_manager;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function createInstance(ContainerInterface $container, EntityTypeInterface $entity_type) {
+    return new static(
+      $entity_type,
+      $container->get('entity_type.manager')->getStorage($entity_type->id()),
+      $container->get('date.formatter'),
+      $container->get('redirect.destination'),
+      $container->get('onlyoffice_docspace.request_manager')
+    );
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -42,6 +102,8 @@ class OODSPUserListBuilder extends UserListBuilder {
     $header = $this->buildHeader();
     $entity_query->tableSort($header);
     $uids = $entity_query->execute();
+    $this->loadDocSpaceUsers();
+
     return $this->storage->loadMultiple($uids);
   }
 
@@ -57,15 +119,11 @@ class OODSPUserListBuilder extends UserListBuilder {
 
     $header['docspace_user_status'] = [
       'data' => $this->t('DocSpace User Status'),
-      'field' => 'docspace_user_status',
-      'specifier' => 'docspace_user_status',
       'class' => [RESPONSIVE_PRIORITY_LOW],
     ];
 
     $header['docspace_user_type'] = [
       'data' => $this->t('DocSpace User Type'),
-      'field' => 'docspace_user_type',
-      'specifier' => 'docspace_user_type',
       'class' => [RESPONSIVE_PRIORITY_LOW],
     ];
 
@@ -86,9 +144,32 @@ class OODSPUserListBuilder extends UserListBuilder {
     $row['status'] = [];
     $row['status']['data']['#markup'] = $status;
 
-    $row['docspace_user_status']['data']['#markup'] = $this->t('In DocSpace');
-    $row['docspace_user_type']['data']['#markup'] = $this->t('Room Admin');
-    
+    $docSpaceUserStatus = -1;
+    $docSpaceUserRoleLabel = '';
+
+        for ( $i = 0; $i < count($this->listDocSpaceUsers); ++$i ) {
+            if ($this->listDocSpaceUsers[$i]['email'] === $entity->getEmail()) {
+                $docSpaceUserStatus= $this->listDocSpaceUsers[$i]['activationStatus'];
+                $docSpaceUserRoleLabel = $this->getDocSpaceUserRoleLabel($this->listDocSpaceUsers[$i]);
+            }
+        }
+
+    // $oodsp_security_manager = new OODSP_Security_Manager();
+    // $user_pass = $oodsp_security_manager->get_oodsp_user_pass( $user_object->ID );
+    $user_pass = "1111";
+
+    if ( 0 === $docSpaceUserStatus || 1 === $docSpaceUserStatus ) {
+      if ( ! empty( $user_pass ) ) {
+        $row['docspace_user_status']['data']['#markup'] = $this->t('In DocSpace');
+      } else {
+        $row['docspace_user_status']['data']['#markup'] = $this->t('Unauthorized');
+      }
+    } else {
+      $row['docspace_user_status']['data']['#markup'] = '';
+    }
+
+    $row['docspace_user_type']['data']['#markup'] = $docSpaceUserRoleLabel;
+
     return $row;
   }
 
@@ -109,4 +190,32 @@ class OODSPUserListBuilder extends UserListBuilder {
 
     return $build;
   }
+
+  private function loadDocSpaceUsers() {
+        $responseDocSpaceUsers = $this->requestManager->getDocSpaceUsers();
+
+        if (!$responseDocSpaceUsers['error'] ) {
+            $this->listDocSpaceUsers = $responseDocSpaceUsers['data'];
+            $this->isConnectedToDocSpace = true;
+    }
+  }
+
+  /**
+     * Return label for role DocSpace user.
+     *
+     * @param string $user The DocSpace user.
+     */
+    private function getDocSpaceUserRoleLabel($user) {
+        if ($user['isOwner']) {
+            return $this->t('Owner');
+        } elseif ($user['isAdmin']) {
+            return $this->t('DocSpace admin');
+        } elseif ($user['isCollaborator'] ) {
+            return $this->t('Power user');
+        } elseif ($user['isVisitor']) {
+            return $this->t('User');
+        } else {
+            return $this->t('Room admin');
+        }
+    }
 }

@@ -40,7 +40,7 @@ interface RequestManagerInterface {
 	 * @param string $login DocSpace user login.
 	 * @param string $pass DocSpace user password.
 	 */
-  public function connectDocSpace( $url = null, $login = null, $pass = null );
+  public function connectDocSpace($url = null, $login = null, $pass = null);
 
   /**
 	 * Get DocSpace user.
@@ -49,6 +49,11 @@ interface RequestManagerInterface {
 	 * @param string $login DocSpace user login.
 	 * @param string $token DocSpace token.
 	 */
-  public function getDocSpaceUser( $url, $login, $token );
+  public function getDocSpaceUser($url, $login, $token);
 
+    /**
+	 * Get DocSpace users.
+	 *
+	 */
+	public function getDocSpaceUsers();
 }
