@@ -25,6 +25,7 @@ use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Url;
 use Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface;
 
 /**
@@ -115,19 +116,6 @@ class SettingsForm extends ConfigFormBase {
       '#default_value' => NULL
     ];
 
-    $form['export_users'] = [
-      '#type' => 'fieldset',
-      '#title' =>  $this->t('DocSpace Users'),
-      'description' => [
-        '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press Export Now. Users who don’t have an account in DocSpace will have Drupal Viewer with View Only access to content.') . '</p>',
-      ],
-    ];
-
-    $form['export_users']['export'] = [
-      '#type' => 'submit',
-      '#value' => $this->t('Export Now')
-    ];
-
     $form['oodsp-settings-hidden-block'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
@@ -162,7 +150,33 @@ class SettingsForm extends ConfigFormBase {
       ]
     ];
 
-    return parent::buildForm($form, $form_state);
+    $form = parent::buildForm($form, $form_state);
+
+    $form['actions']['export_users'] = [
+      '#type' => 'fieldset',
+      '#title' =>  $this->t('DocSpace Users'),
+      'description' => [
+        '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press Export Now. Users who don’t have an account in DocSpace will have Drupal Viewer with View Only access to content.') . '</p>',
+      ],
+    ];
+
+    $url = Url::fromRoute('onlyoffice_docspace.users_export');
+    $url_options = [
+      'attributes' => [
+        'class' => [
+          'button',
+        ],
+      ],
+    ];
+    $url->setOptions($url_options);
+
+    $form['actions']['export_users']['export'] = [
+      '#type' => 'link',
+      '#title' => $this->t('Export Now'),
+      '#url'=> $url
+    ];
+
+    return $form;
   }
 
   /**

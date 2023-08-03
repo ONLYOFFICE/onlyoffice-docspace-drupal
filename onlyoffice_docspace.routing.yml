@@ -1,11 +1,18 @@
 onlyoffice_docspace.settings_form:
-  path: '/admin/config/system/onlyoffice-settings'
+  path: '/admin/config/system/onlyoffice-docspace-settings'
   defaults:
     _title: 'ONLYOFFICE DocSpace Connector settings'
     _form: 'Drupal\onlyoffice_docspace\Form\SettingsForm'
   requirements:
     _permission: 'administer onlyoffice_docspace configuration'
 
+onlyoffice_docspace.user_form:
+  path: '/admin/config/system/onlyoffice-docspace-settings/users'
+  defaults:
+    _title: 'ONLYOFFICE DocSpace Users'
+    _form: 'Drupal\onlyoffice_docspace\Form\UsersForm'
+  requirements:
+    _permission: 'administer onlyoffice_docspace configuration'
 
 onlyoffice_docspace.page:
   path: '/admin/content/onlyoffice-docspace'
