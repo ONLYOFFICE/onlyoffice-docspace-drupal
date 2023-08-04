@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\onlyoffice_docspace\RequestManager;
+namespace Drupal\onlyoffice_docspace\Manager\RequestManager;
 
 /**
  * Copyright (c) Ascensio System SIA 2023.
@@ -22,11 +22,12 @@ namespace Drupal\onlyoffice_docspace\RequestManager;
  */
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\onlyoffice_docspace\Manager\ManagerBase;
 use GuzzleHttp\ClientInterface;
 use Drupal\Component\Serialization\Json;
 use GuzzleHttp\Cookie\CookieJar;
 
-class RequestManager extends RequestManagerBase implements RequestManagerInterface {
+class RequestManager extends ManagerBase implements RequestManagerInterface {
 
 	/**
 	 * Config factory service.
@@ -207,6 +208,65 @@ class RequestManager extends RequestManagerBase implements RequestManagerInterfa
 			return $result;
 		} catch (\Exception $e) {
 			$result['error'] = self::ERROR_GET_USERS;
+			return $result;
+		}
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function inviteToDocSpace($email, $password_hash, $firstname, $lastname, $type, $token = null) {
+		$result = array(
+			'error' => null,
+			'data'  => null,
+		);
+
+		if (!$token) {
+			$responseConnect = $this->connectDocSpace();
+
+			if ($responseConnect['error'] ) {
+				return $responseConnect;
+			}
+
+			$token = $responseConnect['data'];
+		}
+
+		$url = $this->config('onlyoffice_docspace.settings')->get('url');
+
+		try {
+			$response = $this->httpClient->request(
+				'POST',
+				$url . 'api/2.0/people/active',
+				array(
+					'headers' => array( 'Content-Type' => 'application/json; charset=utf-8' ),
+					'cookies' => $this->createCookieJar(
+						array('asc_auth_key' => $token),
+						$url
+					),
+					'body'    =>Json::encode(
+						array(
+							'email'        => $email,
+							'passwordHash' => $password_hash,
+							'firstname'    => $firstname,
+							'lastname'     => $lastname,
+							'type'         => $type,
+						)
+					),
+					'method'  => 'POST',
+				)
+			);
+
+			if ($response->getStatusCode() !== 200) {
+				$result['error'] = self::ERROR_USER_INVITE;
+				return $result;
+			}
+
+			$body = Json::decode((string) $response->getBody());
+			$result['data'] = $body['response'];
+
+			return $result;
+		} catch (\Exception $e) {
+			$result['error'] = self::ERROR_USER_INVITE;
 			return $result;
 		}
 	}

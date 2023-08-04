@@ -32,7 +32,7 @@
 
       DocSpaceComponent.initScript(url)
         .then(async function() {
-          showLoader();
+          Drupal.showLoader();
 
           DocSpace.SDK.initSystem({
             frameId: "oodsp-settings-frame",
@@ -47,7 +47,7 @@
                 $settingsForm.submit();
               },
               'onAppError': function() {
-                hideLoader();
+                Drupal.hideLoader();
                 messages.clear();
                 messages.add('ONLYOFFICE DocSpace cannot be reached.', {type: 'error'});
               }
@@ -55,7 +55,7 @@
           });
         }).catch(
           function() {
-            hideLoader();
+            Drupal.hideLoader();
             messages.clear();
             messages.add('ONLYOFFICE DocSpace cannot be reached.', {type: 'error'});
           }
@@ -76,13 +76,5 @@
 
     return rnd.substring(0, i);
   };
-
-  const showLoader = function() {
-       $('#oodsp-settings-loader').show();
-    };
-
-    const hideLoader = function() {
-        $('#oodsp-settings-loader').hide();
-    };
 
 })(jQuery, Drupal);

@@ -27,7 +27,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 use Drupal\user\UserListBuilder;
 
 /**
@@ -54,7 +54,7 @@ class OODSPUserListBuilder extends UserListBuilder {
   /**
    * The ONLYOFFICE DocSpace request manager.
    *
-   * @var \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface
+   * @var \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface
    */
   protected $requestManager;
 
@@ -69,7 +69,7 @@ class OODSPUserListBuilder extends UserListBuilder {
    *   The date formatter service.
    * @param \Drupal\Core\Routing\RedirectDestinationInterface $redirect_destination
    *   The redirect destination service.
-   * @param \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface $request_manager
+   * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The ONLYOFFICE DocSpace request manager.
    */
   public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, DateFormatterInterface $date_formatter, RedirectDestinationInterface $redirect_destination, RequestManagerInterface $request_manager) {
@@ -187,6 +187,7 @@ class OODSPUserListBuilder extends UserListBuilder {
 
     unset($build['onlyoffice_docspace_users']['#rows']);
     unset($build['table']);
+    unset($build['pager']);
 
     return $build;
   }

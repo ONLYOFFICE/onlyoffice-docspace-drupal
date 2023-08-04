@@ -26,7 +26,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 
 /**
  * Configure ONLYOFFICE Connector settings for this site.
@@ -36,7 +36,7 @@ class SettingsForm extends ConfigFormBase {
   /**
    * The request manager.
    *
-   * @var \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface
+   * @var \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface
    */
   protected $requestManager;
 
@@ -52,7 +52,7 @@ class SettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
-   * @param \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface $request_manager
+   * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The aggregator fetcher plugin manager.
    */
   public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager) {
@@ -136,17 +136,16 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#attributes' => [
-        'id' => 'oodsp-settings-loader',
+        'id' => 'onlyoffice-docspace-loader',
         'class' => ['ui-widget-overlay'],
         'hidden' => TRUE,
-      ]
-    ];
-
-    $form['loader']['div']= [
-      '#type' => 'html_tag',
-      '#tag' => 'div',
-      '#attributes' => [
-        'class' => ['loader']
+      ],
+      'div' => [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => ['loader']
+        ],
       ]
     ];
 

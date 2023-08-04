@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\onlyoffice_docspace\RequestManager;
+namespace Drupal\onlyoffice_docspace\Manager;
 
 /**
  * Copyright (c) Ascensio System SIA 2023.
@@ -24,9 +24,9 @@ namespace Drupal\onlyoffice_docspace\RequestManager;
 use Drupal\Core\Logger\LoggerChannelTrait;
 
 /**
- * Defines an abstract base-class for OODSP request manager objects.
+ * Defines an abstract base-class for manager objects.
  */
-abstract class RequestManagerBase {
+abstract class ManagerBase {
 
   use LoggerChannelTrait;
 

@@ -1,4 +1,8 @@
 services:
   onlyoffice_docspace.request_manager:
-    class: Drupal\onlyoffice_docspace\RequestManager\RequestManager
+    class: Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManager
     arguments: ['@config.factory', '@http_client']
+
+  onlyoffice_docspace.security_manager:
+    class: Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManager
+    arguments: ['@database']

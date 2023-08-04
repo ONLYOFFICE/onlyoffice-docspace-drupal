@@ -26,6 +26,8 @@ use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\TempStore\PrivateTempStoreFactory;
+use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -61,6 +63,20 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
   protected $messenger;
 
   /**
+   * The ONLYOFFICE DocSpace request manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface
+   */
+  protected $requestManager;
+
+  /**
+   * The ONLYOFFICE DocSpace security manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface
+   */
+  protected $securityManager;
+
+  /**
    * Constructs a CancelUser object.
    *
    * @param array $configuration
@@ -75,12 +91,17 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
    *   Current user.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
+   * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
+   *   The ONLYOFFICE DocSpace request manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
+   *   The ONLYOFFICE DocSpace security manager.
    */
-  public function __construct(array $configuration, $plugin_id, $plugin_definition, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user, MessengerInterface $messenger) {
+  public function __construct(array $configuration, $plugin_id, $plugin_definition, PrivateTempStoreFactory $temp_store_factory, AccountInterface $current_user, MessengerInterface $messenger, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager) {
     $this->currentUser = $current_user;
     $this->tempStoreFactory = $temp_store_factory;
     $this->messenger = $messenger;
-
+    $this->requestManager = $request_manager;
+    $this->securityManager = $security_manager;
 
     parent::__construct($configuration, $plugin_id, $plugin_definition);
   }
@@ -95,16 +116,67 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
       $plugin_definition,
       $container->get('tempstore.private'),
       $container->get('current_user'),
-      $container->get('messenger')
+      $container->get('messenger'),
+      $container->get('onlyoffice_docspace.request_manager'),
+      $container->get('onlyoffice_docspace.security_manager')
     );
   }
 
   /**
    * {@inheritdoc}
    */
-  public function executeMultiple(array $entities) {
-    foreach ($entities as $entity) {
-      $this->messenger()->addError($entity->id());
+  public function executeMultiple(array $data) {
+	  $responseDocSpaceUsers = $this->requestManager->getDocSpaceUsers();
+
+    if ($responseDocSpaceUsers['error']) {
+      $this->messenger()->addError($this->t('Error getting users from ONLYOFFICE DocSpace'));
+    }
+
+    $listDocSpaceUsers = array_map(
+      function($user) {
+        return $user['email'];
+      },
+      $responseDocSpaceUsers['data']
+    );
+
+    $countInvited = 0;
+    $countSkipped = 0;
+    $countError= 0;
+
+    foreach ($data as $value) {
+      $entity = $value['entity'];
+      $passwordHash = $value['passwordHash'];
+
+      if (in_array($entity->getEmail(), $listDocSpaceUsers, true)) {
+        $countSkipped++;
+      } else {
+        $responseInvite =  $this->requestManager->inviteToDocSpace(
+            $entity->getEmail(),
+            $passwordHash,
+            '',
+            '',
+            2
+          );
+
+        if ($responseInvite['error']) {
+          $countError++;
+        } else {
+          $this->securityManager->setPasswordHash($entity->id(), $passwordHash);
+          $countInvited++;
+        }
+      }
+    }
+
+    if (0 !== $countError) {
+      $this->messenger()->addError('Invite with error for users ' . $countError);
+    }
+
+    if (0 !== $countSkipped) {
+      $this->messenger()->addError('Invite skipped for users ' . $countSkipped);
+    }
+
+    if ( 0 !== $countInvited ) {
+      $this->messenger()->addError('Invite sucessed for users ' . $countInvited);
     }
   }
 

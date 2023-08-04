@@ -25,6 +25,21 @@ onlyoffice_docspace.settings:
   js:
     assets/js/docspace-component-api.js: {}
     js/onlyoffice-docspace-settings.js: {}
+    js/loader.js: {}
+  dependencies:
+    - core/jquery
+    - core/drupal
+    - core/drupalSettings
+    - core/drupal.message
+
+onlyoffice_docspace.users:
+  css:
+    base:
+      css/loader.css: {}
+  js:
+    assets/js/docspace-component-api.js: {}
+    js/onlyoffice-docspace-users.js: {}
+    js/loader.js: {}
   dependencies:
     - core/jquery
     - core/drupal

@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\onlyoffice_docspace\RequestManager;
+namespace Drupal\onlyoffice_docspace\Manager\RequestManager;
 
 /**
  * Copyright (c) Ascensio System SIA 2023.
@@ -23,7 +23,7 @@ namespace Drupal\onlyoffice_docspace\RequestManager;
 
 interface RequestManagerInterface {
 
-  const UNAUTHORIZED = 1;
+	const UNAUTHORIZED = 1;
 	const USER_NOT_FOUND = 2;
 	const FORBIDDEN = 3;
 	const ERROR_USER_INVITE = 4;
@@ -34,7 +34,7 @@ interface RequestManagerInterface {
 	const ERROR_SHARE_ROOM = 9;
 
   /**
-	 * Connect to DocSapace.
+	 * Connect to ONLYOFFICE DocSapace.
 	 *
 	 * @param string $url DocSpace URL.
 	 * @param string $login DocSpace user login.
@@ -43,7 +43,7 @@ interface RequestManagerInterface {
   public function connectDocSpace($url = null, $login = null, $pass = null);
 
   /**
-	 * Get DocSpace user.
+	 * Get ONLYOFFICE DocSpace user.
 	 *
 	 * @param string $url DocSpace URL.
 	 * @param string $login DocSpace user login.
@@ -52,8 +52,20 @@ interface RequestManagerInterface {
   public function getDocSpaceUser($url, $login, $token);
 
     /**
-	 * Get DocSpace users.
+	 * Get ONLYOFFICE DocSpace users.
 	 *
 	 */
 	public function getDocSpaceUsers();
+
+	/**
+	 * Invite user to ONLYOFFICE DocSpace.
+	 * 
+	 * @param string $email User email.
+	 * @param string $password_hash User password hash.
+	 * @param string $firstname User firstname.
+	 * @param string $lastname User lastname.
+	 * @param string $type User type.
+	 * @param string $token DocSpace token.
+	 */
+	public function inviteToDocSpace($email, $password_hash, $firstname, $lastname, $type, $token = null);
 }

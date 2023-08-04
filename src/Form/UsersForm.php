@@ -26,7 +26,7 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Messenger\MessengerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
-use Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 
 /**
  * Defines the ONLYOFFICE DocSpace users export form.
@@ -36,7 +36,7 @@ class UsersForm extends FormBase {
   /**
    * The request manager.
    *
-   * @var \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface
+   * @var \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface
    */
   protected $requestManager;
 
@@ -80,7 +80,7 @@ class UsersForm extends FormBase {
    * 
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   The service container this object should use.
-   * @param \Drupal\onlyoffice_docspace\RequestManager\RequestManagerInterface $request_manager
+   * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The aggregator fetcher plugin manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
@@ -145,8 +145,46 @@ class UsersForm extends FormBase {
     ];
 
     $form['header']['user_bulk_form']['actions'] = $form['actions'];
+    $form['pager'] = [
+      '#type' => 'pager',
+      '#weight' => 100
+    ];
 
-    $form['pager']['#weight'] = 100;
+    $form['oodsp-system-hidden-block'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'class' => ['hidden']
+      ],
+      'div' => [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'id' => 'oodsp-system-frame'
+        ]
+      ]
+    ];
+
+    $form['loader'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'id' => 'onlyoffice-docspace-loader',
+        'class' => ['ui-widget-overlay'],
+        'hidden' => TRUE,
+      ],
+      'div' => [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => ['loader']
+        ],
+      ]
+    ];
+
+    $form['#attached'] = [
+      'library' => ['onlyoffice_docspace/onlyoffice_docspace.users'],
+    ];
 
     return $form;
   }
@@ -168,12 +206,18 @@ class UsersForm extends FormBase {
     $user_input = $form_state->getUserInput();
     $selected = array_filter($user_input['onlyoffice_docspace_users']);
     $action = $this->actions[$form_state->getValue('action')];
+    $userStorage = $this->entityTypeManager->getStorage('user');
 
-    $entities = [];
+    $executionData = [];
     $count = 0;
-  
+    
     foreach ($selected as $bulk_form_key) {
-      $entity = $this->loadEntityFromBulkFormKey($bulk_form_key);
+      $bulk_form_key = explode( '$$', $bulk_form_key, 2 );
+
+      $id = $bulk_form_key[0];
+      $passwordHash = $bulk_form_key[1];
+
+      $entity = $userStorage->load($id);
 
       if (empty($entity)) {
         continue;
@@ -190,15 +234,19 @@ class UsersForm extends FormBase {
 
       $count++;
 
-      $entities[$bulk_form_key] = $entity;
+      $data = [
+        'entity' => $entity,
+        'passwordHash' => $passwordHash
+      ];
+      array_push($executionData, $data);
     }
 
     if (!$count) {
       return;
     }
-  
-    $action->execute($entities);
-  
+
+    $action->execute($executionData);
+
     $operation_definition = $action->getPluginDefinition();
     if (!empty($operation_definition['confirm_form_route_name'])) {
       $options = [
@@ -211,13 +259,6 @@ class UsersForm extends FormBase {
         '%action' => $action->label(),
       ]));
     }
-  }
-
-  protected function loadEntityFromBulkFormKey($id) {
-    $storage = $this->entityTypeManager->getStorage('user');
-    $entity =  $storage->load($id);
-
-    return $entity;
   }
 
   protected function getBulkOptions() {
