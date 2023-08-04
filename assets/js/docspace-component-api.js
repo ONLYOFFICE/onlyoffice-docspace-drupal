@@ -57,19 +57,20 @@
 
     window.DocSpaceComponent.oodspCredentials = function (hash = null) {
         var xhr = new XMLHttpRequest();
-        var postData = "action=oodsp_credentials";
-        
+
+        var body = {};
+
         if (DocSpaceComponent.isPublic) {
-            postData += "&is_public=true";
+            body.public = true;
         }
         
         if (hash) {
-            postData += "&hash=" + hash;
+            body.hash = hash;
         }
 
         xhr.open("POST", DocSpaceComponent.ajaxUrl, false);
-        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded; charset=UTF-8");
-        xhr.send(postData);
+        xhr.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+        xhr.send(JSON.stringify(body));
 
         if (xhr.status === 200) {
             return xhr.responseText || null;

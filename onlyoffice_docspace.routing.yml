@@ -24,3 +24,12 @@ onlyoffice_docspace.page:
     scheme: null
   requirements:
     _permission: 'administer onlyoffice_docspace configuration'
+
+onlyoffice_docspace.credentilas:
+  path: '/credentilas'
+  defaults:
+    _controller: '\Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController::credentials'
+  methods: [POST]
+  requirements:
+    # Don't use standard access restriction because document editor service use jwt authorization.
+    _access: 'TRUE'
