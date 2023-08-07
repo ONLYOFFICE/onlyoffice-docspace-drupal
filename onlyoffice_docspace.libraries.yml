@@ -45,3 +45,11 @@ onlyoffice_docspace.users:
     - core/drupal
     - core/drupalSettings
     - core/drupal.message
+
+onlyoffice_docspace.formater:
+  js:
+    assets/js/docspace-component-api.js: {}
+    js/onlyoffice-docspace-formater.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings

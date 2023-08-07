@@ -33,7 +33,7 @@ use Drupal\Core\TypedData\DataDefinition;
  *   label = @Translation("ONLYOFFICE DocSpace"),
  *   description = @Translation("This field stores a ONLYOFFICE DocSpace in the database."),
  *   default_widget = "onlyoffice_docspace_widget",
- *   default_formatter = "basic_string"
+ *   default_formatter = "onlyoffice_docspace"
  * )
  */
 class OODSPItem extends FieldItemBase {
