@@ -21,301 +21,310 @@ namespace Drupal\onlyoffice_docspace\Manager\RequestManager;
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Component\Serialization\Json;
 use Drupal\onlyoffice_docspace\Manager\ManagerBase;
 use GuzzleHttp\ClientInterface;
-use Drupal\Component\Serialization\Json;
 use GuzzleHttp\Cookie\CookieJar;
 
+/**
+ * The ONLYOFFICE DocSpace Request Manager.
+ */
 class RequestManager extends ManagerBase implements RequestManagerInterface {
 
-	/**
-	 * Config factory service.
-	 *
-	 * @var \Drupal\Core\Config\ConfigFactoryInterface
-	 */
-	protected $configFactory;
+  /**
+   * The HTTP client to fetch the feed data with.
+   *
+   * @var \GuzzleHttp\ClientInterface
+   */
+  protected $httpClient;
 
-	/**
-	 * The HTTP client to fetch the feed data with.
-	 *
-	 * @var \GuzzleHttp\ClientInterface
-	 */
-	protected $httpClient;
+  /**
+   * A logger instance.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
 
-	/**
-	 * A logger instance.
-	 *
-	 * @var \Psr\Log\LoggerInterface
-	 */
-	protected $logger;
+  /**
+   * Constructor.
+   *
+   * @param \GuzzleHttp\ClientInterface $http_client
+   *   The Guzzle HTTP client.
+   */
+  public function __construct(ClientInterface $http_client) {
+    $this->httpClient = $http_client;
+    $this->logger = $this->getLogger('onlyoffice');
+  }
 
-	/**
-	 * Constructor.
-	 *
-	 * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
-	 *   The config factory service.
-	 * @param \GuzzleHttp\ClientInterface $http_client
-   	 *   The Guzzle HTTP client.
-	 */
-	public function __construct(ConfigFactoryInterface $config_factory, ClientInterface $http_client) {
-		$this->configFactory = $config_factory;
-		$this->httpClient = $http_client;
-		$this->logger = $this->getLogger('onlyoffice');
-	  }
+  /**
+   * {@inheritdoc}
+   */
+  public function connectDocSpace($url = NULL, $login = NULL, $password_hash = NULL) {
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
-  
-	/**
-	 * {@inheritdoc}
-	 */
-	public function connectDocSpace( $url = null, $login = null, $passwordHash = null ) {
-		$result = array(
-			'error' => null,
-			'data'  => null,
-		);
+    $currentUrl = $this->config('onlyoffice_docspace.settings')->get('url');
+    $currentLogin = $this->config('onlyoffice_docspace.settings')->get('login');
+    $currentPasswordHash = $this->config('onlyoffice_docspace.settings')->get('passwordHash');
 
-		$currentUrl = $this->config('onlyoffice_docspace.settings')->get('url');
-		$currentLogin = $this->config('onlyoffice_docspace.settings')->get('login');
-		$currentPasswordHash  = $this->config('onlyoffice_docspace.settings')->get('passwordHash');
+    // Try authentication with current credintails, if new credintails equals
+    // null or new credintails equals current credintails.
+    if (($url === NULL &&  $login === NULL && $password_hash === NULL)
+      || ($currentUrl === $url && $currentLogin === $login && $currentPasswordHash === $password_hash)) {
 
-		// Try authentication with current credintails, if new credintails equals null or new credintails equals current credintails.
-		if ((null === $url && null === $login && null === $passwordHash)
-			|| ($currentUrl === $url && $currentLogin === $login && $currentPasswordHash === $passwordHash)) {
+      $currentToken = $this->config('onlyoffice_docspace.settings')->get('token');
 
-			$currentToken = $this->config('onlyoffice_docspace.settings')->get('token');
+      if (!empty($currentToken)) {
+        // Check is admin with current token.
+        $responseDocSpaceUser = $this->getDocSpaceUser($currentUrl, $currentLogin, $currentPasswordHash);
 
-			if (!empty($currentToken)) {
-				// Check is admin with current token.
-				$responseDocSpaceUser = $this->getDocSpaceUser($currentUrl, $currentLogin, $currentPasswordHash);
+        if (!$responseDocSpaceUser['error']) {
+          if (!$responseDocSpaceUser['data']['isAdmin']) {
+            // Error user is not admin.
+            $result['error'] = self::FORBIDDEN;
+            return $result;
+          }
 
-				if (!$responseDocSpaceUser['error']) {
-					if (!$responseDocSpaceUser['data']['isAdmin']) {
-						$result['error'] = self::FORBIDDEN; // Error user is not admin.
-						return $result;
-					}
+          // Return current token.
+          $result['data'] = $currentToken;
+          return $result;
+        }
+      }
 
-					$result['data'] = $currentToken; // Return current token.
-					return $result;
-				}
-			}
+      $url = $currentUrl;
+      $login = $currentLogin;
+      $password_hash = $currentPasswordHash;
+    }
 
-			$url = $currentUrl;
-			$login = $currentLogin;
-			$passwordHash = $currentPasswordHash;
-		}
+    // Try authentication with new credintails.
+    // Try get new token.
+    $responseDocSpaceToken = $this->getDocSpaceToken($url, $login, $password_hash);
 
-		// Try authentication with new credintails.
-		// Try get new token.
-		$responseDocSpaceToken = $this->getDocSpaceToken( $url, $login, $passwordHash );
+    if ($responseDocSpaceToken['error']) {
+      // Error authentication.
+      return $responseDocSpaceToken;
+    }
 
-		if ( $responseDocSpaceToken['error'] ) {
-			return $responseDocSpaceToken; // Error authentication.
-		}
+    // Check is admin with new token.
+    $responseDocSpaceUser = $this->getDocSpaceUser($url, $login, $responseDocSpaceToken['data']);
 
-		// Check is admin with new token.
-		$responseDocSpaceUser = $this->getDocSpaceUser( $url, $login, $responseDocSpaceToken['data'] );
+    if ($responseDocSpaceUser['error']) {
+      // Error getting user data.
+      return $responseDocSpaceUser;
+    }
 
-		if ( $responseDocSpaceUser['error'] ) {
-			return $responseDocSpaceUser; // Error getting user data.
-		}
+    if (!$responseDocSpaceUser['data']['isAdmin']) {
+      // Error user is not admin.
+      $result['error'] = self::FORBIDDEN;
+      return $result;
+    }
 
-		if ( ! $responseDocSpaceUser['data']['isAdmin'] ) {
-			$result['error'] = self::FORBIDDEN; // Error user is not admin.
-			return $result;
-		}
+    // $this->config('onlyoffice_docspace.settings')
+    // ->set('token', $res_authentication['data'])
+    // ->save();
 
-		// $this->config('onlyoffice_docspace.settings')
-      	// 	->set('token', $res_authentication['data'])
-      	// 	->save();
+    // Return new current token.
+    $result['data'] = $responseDocSpaceToken['data'];
+    return $result;
+  }
 
-		$result['data'] = $responseDocSpaceToken['data']; // Return new current token.
-		return $result;
-	}
-  
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDocSpaceUser($url, $login, $token) {
-		$result = array(
-			'error' => null,
-			'data' => null,
-		);
+  /**
+   * {@inheritdoc}
+   */
+  public function getDocSpaceUser($url, $login, $token) {
+    $result = [
+      'error' => NULL,
+      'data' => NULL,
+    ];
 
-		try {
-			$response = $this->httpClient->request(
-				'GET',
-				$url . 'api/2.0/people/email?email=' . $login,
-				array(
-					'cookies' => $this->createCookieJar(
-						array('asc_auth_key' => $token),
-						$url
-					),
-				)
-			);
-			
-			if ($response->getStatusCode() !== 200) {
-				$result['error'] = self::USER_NOT_FOUND;
-				return $result;
-			}
+    try {
+      $response = $this->httpClient->request(
+        'GET',
+        $url . 'api/2.0/people/email?email=' . $login,
+        [
+          'cookies' => $this->createCookieJar(
+            ['asc_auth_key' => $token],
+            $url
+          ),
+        ]
+      );
 
-			$body = Json::decode((string) $response->getBody());
-			$result['data'] = $body['response'];
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::USER_NOT_FOUND;
+        return $result;
+      }
 
-			return $result;
-		} catch (\Exception $e) {
-			$result['error'] = self::USER_NOT_FOUND;
-			return $result;
-		}
-	}
+      $body = Json::decode((string) $response->getBody());
+      $result['data'] = $body['response'];
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getDocSpaceUsers() {
-		$result = array(
-			'error' => null,
-			'data'  => null,
-		);
+      return $result;
+    }
+    catch (\Exception $e) {
+      $result['error'] = self::USER_NOT_FOUND;
+      return $result;
+    }
+  }
 
-		$responseConnect = $this->connectDocSpace();
+  /**
+   * {@inheritdoc}
+   */
+  public function getDocSpaceUsers() {
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
-		if ( $responseConnect['error'] ) {
-			return $responseConnect;
-		}
+    $responseConnect = $this->connectDocSpace();
 
-		$url = $this->config('onlyoffice_docspace.settings')->get('url');
+    if ($responseConnect['error']) {
+      return $responseConnect;
+    }
 
-		try {
-			$response = $this->httpClient->request(
-				'GET',
-				$url . 'api/2.0/people',
-				array(
-					'cookies' => $this->createCookieJar(
-						array('asc_auth_key' => $responseConnect['data']),
-						$url
-					),
-				)
-			);
+    $url = $this->config('onlyoffice_docspace.settings')->get('url');
 
-			if ($response->getStatusCode() !== 200) {
-				$result['error'] = self::ERROR_GET_USERS;
-				return $result;
-			}
+    try {
+      $response = $this->httpClient->request(
+        'GET',
+        $url . 'api/2.0/people',
+        [
+          'cookies' => $this->createCookieJar(
+            ['asc_auth_key' => $responseConnect['data']],
+            $url
+          ),
+        ]
+      );
 
-			$body = Json::decode((string) $response->getBody());
-			$result['data'] = $body['response'];
-			
-			return $result;
-		} catch (\Exception $e) {
-			$result['error'] = self::ERROR_GET_USERS;
-			return $result;
-		}
-	}
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::ERROR_GET_USERS;
+        return $result;
+      }
 
-	/**
-	 * {@inheritdoc}
-	 */
-	public function inviteToDocSpace($email, $password_hash, $firstname, $lastname, $type, $token = null) {
-		$result = array(
-			'error' => null,
-			'data'  => null,
-		);
+      $body = Json::decode((string) $response->getBody());
+      $result['data'] = $body['response'];
 
-		if (!$token) {
-			$responseConnect = $this->connectDocSpace();
+      return $result;
+    }
+    catch (\Exception $e) {
+      $result['error'] = self::ERROR_GET_USERS;
+      return $result;
+    }
+  }
 
-			if ($responseConnect['error'] ) {
-				return $responseConnect;
-			}
+  /**
+   * {@inheritdoc}
+   */
+  public function inviteToDocSpace($email, $password_hash, $firstname, $lastname, $type, $token = NULL) {
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
-			$token = $responseConnect['data'];
-		}
+    if (!$token) {
+      $responseConnect = $this->connectDocSpace();
 
-		$url = $this->config('onlyoffice_docspace.settings')->get('url');
+      if ($responseConnect['error']) {
+        return $responseConnect;
+      }
 
-		try {
-			$response = $this->httpClient->request(
-				'POST',
-				$url . 'api/2.0/people/active',
-				array(
-					'headers' => array( 'Content-Type' => 'application/json; charset=utf-8' ),
-					'cookies' => $this->createCookieJar(
-						array('asc_auth_key' => $token),
-						$url
-					),
-					'body'    =>Json::encode(
-						array(
-							'email'        => $email,
-							'passwordHash' => $password_hash,
-							'firstname'    => $firstname,
-							'lastname'     => $lastname,
-							'type'         => $type,
-						)
-					),
-					'method'  => 'POST',
-				)
-			);
+      $token = $responseConnect['data'];
+    }
 
-			if ($response->getStatusCode() !== 200) {
-				$result['error'] = self::ERROR_USER_INVITE;
-				return $result;
-			}
+    $url = $this->config('onlyoffice_docspace.settings')->get('url');
 
-			$body = Json::decode((string) $response->getBody());
-			$result['data'] = $body['response'];
+    try {
+      $response = $this->httpClient->request(
+        'POST',
+        $url . 'api/2.0/people/active',
+        [
+          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+          'cookies' => $this->createCookieJar(
+            ['asc_auth_key' => $token],
+            $url
+          ),
+          'body' => Json::encode(
+            [
+              'email' => $email,
+              'passwordHash' => $password_hash,
+              'firstname' => $firstname,
+              'lastname' => $lastname,
+              'type' => $type,
+            ]
+          ),
+          'method' => 'POST',
+        ]
+      );
 
-			return $result;
-		} catch (\Exception $e) {
-			$result['error'] = self::ERROR_USER_INVITE;
-			return $result;
-		}
-	}
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::ERROR_USER_INVITE;
+        return $result;
+      }
 
-	/**
-	 * Get DocSpace Token.
-	 *
-	 * @param string $url DocSpace URL.
-	 * @param string $login DocSpace User login.
-	 * @param string $pass DocSpace User password.
-	 */
-	private function getDocSpaceToken( $url, $login, $passwordHash ) {
-		$result = array(
-			'error' => null,
-			'data'  => null,
-		);
-		
-		try {
-			$response = $this->httpClient->request(
-				'POST',
-				$url . 'api/2.0/authentication',
-				array(
-					'headers' => array( 'Content-Type' => 'application/json; charset=utf-8' ),
-					'body'    =>Json::encode(
-						array(
-							'userName'     => $login,
-							'passwordHash' => $passwordHash,
-						)
-					),
-					'method'  => 'POST',
-				)
-			);
+      $body = Json::decode((string) $response->getBody());
+      $result['data'] = $body['response'];
 
-			if ($response->getStatusCode() !== 200) {
-				$result['error'] = self::UNAUTHORIZED;
-				return $result;
-			}
+      return $result;
+    }
+    catch (\Exception $e) {
+      $result['error'] = self::ERROR_USER_INVITE;
+      return $result;
+    }
+  }
 
-			$body = Json::decode((string) $response->getBody());
+  /**
+   * Get ONLYOFFICE DocSpace Token.
+   *
+   * @param string $url
+   *   The ONLYOFFICE DocSpace URL.
+   * @param string $login
+   *   The ONLYOFFICE DocSpace User login.
+   * @param string $password_hash
+   *   The ONLYOFFICE DocSpace User password.
+   */
+  private function getDocSpaceToken($url, $login, $password_hash) {
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
-			$result['data'] = $body['response']['token'];
-			return $result;
-		} catch (\Exception $e) {
-			$result['error'] = self::UNAUTHORIZED;
-			return $result;
-		}
-	}
+    try {
+      $response = $this->httpClient->request(
+        'POST',
+        $url . 'api/2.0/authentication',
+        [
+          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+          'body' => Json::encode(
+            [
+              'userName'     => $login,
+              'passwordHash' => $password_hash,
+            ]
+          ),
+          'method'  => 'POST',
+        ]
+      );
 
-	private function createCookieJar($cookieArray, $url) {
-		return CookieJar::fromArray($cookieArray, parse_url($url, PHP_URL_HOST));
-	}
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::UNAUTHORIZED;
+        return $result;
+      }
+
+      $body = Json::decode((string) $response->getBody());
+
+      $result['data'] = $body['response']['token'];
+      return $result;
+    }
+    catch (\Exception $e) {
+      $result['error'] = self::UNAUTHORIZED;
+      return $result;
+    }
+  }
+
+  /**
+   * Get ONLYOFFICE DocSpace Token.
+   */
+  private function createCookieJar($cookieArray, $url) {
+    return CookieJar::fromArray($cookieArray, parse_url($url, PHP_URL_HOST));
+  }
+
 }

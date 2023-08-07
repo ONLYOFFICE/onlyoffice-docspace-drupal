@@ -1,25 +1,45 @@
+/**
+ *
+ * (c) Copyright Ascensio System SIA 2023
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ */
+
 #oodspModalDialog {
-    padding: 0;
-    height: 500px!important;
-    min-height: unset!important;
-    max-height: unset!important;
+  padding: 0;
+  height: 500px!important;
+  min-height: unset!important;
+  max-height: unset!important;
 }
 
 .oodsp-container-inline {
-    display: inline-block;
+  display: inline-block;
 }
 
 .oodsp-image {
-    margin: auto 20px;
-    border-radius: 18px;
+  margin: auto 20px;
+  border-radius: 18px;
 }
 
 .oodsp-fields {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: flex-start;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
 }
 
 .hidden {
-    display: none!important;
+  display: none!important;
 }

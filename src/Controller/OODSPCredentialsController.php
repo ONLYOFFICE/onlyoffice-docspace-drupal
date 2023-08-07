@@ -23,8 +23,8 @@ namespace Drupal\onlyoffice_docspace\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -32,10 +32,10 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OODSPCredentialsController extends ControllerBase {
 
-  public const OODSP_PUBLIC_USER_LOGIN     = 'wpviewer@onlyoffice.com';
-	public const OODSP_PUBLIC_USER_PASS      = '8c6b8b3e59010d7c925a47039f749d86fbdc9b37257cd262f2dae7c84a106505';
-	public const OODSP_PUBLIC_USER_FIRSTNAME = 'WordPress';
-	public const OODSP_PUBLIC_USER_LASTNAME  = 'Viewer';
+  public const OODSP_PUBLIC_USER_LOGIN = 'wpviewer@onlyoffice.com';
+  public const OODSP_PUBLIC_USER_PASS = '8c6b8b3e59010d7c925a47039f749d86fbdc9b37257cd262f2dae7c84a106505';
+  public const OODSP_PUBLIC_USER_FIRSTNAME = 'WordPress';
+  public const OODSP_PUBLIC_USER_LASTNAME = 'Viewer';
 
   /**
    * The ONLYOFFICE DocSpace security manager.
@@ -80,11 +80,10 @@ class OODSPCredentialsController extends ControllerBase {
   public function credentials(Request $request) {
     $user = $this->currentUser()->getAccount();
 
-    $this->logger->error(print_r($user, true));
-
     if ($user->isAnonymous()) {
       return new JsonResponse(self::OODSP_PUBLIC_USER_PASS, 200);
-    } else {
+    }
+    else {
       $body = json_decode($request->getContent());
 
       if (!$body) {
@@ -97,24 +96,27 @@ class OODSPCredentialsController extends ControllerBase {
 
       $public = $body->public;
 
-      if (!empty($public) && $public === true) {
+      if (!empty($public) && $public === TRUE) {
         return new JsonResponse(self::OODSP_PUBLIC_USER_PASS, 200);
-      } 
-        
+      }
+
       $hash = $body->hash;
 
       if (empty($hash) || trim($hash) === '') {
         $hash = $this->securityManager->getPasswordHash($user->id());
 
         if (empty($hash)) {
-          return new JsonResponse(null, 404);
+          return new JsonResponse(NULL, 404);
         }
-      } else {
+      }
+      else {
         $hash = trim($hash);
         $this->securityManager->setPasswordHash($user->id(), $hash);
       }
 
       return new JsonResponse($hash, 200);
     }
+
   }
+
 }

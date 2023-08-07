@@ -21,12 +21,12 @@ namespace Drupal\onlyoffice_docspace\Form;
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Config\ConfigFactoryInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure ONLYOFFICE Connector settings for this site.
@@ -113,14 +113,14 @@ class SettingsForm extends ConfigFormBase {
 
     $form['passwordHash'] = [
       '#type' => 'hidden',
-      '#default_value' => NULL
+      '#default_value' => NULL,
     ];
 
     $form['oodsp-settings-hidden-block'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#attributes' => [
-        'class' => ['hidden']
+        'class' => ['hidden'],
       ],
     ];
 
@@ -128,8 +128,8 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#attributes' => [
-        'id' => 'oodsp-settings-frame'
-      ]
+        'id' => 'oodsp-settings-frame',
+      ],
     ];
 
     $form['loader'] = [
@@ -144,16 +144,16 @@ class SettingsForm extends ConfigFormBase {
         '#type' => 'html_tag',
         '#tag' => 'div',
         '#attributes' => [
-          'class' => ['loader']
+          'class' => ['loader'],
         ],
-      ]
+      ],
     ];
 
     $form = parent::buildForm($form, $form_state);
 
     $form['actions']['export_users'] = [
       '#type' => 'fieldset',
-      '#title' =>  $this->t('DocSpace Users'),
+      '#title' => $this->t('DocSpace Users'),
       'description' => [
         '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press Export Now. Users who don’t have an account in DocSpace will have Drupal Viewer with View Only access to content.') . '</p>',
       ],
@@ -172,7 +172,7 @@ class SettingsForm extends ConfigFormBase {
     $form['actions']['export_users']['export'] = [
       '#type' => 'link',
       '#title' => $this->t('Export Now'),
-      '#url'=> $url
+      '#url' => $url,
     ];
 
     return $form;
@@ -187,23 +187,22 @@ class SettingsForm extends ConfigFormBase {
     $login = $form_state->getValue('login');
     $passwordHash = $form_state->getValue('passwordHash');
 
-    $url = '/' === substr( $url, -1 ) ? $url : $url . '/';
+    $url = '/' === substr($url, -1) ? $url : $url . '/';
 
-    $responseConnect =$this->requestManager->connectDocSpace($url, $login, $passwordHash);
+    $responseConnect = $this->requestManager->connectDocSpace($url, $login, $passwordHash);
 
-		if ( $this->requestManager::UNAUTHORIZED === $responseConnect['error'] ) {
+    if ($this->requestManager::UNAUTHORIZED === $responseConnect['error']) {
       $form_state->setErrorByName('', $this->t('Invalid credentials. Please try again!'));
-		}
-		if ( $this->requestManager::USER_NOT_FOUND === $responseConnect['error'] ) {
+    }
+    if ($this->requestManager::USER_NOT_FOUND === $responseConnect['error']) {
       $form_state->setErrorByName('', $this->t('Error getting data user. Please try again!'));
-		}
-		if ( $this->requestManager::FORBIDDEN === $responseConnect['error'] ) {
+    }
+    if ($this->requestManager::FORBIDDEN === $responseConnect['error']) {
       $form_state->setErrorByName('', $this->t('The specified user is not a DocSpace administrator!'));
-		}
+    }
 
     parent::validateForm($form, $form_state);
   }
-
 
   /**
    * {@inheritdoc}

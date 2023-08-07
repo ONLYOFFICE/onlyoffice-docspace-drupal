@@ -21,21 +21,27 @@ namespace Drupal\onlyoffice_docspace\Manager\SecurityManager;
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+/**
+ * An interface for ONLYOFFICE DocSpace Security Manager.
+ */
 interface SecurityManagerInterface {
 
-	/**
-	 * Get password hash for ONLYOFFICE DocSpace user.
-	 *
-	 * @param string $user_id The user id.
-	 */
-	public function getPasswordHash($user_id);
+  /**
+   * Get password hash for ONLYOFFICE DocSpace user.
+   *
+   * @param string $user_id
+   *   The user id.
+   */
+  public function getPasswordHash($user_id);
 
-	/**
-	 * Set password hash for ONLYOFFICE DocSpace user.
-	 *
-	 * @param string $user_id The user id.
-	 * @param string $passwordHash The password hash.
-	 */
-	public function setPasswordHash($user_id, $password_hash);
+  /**
+   * Set password hash for ONLYOFFICE DocSpace user.
+   *
+   * @param string $user_id
+   *   The user id.
+   * @param string $password_hash
+   *   The password hash.
+   */
+  public function setPasswordHash($user_id, $password_hash);
 
 }

@@ -1,4 +1,7 @@
 <?php
+
+namespace Drupal\onlyoffice_docspace\Controller;
+
 /**
  * Copyright (c) Ascensio System SIA 2023.
  *
@@ -18,28 +21,25 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-namespace Drupal\onlyoffice_docspace\Controller;
-
 use Drupal\Core\Controller\ControllerBase;
-use Symfony\Component\HttpFoundation\Request;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Symfony\Component\HttpFoundation\Request;
 
+/**
+ * Returns response for ONLYOFFICE DocSpace page route.
+ */
 class OODSPPageController extends ControllerBase {
 
-    public function getOnlyofficeDocSpacePage($scheme, Request $request, RouteMatchInterface $route_match) {
-        $build = array();
+  /**
+   * Method for processing page.
+   */
+  public function getOnlyofficeDocSpacePage($scheme, Request $request, RouteMatchInterface $route_match) {
+    $build = [];
 
-        $build['onlyoffice_docspace-admin-container']['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.page';
-        $build['onlyoffice_docspace-admin-container']['#theme'] = 'onlyoffice_docspace_page';
+    $build['onlyoffice_docspace-admin-container']['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.page';
+    $build['onlyoffice_docspace-admin-container']['#theme'] = 'onlyoffice_docspace_page';
 
-        return $build;
-    }
+    return $build;
+  }
 
-    public static function buildBrowserPage($is_page_layout = FALSE) {
-        global $language;
-
-        $build = array();
-
-        return $build;
-      }
 }

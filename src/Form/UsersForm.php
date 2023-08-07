@@ -23,10 +23,10 @@ namespace Drupal\onlyoffice_docspace\Form;
 
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
-use Drupal\Core\Messenger\MessengerInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines the ONLYOFFICE DocSpace users export form.
@@ -77,7 +77,7 @@ class UsersForm extends FormBase {
 
   /**
    * Constructs a \Drupal\onlyoffice_docspace\UsersForm object.
-   * 
+   *
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   The service container this object should use.
    * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
@@ -125,9 +125,9 @@ class UsersForm extends FormBase {
     $form = $this->userListBuilder->render();
 
     $form['actions']['#type'] = 'actions';
-    $form['actions']['submit']= [
+    $form['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Apply to selected items')
+      '#value' => $this->t('Apply to selected items'),
     ];
 
     $form['header'] = [
@@ -141,28 +141,28 @@ class UsersForm extends FormBase {
     $form['header']['user_bulk_form']['action'] = [
       '#type' => 'select',
       '#title' => 'Action',
-      '#options' => $this->getBulkOptions()
+      '#options' => $this->getBulkOptions(),
     ];
 
     $form['header']['user_bulk_form']['actions'] = $form['actions'];
     $form['pager'] = [
       '#type' => 'pager',
-      '#weight' => 100
+      '#weight' => 100,
     ];
 
     $form['oodsp-system-hidden-block'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#attributes' => [
-        'class' => ['hidden']
+        'class' => ['hidden'],
       ],
       'div' => [
         '#type' => 'html_tag',
         '#tag' => 'div',
         '#attributes' => [
-          'id' => 'oodsp-system-frame'
-        ]
-      ]
+          'id' => 'oodsp-system-frame',
+        ],
+      ],
     ];
 
     $form['loader'] = [
@@ -177,9 +177,9 @@ class UsersForm extends FormBase {
         '#type' => 'html_tag',
         '#tag' => 'div',
         '#attributes' => [
-          'class' => ['loader']
+          'class' => ['loader'],
         ],
-      ]
+      ],
     ];
 
     $form['#attached'] = [
@@ -210,9 +210,9 @@ class UsersForm extends FormBase {
 
     $executionData = [];
     $count = 0;
-    
+
     foreach ($selected as $bulk_form_key) {
-      $bulk_form_key = explode( '$$', $bulk_form_key, 2 );
+      $bulk_form_key = explode('$$', $bulk_form_key, 2);
 
       $id = $bulk_form_key[0];
       $passwordHash = $bulk_form_key[1];
@@ -236,7 +236,7 @@ class UsersForm extends FormBase {
 
       $data = [
         'entity' => $entity,
-        'passwordHash' => $passwordHash
+        'passwordHash' => $passwordHash,
       ];
       array_push($executionData, $data);
     }
@@ -261,6 +261,9 @@ class UsersForm extends FormBase {
     }
   }
 
+  /**
+   * Returns the available operations for this form.
+   */
   protected function getBulkOptions() {
     $options = [];
 
@@ -269,5 +272,6 @@ class UsersForm extends FormBase {
     }
 
     return $options;
-  } 
+  }
+
 }

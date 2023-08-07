@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Install, update and uninstall functions for the ONLYOFFICE DocSpace Connector module.
+ * Install functions for the ONLYOFFICE DocSpace Connector module.
  */
 
 /**
@@ -34,7 +34,7 @@ function onlyoffice_docspace_install() {
 
   $schema = \Drupal::database()->schema();
   if (!$schema->tableExists('users_docspace')) {
-    $schema->createTable('users_docspace', array(
+    $schema->createTable('users_docspace', [
       'fields' => [
         'uid' => [
           'description' => 'The {users}.uid this record affects.',
@@ -48,11 +48,11 @@ function onlyoffice_docspace_install() {
           'length' => 225,
           'not null' => TRUE,
           'default' => '',
-        ]
+        ],
       ],
       'primary key' => ['uid'],
       'indexes' => [
-        'uid' => ['uid']
+        'uid' => ['uid'],
       ],
       // For documentation purposes only; foreign keys are not created in the
       // database.
@@ -61,10 +61,10 @@ function onlyoffice_docspace_install() {
           'table' => 'users',
           'columns' => [
             'uid' => 'uid',
-          ]
+          ],
         ],
       ],
-    ));
+    ]);
   }
 }
 
@@ -76,7 +76,6 @@ function onlyoffice_docspace_uninstall() {
 
   $schema = \Drupal::database()->schema();
   if ($schema->tableExists('users_docspace')) {
-      $schema->dropTable('users_docspace');
+    $schema->dropTable('users_docspace');
   }
 }
-

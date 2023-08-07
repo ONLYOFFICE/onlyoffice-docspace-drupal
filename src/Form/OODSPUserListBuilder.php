@@ -26,9 +26,9 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 use Drupal\user\UserListBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Defines a class to build a listing of user entities.
@@ -38,14 +38,14 @@ use Drupal\user\UserListBuilder;
 class OODSPUserListBuilder extends UserListBuilder {
 
   /**
-   * Is connected to DocSpace.
+   * Is connected to ONLYOFFICE DocSpace.
    *
-   * @var boolean
+   * @var bool
    */
   private $isConnectedToDocSpace = FALSE;
 
   /**
-   * List DocSpace Users.
+   * List ONLYOFFICE DocSpace Users.
    *
    * @var array
    */
@@ -147,24 +147,26 @@ class OODSPUserListBuilder extends UserListBuilder {
     $docSpaceUserStatus = -1;
     $docSpaceUserRoleLabel = '';
 
-        for ( $i = 0; $i < count($this->listDocSpaceUsers); ++$i ) {
-            if ($this->listDocSpaceUsers[$i]['email'] === $entity->getEmail()) {
-                $docSpaceUserStatus= $this->listDocSpaceUsers[$i]['activationStatus'];
-                $docSpaceUserRoleLabel = $this->getDocSpaceUserRoleLabel($this->listDocSpaceUsers[$i]);
-            }
-        }
+    for ($i = 0; $i < count($this->listDocSpaceUsers); ++$i) {
+      if ($this->listDocSpaceUsers[$i]['email'] === $entity->getEmail()) {
+        $docSpaceUserStatus = $this->listDocSpaceUsers[$i]['activationStatus'];
+        $docSpaceUserRoleLabel = $this->getDocSpaceUserRoleLabel($this->listDocSpaceUsers[$i]);
+      }
+    }
 
     // $oodsp_security_manager = new OODSP_Security_Manager();
     // $user_pass = $oodsp_security_manager->get_oodsp_user_pass( $user_object->ID );
     $user_pass = "1111";
 
-    if ( 0 === $docSpaceUserStatus || 1 === $docSpaceUserStatus ) {
-      if ( ! empty( $user_pass ) ) {
+    if ($docSpaceUserStatus === 0 || $docSpaceUserStatus === 1) {
+      if (!empty($user_pass)) {
         $row['docspace_user_status']['data']['#markup'] = $this->t('In DocSpace');
-      } else {
+      }
+      else {
         $row['docspace_user_status']['data']['#markup'] = $this->t('Unauthorized');
       }
-    } else {
+    }
+    else {
       $row['docspace_user_status']['data']['#markup'] = '';
     }
 
@@ -181,7 +183,7 @@ class OODSPUserListBuilder extends UserListBuilder {
     $build['onlyoffice_docspace_users'] = $build['table'];
     $build['onlyoffice_docspace_users']['#tableselect'] = TRUE;
 
-    foreach ($build['onlyoffice_docspace_users']['#rows'] as $key => $value ) {
+    foreach ($build['onlyoffice_docspace_users']['#rows'] as $key => $value) {
       $build['onlyoffice_docspace_users'][$key] = $value;
     }
 
@@ -192,31 +194,40 @@ class OODSPUserListBuilder extends UserListBuilder {
     return $build;
   }
 
+  /**
+   * Load users from ONLYOFFICE DocSpace.
+   */
   private function loadDocSpaceUsers() {
-        $responseDocSpaceUsers = $this->requestManager->getDocSpaceUsers();
+    $responseDocSpaceUsers = $this->requestManager->getDocSpaceUsers();
 
-        if (!$responseDocSpaceUsers['error'] ) {
-            $this->listDocSpaceUsers = $responseDocSpaceUsers['data'];
-            $this->isConnectedToDocSpace = true;
+    if (!$responseDocSpaceUsers['error']) {
+      $this->listDocSpaceUsers = $responseDocSpaceUsers['data'];
+      $this->isConnectedToDocSpace = TRUE;
     }
   }
 
   /**
-     * Return label for role DocSpace user.
-     *
-     * @param string $user The DocSpace user.
-     */
-    private function getDocSpaceUserRoleLabel($user) {
-        if ($user['isOwner']) {
-            return $this->t('Owner');
-        } elseif ($user['isAdmin']) {
-            return $this->t('DocSpace admin');
-        } elseif ($user['isCollaborator'] ) {
-            return $this->t('Power user');
-        } elseif ($user['isVisitor']) {
-            return $this->t('User');
-        } else {
-            return $this->t('Room admin');
-        }
+   * Return label for role ONLYOFFICE DocSpace user.
+   *
+   * @param string $user
+   *   The ONLYOFFICE DocSpace user.
+   */
+  private function getDocSpaceUserRoleLabel($user) {
+    if ($user['isOwner']) {
+      return $this->t('Owner');
     }
+    elseif ($user['isAdmin']) {
+      return $this->t('DocSpace admin');
+    }
+    elseif ($user['isCollaborator']) {
+      return $this->t('Power user');
+    }
+    elseif ($user['isVisitor']) {
+      return $this->t('User');
+    }
+    else {
+      return $this->t('Room admin');
+    }
+  }
+
 }

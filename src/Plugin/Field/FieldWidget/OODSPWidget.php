@@ -38,6 +38,7 @@ use Drupal\Core\StringTranslation\TranslatableMarkup;
  * )
  */
 class OODSPWidget extends WidgetBase {
+
   /**
    * {@inheritdoc}
    */
@@ -49,24 +50,23 @@ class OODSPWidget extends WidgetBase {
 
     $element['target_id'] = [
       '#type' => 'hidden',
-      '#default_value' => isset($items[$delta]->target_id) ? $items[$delta]->target_id : ''
+      '#default_value' => $items[$delta]->target_id ?? '',
     ];
 
     $element['type'] = [
       '#type' => 'hidden',
-      '#default_value' => isset($items[$delta]->type) ? $items[$delta]->type : ''
+      '#default_value' => $items[$delta]->type ?? '',
     ];
 
     $element['title'] = [
       '#type' => 'hidden',
-      '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : ''
+      '#default_value' => $items[$delta]->title ?? '',
     ];
 
     $element['image'] = [
       '#type' => 'hidden',
-      '#default_value' => isset($items[$delta]->image) ? $items[$delta]->image : ''
+      '#default_value' => $items[$delta]->image ?? '',
     ];
-    
 
     $element['fields'] = [
       '#type' => 'html_tag',
@@ -76,37 +76,37 @@ class OODSPWidget extends WidgetBase {
       ],
     ];
 
-      $element['fields']['image'] = [
-        '#type' => 'html_tag',
-        '#tag' => 'img',
-        '#attributes' => [
-          'src' => isset($items[$delta]->image) ? $items[$delta]->image : '',
-          'width' => '100',
-          'height' => '100',
-          'class' => ['oodsp-image'],
-        ],
-        '#weight' => -12,
-      ];
+    $element['fields']['image'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'img',
+      '#attributes' => [
+        'src' => $items[$delta]->image ?? '',
+        'width' => '100',
+        'height' => '100',
+        'class' => ['oodsp-image'],
+      ],
+      '#weight' => -12,
+    ];
 
-      $element['fields']['title'] = [
-        '#type' => 'textfield',
-        '#title' => new TranslatableMarkup('Title'),
-        '#default_value' => isset($items[$delta]->title) ? $items[$delta]->title : '',
-        '#maxlength' => 1024,
-        '#weight' => -11,
-        '#wrapper_attributes' => [
-          'id' => 'title',
-          'class' => ['oodsp-container-inline'],
-        ],
-      ];
+    $element['fields']['title'] = [
+      '#type' => 'textfield',
+      '#title' => new TranslatableMarkup('Title'),
+      '#default_value' => $items[$delta]->title ?? '',
+      '#maxlength' => 1024,
+      '#weight' => -11,
+      '#wrapper_attributes' => [
+        'id' => 'title',
+        'class' => ['oodsp-container-inline'],
+      ],
+    ];
 
-      $element['fields']['remove'] = [
-        '#type' => 'button',
-        '#value' => $this->t('Remove'),
-        '#attributes' => [
-          'class' => ['oodsp-remove-button'],
-        ]
-      ];
+    $element['fields']['remove'] = [
+      '#type' => 'button',
+      '#value' => $this->t('Remove'),
+      '#attributes' => [
+        'class' => ['oodsp-remove-button'],
+      ],
+    ];
 
     $element['buttons'] = [
       '#type' => 'html_tag',
@@ -114,30 +114,32 @@ class OODSPWidget extends WidgetBase {
       '#attributes' => [
         'class' => ['oodsp-fields'],
       ],
-    ];  
-      $element['buttons']['select_room'] = [
-        '#type' => 'button',
-        '#value' => $this->t('Select room'),
-        '#attributes' => [
-          'class' => ['oodsp-select-button'],
-          'data-mode' => 'room-selector',
-          'data-title' => $this->t('Select room')
-        ]
-      ];
+    ];
 
-      $element['buttons']['select_file'] = [
-        '#type' => 'button',
-        '#value' => $this->t('Select file'),
-        '#attributes' => [
-          'class' => ['oodsp-select-button'],
-          'data-mode' => 'file-selector',
-          'data-title' => $this->t('Select file')
-        ]
-      ];
+    $element['buttons']['select_room'] = [
+      '#type' => 'button',
+      '#value' => $this->t('Select room'),
+      '#attributes' => [
+        'class' => ['oodsp-select-button'],
+        'data-mode' => 'room-selector',
+        'data-title' => $this->t('Select room'),
+      ],
+    ];
+
+    $element['buttons']['select_file'] = [
+      '#type' => 'button',
+      '#value' => $this->t('Select file'),
+      '#attributes' => [
+        'class' => ['oodsp-select-button'],
+        'data-mode' => 'file-selector',
+        'data-title' => $this->t('Select file'),
+      ],
+    ];
 
     if (isset($items[$delta]->target_id)) {
       $element['buttons']['#attributes']['class'][] = 'hidden';
-    } else {
+    }
+    else {
       $element['fields']['#attributes']['class'][] = 'hidden';
     }
 

@@ -21,51 +21,66 @@ namespace Drupal\onlyoffice_docspace\Manager\RequestManager;
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+/**
+ * An interface for ONLYOFFICE DocSpace Request Manager.
+ */
 interface RequestManagerInterface {
 
-	const UNAUTHORIZED = 1;
-	const USER_NOT_FOUND = 2;
-	const FORBIDDEN = 3;
-	const ERROR_USER_INVITE = 4;
-	const ERROR_GET_USERS = 5;
-	const ERROR_SET_USER_PASS = 6;
-	const ERROR_GET_FILE_INFO = 7;
-	const ERROR_GET_FOLDER_INFO = 8;
-	const ERROR_SHARE_ROOM = 9;
+  const UNAUTHORIZED = 1;
+  const USER_NOT_FOUND = 2;
+  const FORBIDDEN = 3;
+  const ERROR_USER_INVITE = 4;
+  const ERROR_GET_USERS = 5;
+  const ERROR_SET_USER_PASS = 6;
+  const ERROR_GET_FILE_INFO = 7;
+  const ERROR_GET_FOLDER_INFO = 8;
+  const ERROR_SHARE_ROOM = 9;
 
   /**
-	 * Connect to ONLYOFFICE DocSapace.
-	 *
-	 * @param string $url DocSpace URL.
-	 * @param string $login DocSpace user login.
-	 * @param string $pass DocSpace user password.
-	 */
-  public function connectDocSpace($url = null, $login = null, $pass = null);
+   * Connect to ONLYOFFICE DocSapace.
+   *
+   * @param string $url
+   *   The ONLYOFFICE DocSpace URL.
+   * @param string $login
+   *   The ONLYOFFICE DocSpace user login.
+   * @param string $password_hash
+   *   The ONLYOFFICE DocSpace user password.
+   */
+  public function connectDocSpace($url = NULL, $login = NULL, $password_hash = NULL);
 
   /**
-	 * Get ONLYOFFICE DocSpace user.
-	 *
-	 * @param string $url DocSpace URL.
-	 * @param string $login DocSpace user login.
-	 * @param string $token DocSpace token.
-	 */
+   * Get ONLYOFFICE DocSpace user.
+   *
+   * @param string $url
+   *   The ONLYOFFICE DocSpace URL.
+   * @param string $login
+   *   The ONLYOFFICE DocSpace user login.
+   * @param string $token
+   *   The ONLYOFFICE DocSpace token.
+   */
   public function getDocSpaceUser($url, $login, $token);
 
-    /**
-	 * Get ONLYOFFICE DocSpace users.
-	 *
-	 */
-	public function getDocSpaceUsers();
+  /**
+   * Get ONLYOFFICE DocSpace users.
+   */
+  public function getDocSpaceUsers();
 
-	/**
-	 * Invite user to ONLYOFFICE DocSpace.
-	 * 
-	 * @param string $email User email.
-	 * @param string $password_hash User password hash.
-	 * @param string $firstname User firstname.
-	 * @param string $lastname User lastname.
-	 * @param string $type User type.
-	 * @param string $token DocSpace token.
-	 */
-	public function inviteToDocSpace($email, $password_hash, $firstname, $lastname, $type, $token = null);
+  /**
+   * Invite user to ONLYOFFICE DocSpace.
+   *
+   * @param string $email
+   *   User email.
+   * @param string $password_hash
+   *   User password hash.
+   * @param string $firstname
+   *   User firstname.
+   * @param string $lastname
+   *   User lastname.
+   * @param string $type
+   *   User type.
+   * @param string $token
+   *   DocSpace token.
+   */
+  public function inviteToDocSpace($email, $password_hash, $firstname, $lastname, $type, $token = NULL);
+
 }

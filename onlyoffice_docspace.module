@@ -24,9 +24,8 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-use Drupal\Core\Entity\EntityInterface;
-use Drupal\onlyoffice_docspace\OnlyofficeAppConfig;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\onlyoffice_docspace\OnlyofficeAppConfig;
 
 /**
  * Implements hook_help().
@@ -50,9 +49,8 @@ function onlyoffice_docspace_help($route_name, RouteMatchInterface $route_match)
 function onlyoffice_docspace_theme($existing, $type, $theme, $path) {
   return [
     'onlyoffice_docspace_page' => [
-      'variables' => [
-      ],
-      'template' => 'onlyoffice-docspace-page'
+      'variables' => [],
+      'template' => 'onlyoffice-docspace-page',
     ],
   ];
 }
@@ -79,8 +77,8 @@ function onlyoffice_docspace_library_info_build() {
 /**
  * Implements hook_ENTITY_TYPE_delete() for user entities.
  */
-  function onlyoffice_docspace_user_delete($account) {
-    \Drupal::database()->delete('users_docspace')
-      ->condition('uid', $account->id())
-      ->execute();
-  }
+function onlyoffice_docspace_user_delete($account) {
+  \Drupal::database()->delete('users_docspace')
+    ->condition('uid', $account->id())
+    ->execute();
+}
