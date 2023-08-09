@@ -209,11 +209,12 @@ class SettingsForm extends ConfigFormBase {
    */
   public function submitForm(array &$form, FormStateInterface $form_state) {
     $this->config('onlyoffice_docspace.settings')
-      ->set('url', $form_state->getValue('url'))
+      ->set('url', rtrim($form_state->getValue('url'), '/'))
       ->set('login', $form_state->getValue('login'))
       ->set('passwordHash', $form_state->getValue('passwordHash'))
       ->save();
     parent::submitForm($form, $form_state);
   }
 
+  
 }

@@ -75,6 +75,7 @@ class ComponentManager extends ManagerBase {
 
     $build['#attached']['drupalSettings']['DocSpaceComponent'] = [
       'currentUser' => $user->getEmail(),
+      'url' => rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/',
       'ajaxUrl' => Url::fromRoute('onlyoffice_docspace.credentilas')->setAbsolute()->toString(),
       'loginUrl' => Url::fromRoute('onlyoffice_docspace.page_login')->setAbsolute()->toString(),
       'adminUrl' => Url::fromRoute('onlyoffice_docspace.page')->setAbsolute()->toString(),

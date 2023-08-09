@@ -65,7 +65,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       'data'  => NULL,
     ];
 
-    $currentUrl = $this->config('onlyoffice_docspace.settings')->get('url');
+    $currentUrl = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
     $currentLogin = $this->config('onlyoffice_docspace.settings')->get('login');
     $currentPasswordHash = $this->config('onlyoffice_docspace.settings')->get('passwordHash');
 
@@ -182,7 +182,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $responseConnect;
     }
 
-    $url = $this->config('onlyoffice_docspace.settings')->get('url');
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';;
 
     try {
       $response = $this->httpClient->request(
@@ -231,7 +231,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       $token = $responseConnect['data'];
     }
 
-    $url = $this->config('onlyoffice_docspace.settings')->get('url');
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';;
 
     try {
       $response = $this->httpClient->request(

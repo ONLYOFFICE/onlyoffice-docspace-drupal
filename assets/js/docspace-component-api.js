@@ -4,7 +4,7 @@
     window.DocSpaceComponent = drupalSettings.DocSpaceComponent;
 
     var scriptTag = null;
-    window.DocSpaceComponent.initScript = function (docSpaceUrl = "http://192.168.4.16:8092") {
+    window.DocSpaceComponent.initScript = function (docSpaceUrl = DocSpaceComponent.url) {
         return new Promise((resolve, reject) => {
             if (window.DocSpace || scriptTag) return resolve();
             docSpaceUrl += docSpaceUrl.endsWith("/") ? "" : "/"
