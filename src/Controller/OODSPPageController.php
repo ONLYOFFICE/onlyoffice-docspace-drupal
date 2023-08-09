@@ -23,6 +23,8 @@ namespace Drupal\onlyoffice_docspace\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 /**
@@ -31,13 +33,50 @@ use Symfony\Component\HttpFoundation\Request;
 class OODSPPageController extends ControllerBase {
 
   /**
+   * The ONLYOFFICE DocSpace Component manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   */
+  protected $componentManager;
+
+  /**
+   * A logger instance.
+   *
+   * @var \Psr\Log\LoggerInterface
+   */
+  protected $logger;
+
+  /**
+   * Constructs an OODSPPageController object.
+   *
+   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
+   *   The ONLYOFFICE DocSpace Request manager.
+   */
+  public function __construct(ComponentManager $component_manager) {
+    $this->componentManager = $component_manager;
+    $this->logger = $this->getLogger('onlyoffice_docspace');
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container) {
+    return new static(
+      $container->get('onlyoffice_docspace.component_manager')
+    );
+  }
+
+  /**
    * Method for processing page.
    */
   public function getOnlyofficeDocSpacePage($scheme, Request $request, RouteMatchInterface $route_match) {
     $build = [];
+    $build['onlyoffice_docspace-admin-container'] = [];
 
-    $build['onlyoffice_docspace-admin-container']['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.page';
+    $build['onlyoffice_docspace-admin-container'] = $this->componentManager->buildComponent($build['onlyoffice_docspace-admin-container'], $this->currentUser());
+    
     $build['onlyoffice_docspace-admin-container']['#theme'] = 'onlyoffice_docspace_page';
+    $build['onlyoffice_docspace-admin-container']['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.page';
 
     return $build;
   }
