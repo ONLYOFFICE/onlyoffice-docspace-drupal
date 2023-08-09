@@ -27,10 +27,11 @@
 
 .oodsp-container-inline {
   display: inline-block;
+  max-width: 100%;
 }
 
 .oodsp-image {
-  margin: auto 20px;
+  margin: auto 20px 0px 0px;
   border-radius: 18px;
 }
 
@@ -38,6 +39,15 @@
   display: flex;
   flex-wrap: wrap;
   align-items: flex-start;
+}
+
+.oodsp-fields input {
+  width: 100%;
+}
+
+.oodsp-container-items {
+  flex: 1 1 var(--file-widget-form-item-min-width);
+  max-width: 100%;
 }
 
 .hidden {

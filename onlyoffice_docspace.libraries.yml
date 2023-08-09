@@ -31,12 +31,11 @@ onlyoffice_docspace.widget:
     base:
       css/onlyoffice-docspace-widget.css: {}
   js:
-    assets/js/docspace-component-api.js: {}
     js/onlyoffice-docspace-widget.js: {}
   dependencies:
-    - core/jquery
     - core/drupal
     - core/drupalSettings
+    - core/drupal.message
 
 onlyoffice_docspace.settings:
   css:
