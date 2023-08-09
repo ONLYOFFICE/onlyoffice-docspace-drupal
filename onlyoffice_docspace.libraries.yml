@@ -1,10 +1,30 @@
-onlyoffice_docspace.page:
+onlyoffice_docspace.component:
+  css:
+    base:
+      assets/css/docspace-component-api.css: {}
   js:
     assets/js/docspace-component-api.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+
+onlyoffice_docspace.page:
+  js:
     js/onlyoffice-docspace-page.js: {}
   dependencies:
     - core/drupal
     - core/drupalSettings
+
+onlyoffice_docspace.login:
+  css:
+    base:
+      css/onlyoffice-docspace-login.css: {}
+  js:
+    js/onlyoffice-docspace-login.js: {}
+  dependencies:
+    - core/drupal
+    - core/drupalSettings
+    - core/drupal.message
 
 onlyoffice_docspace.widget:
   css:

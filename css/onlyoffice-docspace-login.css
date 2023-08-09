@@ -1,4 +1,5 @@
-/*
+/**
+ *
  * (c) Copyright Ascensio System SIA 2023
  *
  * This program is free software; you can redistribute it and/or
@@ -14,18 +15,21 @@
  * You should have received a copy of the GNU General Public License
  * along with this program; if not, write to the Free Software
  * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
-*/
+ *
+ */
 
-(function (Drupal) {
-  DocSpaceComponent.renderDocSpace(
-    'oodsp-manager-frame',
-    function() {
-      DocSpace.SDK.initManager({
-        frameId: "oodsp-manager-frame",
-        showMenu: true,
-        showFilter: true,
-        showHeader: true
-      });
-    }
-  );
-})(Drupal);
+#edit-login-form {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 400px;
+}
+
+#edit-login-form div {
+  text-align: center;
+}
+
+#edit-login-form img {
+  display: inline-block;
+  vertical-align: middle;
+  margin: 15px;
+}

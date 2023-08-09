@@ -1,6 +1,8 @@
 (function () {
     if (!window.DocSpaceComponent) window.DocSpaceComponent = {};
 
+    window.DocSpaceComponent = drupalSettings.DocSpaceComponent;
+
     var scriptTag = null;
     window.DocSpaceComponent.initScript = function (docSpaceUrl = "http://192.168.4.16:8092") {
         return new Promise((resolve, reject) => {
@@ -85,51 +87,27 @@
             events: {
                 onAppReady: async function() {
                     const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
-                    
-                    onSuccess();
-                    // if (userInfo && userInfo.email === DocSpaceComponent.currentUser){
-                    //     onSuccess();
-                    // } else {
-                    //     var hash = null;
 
-                    //     if (password) {
-                    //         const hashSettings = await DocSpace.SDK.frames[frameId].getHashSettings();
-                    //         hash = await DocSpace.SDK.frames[frameId].createHash(password.trim(), hashSettings);
-                    //     } else {
-                    //         hash = DocSpaceComponent.oodspCredentials();
-                    //     }
+                    if (userInfo && userInfo.email === DocSpaceComponent.currentUser){
+                        onSuccess();
+                    } else {
+                        var hash = hash = DocSpaceComponent.oodspCredentials();
 
-                    //     if (hash === null || hash.length === "") {
-                    //         DocSpace.SDK.frames[frameId].destroyFrame();
-                    //         wp.oodsp.login(frameId, DocSpaceComponent.url, DocSpaceComponent.currentUser, null, function (password) {
-                    //             window.DocSpaceComponent.initLoginDocSpace(frameId, password, onSuccess, onError);
-                    //         });
-                    //         return;
-                    //     }
+                        if (hash === null || hash.length === "") {
+                            window.location.replace(DocSpaceComponent.loginUrl);
+                            return;
+                        }
 
-                    //     DocSpace.SDK.frames[frameId].login(DocSpaceComponent.currentUser, hash)
-                    //         .then(function(response) {
-                    //             if(response.status && response.status !== 200) {
-                    //                 DocSpace.SDK.frames[frameId].destroyFrame();
-                    //                 wp.oodsp.login(
-                    //                     frameId,
-                    //                     DocSpaceComponent.url,
-                    //                     DocSpaceComponent.currentUser,
-                    //                     true, 
-                    //                     function (password) {
-                    //                         window.DocSpaceComponent.initLoginDocSpace(frameId, password, onSuccess, onError);
-                    //                     }
-                    //                 );
-                    //                 return;
-                    //             }
+                        DocSpace.SDK.frames[frameId].login(DocSpaceComponent.currentUser, hash)
+                            .then(function(response) {
+                                if(response.status && response.status !== 200) {
+                                    window.location.replace(DocSpaceComponent.loginUrl);
+                                }
 
-                    //             if (password) {
-                    //                 DocSpaceComponent.oodspCredentials(hash);
-                    //             }
-                    //             onSuccess();
-                    //         }
-                    //     );
-                    // } 
+                                onSuccess();
+                            }
+                        );
+                    }
                 },
                 onAppError: async function() {
                     onError();

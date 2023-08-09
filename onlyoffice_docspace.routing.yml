@@ -20,7 +20,18 @@ onlyoffice_docspace.page:
     _admin_route: TRUE
   defaults:
     _controller: '\Drupal\onlyoffice_docspace\Controller\OODSPPageController::getOnlyofficeDocSpacePage'
-    _title: 'File browser'
+    _title: 'ONLYOFFICE DocSpace'
+    scheme: null
+  requirements:
+    _permission: 'administer onlyoffice_docspace configuration'
+
+onlyoffice_docspace.page_login:
+  path: '/admin/content/onlyoffice-docspace/login'
+  options:
+    _admin_route: TRUE
+  defaults:
+    _form: 'Drupal\onlyoffice_docspace\Form\LoginForm'
+    _title: 'ONLYOFFICE DocSpace'
     scheme: null
   requirements:
     _permission: 'administer onlyoffice_docspace configuration'
