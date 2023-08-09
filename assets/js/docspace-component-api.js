@@ -75,7 +75,7 @@
         xhr.send(JSON.stringify(body));
 
         if (xhr.status === 200) {
-            return xhr.responseText || null;
+            return JSON.parse(xhr.responseText) || null;
         }
 
         return null;
@@ -91,7 +91,7 @@
                     if (userInfo && userInfo.email === DocSpaceComponent.currentUser){
                         onSuccess();
                     } else {
-                        var hash = hash = DocSpaceComponent.oodspCredentials();
+                        var hash = DocSpaceComponent.oodspCredentials();
 
                         if (hash === null || hash.length === "") {
                             window.location.replace(DocSpaceComponent.loginUrl);
