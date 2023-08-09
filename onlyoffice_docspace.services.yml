@@ -1,4 +1,8 @@
 services:
+  onlyoffice_docspace.component_manager:
+    class: Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+    arguments: ['@extension.list.module']
+    
   onlyoffice_docspace.request_manager:
     class: Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManager
     arguments: ['@http_client']
