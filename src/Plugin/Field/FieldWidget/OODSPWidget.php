@@ -139,47 +139,48 @@ class OODSPWidget extends WidgetBase {
     $element['fields'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
-      '#attributes' => [
-        'class' => ['oodsp-fields'],
-      ],
-    ];
-
-    $element['fields']['image'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'img',
-      '#attributes' => [
-        'src' => $this->getAbsoluteDocSpaceUrl($items[$delta]->image) ?? '',
-        'width' => '100',
-        'height' => '100',
-        'class' => ['oodsp-image'],
-      ],
-      '#weight' => -12,
-    ];
-
-    $element['fields']['items'] = [
-      '#type' => 'html_tag',
-      '#tag' => 'div',
-      '#attributes' => [
-        'class' => ['oodsp-container-items'],
-      ],
-      'title' => [
-        '#type' => 'textfield',
-        '#title' => new TranslatableMarkup('Title'),
-        '#default_value' => $items[$delta]->title ?? '',
-        '#maxlength' => 1024,
-        '#weight' => -11,
-        '#wrapper_attributes' => [
-          'id' => 'title',
-          'class' => ['oodsp-container-inline'],
+      'field' => [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => ['oodsp-fields'],
+        ],
+        'image' => [
+          '#type' => 'html_tag',
+          '#tag' => 'img',
+          '#attributes' => [
+            'src' => $this->getAbsoluteDocSpaceUrl($items[$delta]->image) ?? '',
+            'width' => '100',
+            'height' => '100',
+            'class' => ['oodsp-image'],
+          ],
+          '#weight' => -12,
+        ],
+        'items' => [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'class' => ['oodsp-container-items'],
+          ],
+          'title' => [
+            '#type' => 'textfield',
+            '#title' => new TranslatableMarkup('Title'),
+            '#default_value' => $items[$delta]->title ?? '',
+            '#maxlength' => 1024,
+            '#weight' => -11,
+            '#wrapper_attributes' => [
+              'id' => 'title',
+              'class' => ['oodsp-container-inline'],
+            ],
+          ],
         ],
       ],
-    ];
-
-    $element['remove'] = [
-      '#type' => 'button',
-      '#value' => $this->t('Remove'),
-      '#attributes' => [
-        'class' => ['oodsp-remove-button'],
+      'remove' => [
+        '#type' => 'button',
+        '#value' => $this->t('Remove'),
+        '#attributes' => [
+          'class' => ['oodsp-remove-button'],
+        ],
       ],
     ];
 
@@ -187,27 +188,25 @@ class OODSPWidget extends WidgetBase {
       '#type' => 'html_tag',
       '#tag' => 'div',
       '#attributes' => [
-        'class' => ['oodsp-fields'],
+        'class' => ['oodsp-buttons'],
       ],
-    ];
-
-    $element['buttons']['select_room'] = [
-      '#type' => 'button',
-      '#value' => $this->t('Select room'),
-      '#attributes' => [
-        'class' => ['oodsp-select-button'],
-        'data-mode' => 'room-selector',
-        'data-title' => $this->t('Select room'),
+      'select_room' => [
+        '#type' => 'button',
+        '#value' => $this->t('Select room'),
+        '#attributes' => [
+          'class' => ['oodsp-select-button'],
+          'data-mode' => 'room-selector',
+          'data-title' => $this->t('Select room'),
+        ],
       ],
-    ];
-
-    $element['buttons']['select_file'] = [
-      '#type' => 'button',
-      '#value' => $this->t('Select file'),
-      '#attributes' => [
-        'class' => ['oodsp-select-button'],
-        'data-mode' => 'file-selector',
-        'data-title' => $this->t('Select file'),
+      'select_file' => [
+        '#type' => 'button',
+        '#value' => $this->t('Select file'),
+        '#attributes' => [
+          'class' => ['oodsp-select-button'],
+          'data-mode' => 'file-selector',
+          'data-title' => $this->t('Select file'),
+        ],
       ],
     ];
 
