@@ -34,7 +34,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class UsersForm extends FormBase {
 
   /**
-   * The request manager.
+   * The ONLYOFFICE DocSpace Request manager.
    *
    * @var \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface
    */
@@ -81,7 +81,7 @@ class UsersForm extends FormBase {
    * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
    *   The service container this object should use.
    * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
-   *   The aggregator fetcher plugin manager.
+   *   The ONLYOFFICE DocSpace Request manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
