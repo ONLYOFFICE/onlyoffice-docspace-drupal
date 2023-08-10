@@ -56,25 +56,6 @@ function onlyoffice_docspace_theme($existing, $type, $theme, $path) {
 }
 
 /**
- * Implements hook_library_info_build().
- */
-function onlyoffice_docspace_library_info_build() {
-
-  $options = \Drupal::config('onlyoffice.settings');
-
-  if ($doc_server_url = $options->get('doc_server_url')) {
-    $api_url = $doc_server_url . OnlyofficeAppConfig::getDocServiceApiUrl();
-    return [
-      'onlyoffice.api' => [
-        'js' => [
-          $api_url => [],
-        ],
-      ],
-    ];
-  }
-}
-
-/**
  * Implements hook_ENTITY_TYPE_delete() for user entities.
  */
 function onlyoffice_docspace_user_delete($account) {
