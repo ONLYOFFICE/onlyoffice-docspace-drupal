@@ -47,8 +47,8 @@
       setInputValue(widgetId, 'title', event[0].label);
       setInputValue(widgetId, 'image', event[0].icon);
 
-      $('img[data-drupal-selector="' + PREFIX + widgetId + '-fields-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon)); //todo: add url to settings
-      $('input[data-drupal-selector="' + PREFIX + widgetId + '-fields-title"]').val(event[0].label);
+      $('img[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon)); //todo: add url to settings
+      $('input[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-items-title"]').val(event[0].label);
 
       $('div[data-drupal-selector="' + PREFIX + widgetId + '-fields"]').removeClass('hidden');
       $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').addClass('hidden');
@@ -61,8 +61,8 @@
       setInputValue(widgetId, 'title', event.label);
       setInputValue(widgetId, 'image', event.icon);
 
-      $('img[data-drupal-selector="' + PREFIX + widgetId + '-fields-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon)); //todo: add url to settings
-      $('input[data-drupal-selector="' + PREFIX + widgetId + '-fields-title"]').val(event.title);
+      $('img[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon)); //todo: add url to settings
+      $('input[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-items-title"]').val(event.title);
 
       $('div[data-drupal-selector="' + PREFIX + widgetId + '-fields"]').removeClass('hidden');
       $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').addClass('hidden');
