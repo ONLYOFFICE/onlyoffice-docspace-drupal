@@ -94,7 +94,7 @@ class OODSPCredentialsController extends ControllerBase {
         );
       }
 
-      if (isset($body['public']) && $body['public'] === TRUE) {
+      if (isset($body->public) && $body->public === TRUE) {
         return new JsonResponse(self::OODSP_PUBLIC_USER_PASS, 200);
       }
 
