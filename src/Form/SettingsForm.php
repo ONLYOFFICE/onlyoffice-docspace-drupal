@@ -104,9 +104,7 @@ class SettingsForm extends ConfigFormBase {
     $form = [];
     $form = $this->componentManager->buildComponent($form, $this->currentUser());
 
-    $form['#attached'] = [
-      'library' => ['onlyoffice_docspace/onlyoffice_docspace.settings'],
-    ];
+    $form['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.settings';
 
     $form['url'] = [
       '#type' => 'textfield',

@@ -50,7 +50,7 @@ abstract class ManagerBase {
     if (!$this->configFactory) {
       $this->configFactory = $this->container()->get('config.factory');
     }
-    return $this->configFactory->get($name);
+    return $this->configFactory->getEditable($name);
   }
 
   /**

@@ -78,7 +78,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
 
       if (!empty($currentToken)) {
         // Check is admin with current token.
-        $responseDocSpaceUser = $this->getDocSpaceUser($currentUrl, $currentLogin, $currentPasswordHash);
+        $responseDocSpaceUser = $this->getDocSpaceUser($currentUrl, $currentLogin, $currentToken);
 
         if (!$responseDocSpaceUser['error']) {
           if (!$responseDocSpaceUser['data']['isAdmin']) {
@@ -121,9 +121,9 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $result;
     }
 
-    // $this->config('onlyoffice_docspace.settings')
-    // ->set('token', $res_authentication['data'])
-    // ->save();
+    $this->config('onlyoffice_docspace.settings')
+      ->set('token', $responseDocSpaceToken['data'])
+      ->save();
 
     // Return new current token.
     $result['data'] = $responseDocSpaceToken['data'];
