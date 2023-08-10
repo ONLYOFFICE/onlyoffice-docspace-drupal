@@ -25,6 +25,7 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
+use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -41,6 +42,13 @@ class SettingsForm extends ConfigFormBase {
   protected $requestManager;
 
   /**
+   * The ONLYOFFICE DocSpace Component manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   */
+  protected $componentManager;
+
+  /**
    * A logger instance.
    *
    * @var \Psr\Log\LoggerInterface
@@ -54,10 +62,13 @@ class SettingsForm extends ConfigFormBase {
    *   The factory for configuration objects.
    * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The aggregator fetcher plugin manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
+   *   The ONLYOFFICE DocSpace Component manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager) {
+  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, ComponentManager $component_manager) {
     parent::__construct($config_factory);
     $this->requestManager = $request_manager;
+    $this->componentManager = $component_manager;
     $this->logger = $this->getLogger('onlyoffice');
   }
 
@@ -68,6 +79,7 @@ class SettingsForm extends ConfigFormBase {
     return new static(
       $container->get('config.factory'),
       $container->get('onlyoffice_docspace.request_manager'),
+      $container->get('onlyoffice_docspace.component_manager')
     );
   }
 
@@ -89,6 +101,9 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $form = [];
+    $form = $this->componentManager->buildComponent($form, $this->currentUser());
+
     $form['#attached'] = [
       'library' => ['onlyoffice_docspace/onlyoffice_docspace.settings'],
     ];
