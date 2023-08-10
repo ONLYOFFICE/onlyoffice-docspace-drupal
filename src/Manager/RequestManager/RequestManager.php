@@ -22,7 +22,9 @@ namespace Drupal\onlyoffice_docspace\Manager\RequestManager;
  */
 
 use Drupal\Component\Serialization\Json;
+use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
 use Drupal\onlyoffice_docspace\Manager\ManagerBase;
+use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManager;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
 
@@ -231,7 +233,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       $token = $responseConnect['data'];
     }
 
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';;
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
 
     try {
       $response = $this->httpClient->request(
@@ -270,6 +272,77 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       $result['error'] = self::ERROR_USER_INVITE;
       return $result;
     }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function createPublicUser($url, $token){
+    $responseDocSpaceUser = $this->getDocSpaceUser($url, OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN, $token);
+
+    if ($responseDocSpaceUser['error'] ) {
+      return $this->inviteToDocSpace(
+        OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN,
+        OODSPCredentialsController::OODSP_PUBLIC_USER_PASS,
+        OODSPCredentialsController::OODSP_PUBLIC_USER_FIRSTNAME,
+        OODSPCredentialsController::OODSP_PUBLIC_USER_LASTNAME,
+        2,
+        $token
+      );
+    } else {
+      return $this->setUserPassword(
+        $responseDocSpaceUser['data']['id'],
+        OODSPCredentialsController::OODSP_PUBLIC_USER_PASS,
+        $token
+      );
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function setUserPassword($user_id, $password_hash, $token) {
+    $result = array(
+        'error' => null,
+        'data'  => null,
+    );
+
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+
+    try {
+      $response = $this->httpClient->request(
+        'PUT',
+        $url . 'api/2.0/people/' . $user_id . '/password',
+        [
+          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+          'cookies' => $this->createCookieJar(
+            ['asc_auth_key' => $token],
+            $url
+          ),
+          'body' => Json::encode(
+            [
+              'passwordHash' => $password_hash,
+            ]
+          ),
+          'method' => 'PUT',
+        ]
+      );
+
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::ERROR_SET_USER_PASS;
+        return $result;
+      }
+
+      $body = Json::decode((string) $response->getBody());
+      $result['data'] = $body['response'];
+
+      return $result;
+    }
+    catch (\Exception $e) {
+        $result['error'] = self::ERROR_SET_USER_PASS;
+        return $result;
+    }
+
   }
 
   /**

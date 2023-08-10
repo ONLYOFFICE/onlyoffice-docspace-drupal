@@ -83,4 +83,26 @@ interface RequestManagerInterface {
    */
   public function inviteToDocSpace($email, $password_hash, $firstname, $lastname, $type, $token = NULL);
 
+  /**
+   * Create ONLYOFFICE DocSpace public user.
+   *
+   * @param string $url
+   *   The ONLYOFFICE DocSpace URL.
+   * @param string $token
+   *   The ONLYOFFICE DocSpace token.
+   */
+  public function createPublicUser($url, $token);
+
+  /**
+   * Set ONLYOFFICE DocSpace user password.
+   *
+   * @param string $user_id 
+   *   The ONLYOFFICE DocSpace user ID.
+   * @param string $password_hash
+   *   The ONLYOFFICE DocSpace user password hash.
+   * @param string $token
+   *   The ONLYOFFICE DocSpace token.
+   */
+  public function setUserPassword($user_id, $password_hash, $token);
+
 }

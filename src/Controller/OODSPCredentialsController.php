@@ -32,9 +32,9 @@ use Symfony\Component\HttpFoundation\Request;
  */
 class OODSPCredentialsController extends ControllerBase {
 
-  public const OODSP_PUBLIC_USER_LOGIN = 'wpviewer@onlyoffice.com';
+  public const OODSP_PUBLIC_USER_LOGIN = 'drupalviewer@onlyoffice.com';
   public const OODSP_PUBLIC_USER_PASS = '8c6b8b3e59010d7c925a47039f749d86fbdc9b37257cd262f2dae7c84a106505';
-  public const OODSP_PUBLIC_USER_FIRSTNAME = 'WordPress';
+  public const OODSP_PUBLIC_USER_FIRSTNAME = 'Drupal';
   public const OODSP_PUBLIC_USER_LASTNAME = 'Viewer';
 
   /**
@@ -94,9 +94,7 @@ class OODSPCredentialsController extends ControllerBase {
         );
       }
 
-      $public = $body->public;
-
-      if (isset($public) && $public === TRUE) {
+      if (isset($body['public']) && $body['public'] === TRUE) {
         return new JsonResponse(self::OODSP_PUBLIC_USER_PASS, 200);
       }
 
