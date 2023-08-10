@@ -149,7 +149,7 @@ class OODSPWidget extends WidgetBase {
           '#type' => 'html_tag',
           '#tag' => 'img',
           '#attributes' => [
-            'src' => $this->getAbsoluteDocSpaceUrl($items[$delta]->image) ?? '',
+            'src' => $this->getAbsoluteDocSpaceUrl($items[$delta]->image ?? ''),
             'width' => '100',
             'height' => '100',
             'class' => ['oodsp-image'],
@@ -221,7 +221,7 @@ class OODSPWidget extends WidgetBase {
   }
 
   private function getAbsoluteDocSpaceUrl($url) {
-    return rtrim($this->configFactory->get('onlyoffice_docspace.settings')->get('url'),"/") . parse_url($url)['path'];
+    return rtrim($this->configFactory->get('onlyoffice_docspace.settings')->get('url'), "/") . parse_url($url)['path'];
   }
 
 }
