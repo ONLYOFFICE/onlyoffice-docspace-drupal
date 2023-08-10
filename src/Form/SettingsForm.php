@@ -28,6 +28,7 @@ use Drupal\Core\Url;
 use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
 use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -41,6 +42,13 @@ class SettingsForm extends ConfigFormBase {
    * @var \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface
    */
   protected $requestManager;
+
+  /**
+   * The ONLYOFFICE DocSpace Security manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface
+   */
+  protected $securityManager;
 
   /**
    * The ONLYOFFICE DocSpace Component manager.
@@ -63,12 +71,15 @@ class SettingsForm extends ConfigFormBase {
    *   The factory for configuration objects.
    * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The aggregator fetcher plugin manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
+   *   The ONLYOFFICE DocSpace Security manager.
    * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
    *   The ONLYOFFICE DocSpace Component manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, ComponentManager $component_manager) {
+  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, ComponentManager $component_manager) {
     parent::__construct($config_factory);
     $this->requestManager = $request_manager;
+    $this->securityManager = $security_manager;
     $this->componentManager = $component_manager;
     $this->logger = $this->getLogger('onlyoffice');
   }
@@ -80,6 +91,7 @@ class SettingsForm extends ConfigFormBase {
     return new static(
       $container->get('config.factory'),
       $container->get('onlyoffice_docspace.request_manager'),
+      $container->get('onlyoffice_docspace.security_manager'),
       $container->get('onlyoffice_docspace.component_manager')
     );
   }
@@ -126,6 +138,11 @@ class SettingsForm extends ConfigFormBase {
     ];
 
     $form['passwordHash'] = [
+      '#type' => 'hidden',
+      '#default_value' => NULL,
+    ];
+
+    $form['currentUserPasswordHash'] = [
       '#type' => 'hidden',
       '#default_value' => NULL,
     ];
@@ -249,6 +266,30 @@ class SettingsForm extends ConfigFormBase {
     } else {
         $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseCreatePublicUser['data']['id'])->save();
         $this->messenger()->addStatus('Public DocSpace user successfully created.');
+    }
+
+    $currentUser = $this->currentUser();
+
+    $responseDocSpaceUser = $this->requestManager->getDocSpaceUser($url, $currentUser->getEmail(), $token);
+
+    if ($responseDocSpaceUser['error']) {
+      $responseInviteToDocSpace = $this->requestManager->inviteToDocSpace(
+        $currentUser->getEmail(),
+        $form_state->getValue('currentUserPasswordHash'),
+        '',
+        '',
+        1, // Room Admin.
+        $token
+      );
+
+      if ($responseInviteToDocSpace['error']) {
+        $this->messenger()->addError('Error create user %s in DocSpace!');
+      } else {
+        $this->securityManager->setPasswordHash($currentUser->id(), $form_state->getValue('currentUserPasswordHash'));
+        $this->messenger()->addStatus('User %s successfully created in DocSpace with role Room Admin.');
+      }
+    } else {
+      $this->messenger()->addWarning('User %s already exits in DocSpace!');
     }
   }
 

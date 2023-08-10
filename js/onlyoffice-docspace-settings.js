@@ -39,9 +39,13 @@
             events: {
               "onAppReady": async function() {
                 const hashSettings = await DocSpace.SDK.frames['oodsp-settings-frame'].getHashSettings();
-                const hash  = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings);
 
+                const hash  = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings);
                 $('input[name="passwordHash"]').val(hash);
+
+                const hashCurrentUser = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(generatePass(), hashSettings);
+                $('input[name="currentUserPasswordHash"]').val(hashCurrentUser);
+
                 $('#edit-password').val(randomString(password.length));
 
                 $settingsForm.submit();
@@ -75,6 +79,19 @@
     }
 
     return rnd.substring(0, i);
+  };
+
+  const generatePass = function() {
+    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    var passwordLength = 24;
+    var password = "";
+
+    for (var i = 0; i <= passwordLength; i++) {
+      var randomNumber = Math.floor( Math.random() * chars.length );
+      password += chars.substring( randomNumber, randomNumber + 1 );
+    }
+
+    return password;
   };
 
 })(jQuery, Drupal);

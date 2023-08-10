@@ -73,7 +73,7 @@ class LoginForm extends FormBase {
    * Constructs a \Drupal\onlyoffice_docspace\UsersForm object.
    *
    * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
-   *   The aggregator fetcher plugin manager.
+   *   The ONLYOFFICE DocSpace Security manager.
    * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
    *   The ONLYOFFICE DocSpace Component manager.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
