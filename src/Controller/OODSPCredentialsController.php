@@ -100,18 +100,10 @@ class OODSPCredentialsController extends ControllerBase {
         return new JsonResponse(self::OODSP_PUBLIC_USER_PASS, 200);
       }
 
-      $hash = $body->hash;
+      $hash = $this->securityManager->getPasswordHash($user->id());
 
-      if (empty($hash) || trim($hash) === '') {
-        $hash = $this->securityManager->getPasswordHash($user->id());
-
-        if (empty($hash)) {
-          return new JsonResponse(NULL, 404);
-        }
-      }
-      else {
-        $hash = trim($hash);
-        $this->securityManager->setPasswordHash($user->id(), $hash);
+      if (empty($hash)) {
+        return new JsonResponse(NULL, 404);
       }
 
       return new JsonResponse($hash, 200);
