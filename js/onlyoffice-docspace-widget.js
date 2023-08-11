@@ -43,7 +43,7 @@
 
     const onSelectRoomCallback = (event) => {
       setInputValue(widgetId, 'target-id', event[0].id);
-      setInputValue(widgetId, 'type', 'room');
+      setInputValue(widgetId, 'type', 'manager');
       setInputValue(widgetId, 'title', event[0].label);
       setInputValue(widgetId, 'image', event[0].icon);
 
@@ -57,7 +57,7 @@
   
     const onSelectFileCallback = (event) => {
       setInputValue(widgetId, 'target-id', event.id);
-      setInputValue(widgetId, 'type', 'file');
+      setInputValue(widgetId, 'type', 'editor');
       setInputValue(widgetId, 'title', event.label);
       setInputValue(widgetId, 'image', event.icon);
 

@@ -63,7 +63,6 @@ onlyoffice_docspace.users:
 
 onlyoffice_docspace.formater:
   js:
-    assets/js/docspace-component-api.js: {}
     js/onlyoffice-docspace-formater.js: {}
   dependencies:
     - core/drupal

@@ -24,6 +24,7 @@ namespace Drupal\onlyoffice_docspace\Manager\ComponentManager;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
+use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
 use Drupal\onlyoffice_docspace\Manager\ManagerBase;
 
 /**
@@ -71,10 +72,14 @@ class ComponentManager extends ManagerBase {
             $error_message ='Go to the settings to configure ONLYOFFICE DocSpace connector.';
         }
 
+    $isAnonymous = $user->isAnonymous();
+    $email = $isAnonymous ? OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN : $user->getEmail();
+
     $build['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.component';
 
     $build['#attached']['drupalSettings']['DocSpaceComponent'] = [
-      'currentUser' => $user->getEmail(),
+      'currentUser' => $email,
+      'isPublic' => $isAnonymous,
       'url' => rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/',
       'ajaxUrl' => Url::fromRoute('onlyoffice_docspace.credentilas')->setAbsolute()->toString(),
       'loginUrl' => Url::fromRoute('onlyoffice_docspace.page_login')->setAbsolute()->toString(),

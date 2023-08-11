@@ -88,7 +88,7 @@
                 onAppReady: async function() {
                     const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
 
-                    if (userInfo && userInfo.email === DocSpaceComponent.currentUser){
+                    if (userInfo && userInfo.email === DocSpaceComponent.currentUser) {
                         onSuccess();
                     } else {
                         var hash = DocSpaceComponent.oodspCredentials();
@@ -126,31 +126,30 @@
                 onAppReady: async function() {
                     const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
 
-                    onSuccess();
-                    // if (userInfo && userInfo.email === DocSpaceComponent.currentUser) {
-                    //     onSuccess();
-                    // } else {
-                    //     const hash = DocSpaceComponent.oodspCredentials();
+                    if (userInfo && userInfo.email === DocSpaceComponent.currentUser) {
+                        onSuccess();
+                    } else {
+                        const hash = DocSpaceComponent.oodspCredentials();
 
-                    //     DocSpace.SDK.frames[frameId].login(DocSpaceComponent.currentUser, hash)
-                    //         .then(function(response) {
-                    //             if(response.status && response.status !== 200) {
-                    //                 DocSpace.SDK.frames[frameId].destroyFrame();
+                        DocSpace.SDK.frames[frameId].login(DocSpaceComponent.currentUser, hash)
+                            .then(function(response) {
+                                if(response.status && response.status !== 200) {
+                                    DocSpace.SDK.frames[frameId].destroyFrame();
 
-                    //                 DocSpaceComponent.renderError(
-                    //                     frameId, 
-                    //                     {
-                    //                         header: DocSpaceComponent.messages.unauthorized_header,
-                    //                         message: DocSpaceComponent.messages.unauthorized_message
-                    //                     }
-                    //                 );
-                    //                 return;
-                    //             }
+                                    DocSpaceComponent.renderError(
+                                        frameId, 
+                                        {
+                                            header: DocSpaceComponent.messages.unauthorized_header,
+                                            message: DocSpaceComponent.messages.unauthorized_message
+                                        }
+                                    );
+                                    return;
+                                }
 
-                    //             onSuccess();
-                    //         }
-                    //     );
-                    // } 
+                                onSuccess();
+                            }
+                        );
+                    } 
                 },
                 onAppError: async function() {
                     onError();

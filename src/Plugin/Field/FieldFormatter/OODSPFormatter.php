@@ -32,6 +32,7 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\file\Entity\File;
+use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -47,6 +48,13 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * )
  */
 class OODSPFormatter extends FormatterBase {
+
+  /**
+   * The ONLYOFFICE DocSpace Component manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   */
+  protected $componentManager;
 
   /**
    * The date formatter service.
@@ -93,6 +101,8 @@ class OODSPFormatter extends FormatterBase {
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
+   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
+   *   The ONLYOFFICE DocSpace Component manager.
    * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
    *   The date formatter service.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
@@ -108,12 +118,14 @@ class OODSPFormatter extends FormatterBase {
     $label,
     $view_mode,
     array $third_party_settings,
+    ComponentManager $component_manager,
     DateFormatterInterface $date_formatter,
     LanguageManagerInterface $language_manager,
     KillSwitch $page_cache_kill_switch,
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
 
+    $this->componentManager = $component_manager;
     $this->dateFormatter = $date_formatter;
     $this->languageManager = $language_manager;
     $this->pageCacheKillSwitch = $page_cache_kill_switch;
@@ -133,6 +145,7 @@ class OODSPFormatter extends FormatterBase {
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
+      $container->get('onlyoffice_docspace.component_manager'),
       $container->get('date.formatter'),
       $container->get('language_manager'),
       $container->get('page_cache_kill_switch'),
@@ -156,24 +169,22 @@ class OODSPFormatter extends FormatterBase {
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $this->pageCacheKillSwitch->trigger();
 
-    $element = [
-      '#attached' => [
-        'library' => [
-          'onlyoffice_docspace/onlyoffice_docspace.formater',
-        ],
-      ],
-    ];
+    $element = [];
+    $element = $this->componentManager->buildComponent($element, \Drupal::currentUser()->getAccount());
+
+    $element['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.formater';
 
     foreach ($items as $delta => $item) {
-      $config = [
-        'id' => $item->target_id,
-        'mode' => $item->type,
-      ];
-
       $editorId = sprintf(
         'onlyoffice-docpace-block-%s',
         $delta,
       );
+
+      $config = [
+        'frameId' => $editorId,
+        'id' => $item->target_id,
+        'mode' => $item->type,
+      ];
 
       $element[$delta] = [
         '#markup' => sprintf('<div id="%s" class="onlyoffice-docspace-block"></div>', $editorId),
