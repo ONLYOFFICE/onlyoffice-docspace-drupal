@@ -119,16 +119,20 @@ class SettingsForm extends ConfigFormBase {
 
     $form['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.settings';
 
+    $url = $this->config('onlyoffice_docspace.settings')->get('url');
+    $login = $this->config('onlyoffice_docspace.settings')->get('login');
+    $passwordHash = $this->config('onlyoffice_docspace.settings')->get('passwordHash');
+
     $form['url'] = [
       '#type' => 'textfield',
       '#title' => $this->t('DocSpace Service Address'),
-      '#default_value' => $this->config('onlyoffice_docspace.settings')->get('url'),
+      '#default_value' => $url,
       '#required' => TRUE,
     ];
     $form['login'] = [
       '#type' => 'textfield',
       '#title' => $this->t('Login'),
-      '#default_value' => $this->config('onlyoffice_docspace.settings')->get('login'),
+      '#default_value' => $login,
       '#required' => TRUE,
     ];
     $form['password'] = [
@@ -180,32 +184,44 @@ class SettingsForm extends ConfigFormBase {
       ],
     ];
 
+    $form['message_users'] = [
+      '#theme' => 'status_messages',
+      '#message_list' => [
+        'warning' =>  [$this->t('The current user will be added to DocSpace with the <b>Room admin</b> role. <b>WordPress Viewer</b> user will be added to DocSpace with View Only access.')]
+      ],
+      '#status_headings' => [
+        'warning' => $this->t('Warning message'),
+      ],
+    ];
+
     $form = parent::buildForm($form, $form_state);
 
-    $form['export_users'] = [
-      '#type' => 'fieldset',
-      '#title' => $this->t('DocSpace Users'),
-      'description' => [
-        '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press') . ' <b>' . $this->t('Export Now') . '</b></p>' ,
-      ],
-      '#weight' => 100,
-    ];
-
-    $url = Url::fromRoute('onlyoffice_docspace.user_form');
-    $url_options = [
-      'attributes' => [
-        'class' => [
-          'button',
+    if (!empty($url) && !empty($login) && !empty($passwordHash)) {
+      $form['export_users'] = [
+        '#type' => 'fieldset',
+        '#title' => $this->t('DocSpace Users'),
+        'description' => [
+          '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press') . ' <b>' . $this->t('Export Now') . '</b></p>' ,
         ],
-      ],
-    ];
-    $url->setOptions($url_options);
+        '#weight' => 100,
+      ];
 
-    $form['export_users']['export'] = [
-      '#type' => 'link',
-      '#title' => $this->t('Export Now'),
-      '#url' => $url,
-    ];
+      $urlUsersForm = Url::fromRoute('onlyoffice_docspace.users_form');
+      $url_options = [
+        'attributes' => [
+          'class' => [
+            'button',
+          ],
+        ],
+      ];
+      $urlUsersForm->setOptions($url_options);
+
+      $form['export_users']['export'] = [
+        '#type' => 'link',
+        '#title' => $this->t('Export Now'),
+        '#url' => $urlUsersForm,
+      ];
+    }
 
     return $form;
   }
@@ -214,7 +230,6 @@ class SettingsForm extends ConfigFormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
     $url = $form_state->getValue('url');
     $login = $form_state->getValue('login');
     $passwordHash = $form_state->getValue('passwordHash');

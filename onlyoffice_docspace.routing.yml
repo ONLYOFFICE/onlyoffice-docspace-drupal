@@ -6,7 +6,7 @@ onlyoffice_docspace.settings_form:
   requirements:
     _permission: 'administer onlyoffice_docspace configuration'
 
-onlyoffice_docspace.user_form:
+onlyoffice_docspace.users_form:
   path: '/admin/config/system/onlyoffice-docspace-settings/users'
   defaults:
     _title: 'ONLYOFFICE DocSpace Users'
