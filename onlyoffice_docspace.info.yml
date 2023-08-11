@@ -6,4 +6,4 @@ package: ONLYOFFICE
 configure: onlyoffice_docspace.settings_form
 
 'interface translation project': onlyoffice-docspace
-'interface translation server pattern': modules/contrib/onlyoffice-docspace-drupal/translations/onlyoffice-docspace.%language.po
+'interface translation server pattern': modules/onlyoffice-docspace-drupal/translations/onlyoffice-docspace.%language.po

@@ -186,7 +186,7 @@ class SettingsForm extends ConfigFormBase {
       '#type' => 'fieldset',
       '#title' => $this->t('DocSpace Users'),
       'description' => [
-        '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press Export Now. Users who don’t have an account in DocSpace will have Drupal Viewer with View Only access to content.') . '</p>',
+        '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press') . ' <b>' . $this->t('Export Now') . '</b></p>' ,
       ],
     ];
 
@@ -253,19 +253,19 @@ class SettingsForm extends ConfigFormBase {
     $responseCreatePublicUser = $this->requestManager->createPublicUser($url, $token);
 
     if ($responseCreatePublicUser['error'] === $this->requestManager::ERROR_USER_INVITE) {
-      $this->messenger()->addWarning('Public DocSpace user was not created! View content will not be available on public pages.');
+      $this->messenger()->addWarning($this->t('Public DocSpace user was not created! View content will not be available on public pages.'));
     } elseif ($responseCreatePublicUser['error'] === $this->requestManager::ERROR_SET_USER_PASS) {
       $responseDocSpaceUser = $this->requestManager->getDocSpaceUser($url, OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN, $token);
 
       if (!$responseDocSpaceUser['error'] ) {
         $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseDocSpaceUser['data']['id'])->save();
       }
-      $this->messenger()->addWarning('Public DocSpace user already created, but failed to update authorization.');
+      $this->messenger()->addWarning($this->t('Public DocSpace user already created, but failed to update authorization.'));
     } elseif ($responseCreatePublicUser['error']) {
-      $this->messenger()->addWarning('Public DocSpace user was not created. View content will not be available on public pages.');
+      $this->messenger()->addWarning($this->t('Public DocSpace user was not created. View content will not be available on public pages.'));
     } else {
         $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseCreatePublicUser['data']['id'])->save();
-        $this->messenger()->addStatus('Public DocSpace user successfully created.');
+        $this->messenger()->addStatus($this->t('Public DocSpace user successfully created.'));
     }
 
     $currentUser = $this->currentUser();
@@ -283,13 +283,13 @@ class SettingsForm extends ConfigFormBase {
       );
 
       if ($responseInviteToDocSpace['error']) {
-        $this->messenger()->addError('Error create user %s in DocSpace!');
+        $this->messenger()->addError($this->t('Error create user @user_email in DocSpace!', ['@user_email' => $currentUser->getEmail()]));
       } else {
         $this->securityManager->setPasswordHash($currentUser->id(), $form_state->getValue('currentUserPasswordHash'));
-        $this->messenger()->addStatus('User %s successfully created in DocSpace with role Room Admin.');
+        $this->messenger()->addStatus($this->t('User @user_email successfully created in DocSpace with role Room Admin.', ['@user_email' => $currentUser->getEmail()]));
       }
     } else {
-      $this->messenger()->addWarning('User %s already exits in DocSpace!');
+      $this->messenger()->addWarning($this->t('User @user_email already exists in DocSpace!', ['@user_email' => $currentUser->getEmail()]));
     }
   }
 

@@ -1,0 +1,64 @@
+# Russian translation of ONLYOFFICE DocSpace Connector
+# (c) Copyright Ascensio System SIA 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
+"POT-Creation-Date: 2022-03-03 11:00+0000\n"
+"PO-Revision-Date: 2022-04-04 13:01+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Generator: Poedit 3.0.1\n"
+
+msgid "DocSpace Service Address"
+msgstr "Адрес службы DocSpace"
+
+msgid "Login"
+msgstr "Логин"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "DocSpace Users"
+msgstr "Пользователи DocSpace"
+
+msgid "To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press"
+msgstr "Чтобы добавить новых пользователей в ONLYOFFICE DocSpace и начать работу в плагине, нажмите"
+
+msgid "Export Now"
+msgstr "Экспортировать сейчас"
+
+msgid "Invalid credentials. Please try again!"
+msgstr "Недействительные учетные данные. Пожалуйста, попробуйте еще раз!"
+
+msgid "Error getting data user. Please try again!"
+msgstr "Ошибка получения данных пользователя. Пожалуйста, попробуйте еще раз!"
+
+msgid "The specified user is not a DocSpace administrator!"
+msgstr "Указанный пользователь не является администратором DocSpace!"
+
+msgid "Public DocSpace user was not created! View content will not be available on public pages."
+msgstr "Публичный пользователь DocSpace не создан! Просмотр контента будет недоступен на общедоступных страницах."
+
+msgid "Public DocSpace user already created, but failed to update authorization."
+msgstr "Публичный пользователь DocSpace уже создан, но ему не удалось обновить авторизацию."
+
+msgid "Public DocSpace user was not created. View content will not be available on public pages."
+msgstr "Публичный пользователь DocSpace не создан. Просмотр контента будет недоступен на общедоступных страницах."
+
+msgid "Public DocSpace user successfully created."
+msgstr "Публичный пользователь DocSpace успешно создан."
+
+msgid "User @user_email already exists in DocSpace!"
+msgstr "Пользователь @user_email уже существует в DocSpace!"
+
+msgid "User @user_email successfully created in DocSpace with role Room Admin."
+msgstr "Пользователь @user_email успешно создан в DocSpace с ролью Администратора Комнаты."
+
+msgid "Error create user @user_email in DocSpace!"
+msgstr "Ошибка при создании пользователя @user_email в DocSpace!"
