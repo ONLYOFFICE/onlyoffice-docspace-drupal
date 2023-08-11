@@ -182,12 +182,13 @@ class SettingsForm extends ConfigFormBase {
 
     $form = parent::buildForm($form, $form_state);
 
-    $form['actions']['export_users'] = [
+    $form['export_users'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('DocSpace Users'),
       'description' => [
         '#markup' => '<p>' . $this->t('To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press') . ' <b>' . $this->t('Export Now') . '</b></p>' ,
       ],
+      '#weight' => 100,
     ];
 
     $url = Url::fromRoute('onlyoffice_docspace.user_form');
@@ -200,7 +201,7 @@ class SettingsForm extends ConfigFormBase {
     ];
     $url->setOptions($url_options);
 
-    $form['actions']['export_users']['export'] = [
+    $form['export_users']['export'] = [
       '#type' => 'link',
       '#title' => $this->t('Export Now'),
       '#url' => $url,
