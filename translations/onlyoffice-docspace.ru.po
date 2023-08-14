@@ -104,3 +104,12 @@ msgstr "Пользователь"
 
 msgid "Room admin"
 msgstr "Администратор комнаты"
+
+msgid "Drupal requests access to your ONLYOFFICE DocSpace"
+msgstr "Drupal запрашивает доступ к вашему ONLYOFFICE DocSpace"
+
+msgid "Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:"
+msgstr "Ваша учетная запись <b>@user_email</b> будет синхронизирована с вашим DocSpace. Пожалуйста, введите свой пароль DocSpace в поле ниже:"
+
+msgid "User authentication failed."
+msgstr "Не удалось выполнить аутентификацию пользователя."

@@ -33,3 +33,7 @@
   vertical-align: middle;
   margin: 15px;
 }
+
+#edit-login-form .url-host {
+  color: #173DC4;
+}

@@ -53,14 +53,14 @@
 
       if (hash === null || hash.length === "") {
         messages.clear();
-        messages.add('User authentication failed.', {type: 'error'});
+        messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
       }
 
       DocSpace.SDK.frames[frameId].login(DocSpaceComponent.currentUser, hash)
         .then(function(response) {
               if(response.status && response.status !== 200) {
                 messages.clear();
-                messages.add('User authentication failed.', {type: 'error'});
+                messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
               } else {
                 $('input[name="passwordHash"]').val(hash);
                 $('#edit-pass').val(randomString(pass.length));

@@ -119,7 +119,7 @@ class LoginForm extends FormBase {
     
     $form['login-form'] = [
       '#type' => 'fieldset',
-      '#title' => 'Drupal requests access to your ONLYOFFICE DocSpace worker.onlyoffice.com'
+      '#title' => $this->t('Drupal requests access to your ONLYOFFICE DocSpace') . ' <span class="url-host">' . parse_url($this->config('onlyoffice_docspace.settings')->get('url') . '</span>', PHP_URL_HOST),
     ];
 
     $form['login-form']['header'] = [
@@ -153,7 +153,7 @@ class LoginForm extends FormBase {
     
     $form['login-form']['pass'] = [
       '#type' => 'password',
-      '#title' => $this->t('Your account example@email.com will be synced with your DocSpace. Please enter your DocSpace password in the field below:'),
+      '#title' => $this->t('Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:', ['@user_email' => $this->currentUser()->getEmail()]),
       '#size' => 60,
       '#required' => TRUE,
     ];
