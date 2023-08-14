@@ -113,3 +113,9 @@ msgstr "Ваша учетная запись <b>@user_email</b> будет си�
 
 msgid "User authentication failed."
 msgstr "Не удалось выполнить аутентификацию пользователя."
+
+msgid "Portal unavailable! Please contact the administrator!"
+msgstr "Портал недоступен! Пожалуйста, свяжитесь с администратором!"
+
+msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
+msgstr "Перейдите в настройки, чтобы настроить коннектор ONLYOFFICE DocSpace."

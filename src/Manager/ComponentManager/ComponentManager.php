@@ -66,14 +66,15 @@ class ComponentManager extends ManagerBase {
    *   The current user.
    */
   public function buildComponent(array $build, AccountInterface $user) {
-    $error_message = 'Portal unavailable! Please contact the administrator!';
-
-        if (true) { //ToDo
-            $error_message ='Go to the settings to configure ONLYOFFICE DocSpace connector.';
-        }
-
     $isAnonymous = $user->isAnonymous();
     $email = $isAnonymous ? OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN : $user->getEmail();
+    
+    if ($user->hasPermission('administer onlyoffice_docspace configuration')) {
+      $error_message = $this->t('Go to the settings to configure ONLYOFFICE DocSpace connector.');
+    }
+    else{
+      $error_message = $this->t('Portal unavailable! Please contact the administrator!');
+    }
 
     $build['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.component';
 

@@ -22,6 +22,7 @@ namespace Drupal\onlyoffice_docspace\Manager;
  */
 
 use Drupal\Core\Logger\LoggerChannelTrait;
+use Drupal\Core\StringTranslation\StringTranslationTrait;
 
 /**
  * Defines an abstract base-class for manager objects.
@@ -29,6 +30,7 @@ use Drupal\Core\Logger\LoggerChannelTrait;
 abstract class ManagerBase {
 
   use LoggerChannelTrait;
+  use StringTranslationTrait;
 
   /**
    * Config factory service.
