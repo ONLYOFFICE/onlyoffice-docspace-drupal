@@ -25,8 +25,11 @@ use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Routing\RedirectDestinationInterface;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
 use Drupal\user\UserListBuilder;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -59,6 +62,20 @@ class OODSPUserListBuilder extends UserListBuilder {
   protected $requestManager;
 
   /**
+   * The ONLYOFFICE DocSpace security manager.
+   *
+   * @var \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface
+   */
+  protected $securityManager;
+
+  /**
+   * The list of available modules.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $extensionListModule;
+
+  /**
    * Constructs a new OODSPUserListBuilder object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
@@ -71,11 +88,17 @@ class OODSPUserListBuilder extends UserListBuilder {
    *   The redirect destination service.
    * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The ONLYOFFICE DocSpace request manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
+   *   The ONLYOFFICE DocSpace security manager.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
+   *   The module extension list.
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, DateFormatterInterface $date_formatter, RedirectDestinationInterface $redirect_destination, RequestManagerInterface $request_manager) {
+  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, DateFormatterInterface $date_formatter, RedirectDestinationInterface $redirect_destination, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, ModuleExtensionList $extension_list_module) {
     parent::__construct($entity_type, $storage, $date_formatter, $redirect_destination);
 
     $this->requestManager = $request_manager;
+    $this->securityManager = $security_manager;
+    $this->extensionListModule = $extension_list_module;
   }
 
   /**
@@ -87,7 +110,9 @@ class OODSPUserListBuilder extends UserListBuilder {
       $container->get('entity_type.manager')->getStorage($entity_type->id()),
       $container->get('date.formatter'),
       $container->get('redirect.destination'),
-      $container->get('onlyoffice_docspace.request_manager')
+      $container->get('onlyoffice_docspace.request_manager'),
+      $container->get('onlyoffice_docspace.security_manager'),
+      $container->get('extension.list.module')
     );
   }
 
@@ -154,16 +179,41 @@ class OODSPUserListBuilder extends UserListBuilder {
       }
     }
 
-    // $oodsp_security_manager = new OODSP_Security_Manager();
-    // $user_pass = $oodsp_security_manager->get_oodsp_user_pass( $user_object->ID );
-    $user_pass = "1111";
+    $user_pass = $this->securityManager->getPasswordHash($entity->id());
 
     if ($docSpaceUserStatus === 0 || $docSpaceUserStatus === 1) {
       if (!empty($user_pass)) {
-        $row['docspace_user_status']['data']['#markup'] = $this->t('In DocSpace');
+        $row['docspace_user_status']['data'] = [
+          '#type' => 'html_tag',
+          '#tag' => 'img',
+          '#attributes' => [
+            'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/done.svg',
+          ],
+        ];
       }
       else {
-        $row['docspace_user_status']['data']['#markup'] = $this->t('Unauthorized');
+        $row['docspace_user_status']['data'] = [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'class' => ['tooltip'],
+          ],
+          'tooltip' => [
+            '#type' => 'html_tag',
+            '#tag' => 'div',
+            '#value' => $this->getLabelForUnauthorized(),
+            '#attributes' => [
+              'class' => ['tooltip-message'],
+            ],
+          ],
+          'status' => [
+            '#type' => 'html_tag',
+            '#tag' => 'img',
+            '#attributes' => [
+              'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/not_authorization.svg',
+            ],
+          ],
+        ];
       }
     }
     else {
@@ -228,6 +278,14 @@ class OODSPUserListBuilder extends UserListBuilder {
     else {
       return $this->t('Room admin');
     }
+  } 
+
+  private function getLabelForUnauthorized() {
+    $output  = '<b>' . $this->t('Problem with the account synchronization between Drupal and ONLYOFFICE DocSpace') . '</b></br></br>';
+    $output .= '<b>' . $this->t('Possible cause:') . '</b> ' . $this->t('DocSpace account was not created via the DocSpace plugin for Drupal') . '</br></br>';
+    $output .= $this->t('Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin.');
+
+    return $output;
   }
 
 }

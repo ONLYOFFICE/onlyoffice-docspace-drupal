@@ -145,6 +145,7 @@ class UsersForm extends FormBase {
     $form['header'] = [
       '#type' => 'container',
       '#weight' => -100,
+      '#markup' => '<span>' . $this->t('To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!') . '</span>',
     ];
 
     $form['header']['user_bulk_form'] = [
@@ -152,7 +153,7 @@ class UsersForm extends FormBase {
     ];
     $form['header']['user_bulk_form']['action'] = [
       '#type' => 'select',
-      '#title' => 'Action',
+      '#title' => $this->t('Action'),
       '#options' => $this->getBulkOptions(),
     ];
 

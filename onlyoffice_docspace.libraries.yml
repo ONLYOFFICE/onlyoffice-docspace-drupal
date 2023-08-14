@@ -53,6 +53,7 @@ onlyoffice_docspace.users:
   css:
     base:
       css/loader.css: {}
+      css/onlyoffice-docspace-users.css: {}
   js:
     js/onlyoffice-docspace-users.js: {}
     js/loader.js: {}

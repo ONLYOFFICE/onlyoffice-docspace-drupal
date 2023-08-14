@@ -34,7 +34,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @Action(
  *   id = "onlyoffice_docspace_export_user_action",
- *   label = @Translation("Invite to DocSapce"),
+ *   label = @Translation("Invite to DocSpace"),
  *   type = "onlyoffice_docspace_user",
  * )
  */

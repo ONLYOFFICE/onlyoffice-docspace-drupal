@@ -65,3 +65,42 @@ msgstr "Пользователь @user_email успешно создан в DocS
 
 msgid "Error create user @user_email in DocSpace!"
 msgstr "Ошибка при создании пользователя @user_email в DocSpace!"
+
+msgid "To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!"
+msgstr "Чтобы добавить новых пользователей в ONLYOFFICE DocSpace, выберите нескольких пользователей и нажмите <b>Пригласить в DocSpace</b>. Все новые пользователи будут добавляться с ролью <b>Пользователь</b>. Если вы хотите изменить роль, перейдите в Аккаунты. Роль <b>Администратор комнаты</b> платная!"
+
+msgid "Invite to DocSpace"
+msgstr "Пригласить в DocSpace"
+
+msgid "DocSpace User Status"
+msgstr "Статус пользователя DocSpace"
+
+msgid "DocSpace User Type"
+msgstr "Тип пользователя DocSpace"
+
+msgid "Problem with the account synchronization between Drupal and ONLYOFFICE DocSpace"
+msgstr "Проблема с синхронизацией аккаунтов между Drupal и ONLYOFFICE DocSpace"
+
+msgid "Possible cause:"
+msgstr "Возможная причина:"
+
+msgid "DocSpace account was not created via the DocSpace plugin for Drupal"
+msgstr "Учетная запись DocSpace не была создана с помощью плагина DocSpace для Drupal."
+
+msgid "Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin."
+msgstr "Бесшовный вход недоступен. Пользователям необходимо будет войти в DocSpace, чтобы получить доступ к плагину."
+
+msgid "Owner"
+msgstr "Владелец"
+
+msgid "DocSpace admin"
+msgstr "Администратор DocSpace"
+
+msgid "Power user"
+msgstr "Опытный пользователь"
+
+msgid "User"
+msgstr "Пользователь"
+
+msgid "Room admin"
+msgstr "Администратор комнаты"
