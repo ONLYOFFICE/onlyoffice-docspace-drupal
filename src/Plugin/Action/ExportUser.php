@@ -116,6 +116,7 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
       $responseDocSpaceUsers['data']
     );
 
+    $countUsers = count($data);
     $countInvited = 0;
     $countSkipped = 0;
     $countError = 0;
@@ -147,15 +148,15 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
     }
 
     if ($countError !== 0) {
-      $this->messenger()->addError('Invite with error for users ' . $countError); // @todo this
+      $this->messenger()->addError($this->t('Invite with error for @count_errors/@count_users users', ['@count_errors' => $countError, '@count_users' => $countUsers]));
     }
 
     if ($countSkipped !== 0) {
-      $this->messenger()->addError('Invite skipped for users ' . $countSkipped); // @todo this
+      $this->messenger()->addWarning($this->t('Invite skipped for @count_skipped/@count_users users', ['@count_skipped' => $countSkipped, '@count_users' => $countUsers]));
     }
 
     if ($countInvited !== 0) {
-      $this->messenger()->addError('Invite sucessed for users ' . $countInvited); // @todo this
+      $this->messenger()->addStatus($this->t('Invite sucessed for @count_invited/@count_users users', ['@count_invited' => $countInvited, '@count_users' => $countUsers]));
     }
   }
 
@@ -171,7 +172,7 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
    */
   public function access($object, AccountInterface $account = NULL, $return_as_object = FALSE) {
     /** @var \Drupal\user\UserInterface $object */
-    return $object->access('delete', $account, $return_as_object); // @todo this
+    return $account->hasPermission('administer onlyoffice_docspace configuration');
   }
 
 }

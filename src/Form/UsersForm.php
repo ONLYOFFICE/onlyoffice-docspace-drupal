@@ -259,19 +259,6 @@ class UsersForm extends FormBase {
     }
 
     $action->execute($executionData);
-
-    $operation_definition = $action->getPluginDefinition();
-    if (!empty($operation_definition['confirm_form_route_name'])) {
-      $options = [
-        'query' => $this->getDestinationArray(),
-      ];
-      $form_state->setRedirect($operation_definition['confirm_form_route_name'], [], $options);
-    }
-    else {
-      $this->messenger->addStatus($this->formatPlural($count, '%action was applied to @count item.', '%action was applied to @count items.', [
-        '%action' => $action->label(),
-      ]));
-    }
   }
 
   /**
