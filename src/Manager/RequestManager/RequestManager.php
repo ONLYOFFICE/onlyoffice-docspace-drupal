@@ -54,7 +54,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
    */
   public function __construct(ClientInterface $http_client) {
     $this->httpClient = $http_client;
-    $this->logger = $this->getLogger('onlyoffice');
+    $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
   /**
@@ -342,6 +342,160 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
         return $result;
     }
 
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFileInfo($file_id) {
+    $result = array(
+      'error' => null,
+      'data'  => null,
+    );
+
+    $responseConnect = $this->connectDocSpace();
+
+    if ($responseConnect['error']) {
+      return $responseConnect;
+    }
+
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+
+    try {
+      $response = $this->httpClient->request(
+        'GET',
+        $url . 'api/2.0/files/file/' . $file_id,
+        [
+          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+          'cookies' => $this->createCookieJar(
+            ['asc_auth_key' => $responseConnect['data']],
+            $url
+          ),
+          'method' => 'GET',
+        ]
+      );
+
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::ERROR_GET_FILE_INFO;
+        return $result;
+      }
+
+      $body = Json::decode((string) $response->getBody());
+      $result['data'] = $body['response'];
+
+      return $result;
+    }
+    catch (\Exception $e) {
+        $result['error'] = self::ERROR_GET_FILE_INFO;
+        return $result;
+    }
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function getFolderInfo($folder_id) {
+    $result = array(
+      'error' => null,
+      'data'  => null,
+    );
+
+    $responseConnect = $this->connectDocSpace();
+
+    if ($responseConnect['error']) {
+      return $responseConnect;
+    }
+
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+
+    try {
+      $response = $this->httpClient->request(
+        'GET',
+        $url . 'api/2.0/files/' . $folder_id,
+        [
+          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+          'cookies' => $this->createCookieJar(
+            ['asc_auth_key' => $responseConnect['data']],
+            $url
+          ),
+          'method' => 'GET',
+        ]
+      );
+
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::ERROR_GET_FOLDER_INFO;
+        return $result;
+      }
+
+      $body = Json::decode((string) $response->getBody());
+      $result['data'] = $body['response'];
+
+      return $result;
+    }
+    catch (\Exception $e) {
+        $result['error'] = self::ERROR_GET_FOLDER_INFO;
+        return $result;
+    }
+
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function shareRoomPublicUser($room_id) {
+    $result = array(
+      'error' => null,
+      'data'  => null,
+    );
+
+    $responseConnect = $this->connectDocSpace();
+
+    if ($responseConnect['error']) {
+      return $responseConnect;
+    }
+
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+
+    try {
+      $response = $this->httpClient->request(
+        'PUT',
+        $url . 'api/2.0/files/rooms/' . $room_id . '/share',
+        [
+          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
+          'cookies' => $this->createCookieJar(
+            ['asc_auth_key' => $responseConnect['data']],
+            $url
+          ),
+          'body' => Json::encode(
+            [
+              'invitations' => [
+                [
+                  'access' => 2,
+                  'id' => $this->config('onlyoffice_docspace.settings')->get('publicUserId'),
+                ],
+              ],
+                'message' => 'Invitation message',
+                'notify' => true,
+            ]
+          ),
+          'method' => 'PUT',
+        ]
+      );
+
+      if ($response->getStatusCode() !== 200) {
+        $result['error'] = self::ERROR_SHARE_ROOM;
+        return $result;
+      }
+
+      $body = Json::decode((string) $response->getBody());
+      $result['data'] = $body['response'];
+
+      return $result;
+    }
+    catch (\Exception $e) {
+        $result['error'] = self::ERROR_SHARE_ROOM;
+        return $result;
+    }
   }
 
   /**
