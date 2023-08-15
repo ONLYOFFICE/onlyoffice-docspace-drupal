@@ -134,3 +134,12 @@ msgstr "Портал недоступен! Пожалуйста, свяжите�
 
 msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
 msgstr "Перейдите в настройки, чтобы настроить коннектор ONLYOFFICE DocSpace."
+
+msgid "Select room"
+msgstr "Выбрать комнату"
+
+msgid "Select file"
+msgstr "Выбрать файл"
+
+msgid "Remove"
+msgstr "Удалить"

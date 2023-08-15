@@ -36,7 +36,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  *
  * @FieldWidget(
  *   id = "onlyoffice_docspace_widget",
- *   label = @Translation("ONLYOFFICE DocSpace widget"),
+ *   label = @Translation("ONLYOFFICE DocSpace"),
  *   field_types = {
  *     "onlyoffice_docspace"
  *   }
