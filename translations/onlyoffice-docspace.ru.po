@@ -36,6 +36,9 @@ msgstr "Чтобы добавить новых пользователей в ONL
 msgid "Export Now"
 msgstr "Экспортировать сейчас"
 
+msgid "ONLYOFFICE DocSpace cannot be reached."
+msgstr "ONLYOFFICE DocSpace недоступен."
+
 msgid "Invalid credentials. Please try again!"
 msgstr "Недействительные учетные данные. Пожалуйста, попробуйте еще раз!"
 

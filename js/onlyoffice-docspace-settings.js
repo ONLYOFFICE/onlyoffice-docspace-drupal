@@ -21,9 +21,10 @@
 
   $('input[name="passwordHash"]').val('');
 
-  $settingsForm.on('submit', function(event) {
-    const messages = new Drupal.Message();
+  $('[data-drupal-messages-fallback]').show()
+  const messages = new Drupal.Message(document.querySelector('[data-drupal-messages-fallback]'));
 
+  $settingsForm.on('submit', function(event) {
     var passwordHash = $('input[name="passwordHash"]').val() || "";
 
     if (passwordHash.trim().length <= 0) {
@@ -53,7 +54,7 @@
               'onAppError': function() {
                 Drupal.hideLoader();
                 messages.clear();
-                messages.add('ONLYOFFICE DocSpace cannot be reached.', {type: 'error'});
+                messages.add(Drupal.t('ONLYOFFICE DocSpace cannot be reached.'), {type: 'error'});
               }
             }
           });
@@ -61,7 +62,7 @@
           function() {
             Drupal.hideLoader();
             messages.clear();
-            messages.add('ONLYOFFICE DocSpace cannot be reached.', {type: 'error'});
+            messages.add(Drupal.t('ONLYOFFICE DocSpace cannot be reached.'), {type: 'error'});
           }
         );
 
