@@ -187,7 +187,7 @@ class SettingsForm extends ConfigFormBase {
     $form['message_users'] = [
       '#theme' => 'status_messages',
       '#message_list' => [
-        'warning' =>  [$this->t('The current user will be added to DocSpace with the <b>Room admin</b> role. <b>WordPress Viewer</b> user will be added to DocSpace with View Only access.')]
+        'warning' =>  [$this->t('The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access.')]
       ],
       '#status_headings' => [
         'warning' => $this->t('Warning message'),
