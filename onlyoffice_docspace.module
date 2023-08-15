@@ -25,7 +25,10 @@
  */
 
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\onlyoffice_docspace\OnlyofficeAppConfig;
+use Drupal\Core\Entity\EntityInterface;
+use Drupal\onlyoffice_docspace\Plugin\Field\FieldType\OODSPItem;
+use Drupal\Core\Entity\FieldableEntityInterface;
+use Drupal\Core\Field\FieldDefinitionInterface;
 
 /**
  * Implements hook_help().
@@ -62,4 +65,85 @@ function onlyoffice_docspace_user_delete($account) {
   \Drupal::database()->delete('users_docspace')
     ->condition('uid', $account->id())
     ->execute();
+}
+
+/**
+ * Implements hook_entity_update().
+ */
+function onlyoffice_docspace_entity_update(EntityInterface $entity) {
+  if (!($entity instanceof FieldableEntityInterface)) {
+    return;
+  }
+
+  $userStorage = \Drupal::service('entity_type.manager')->getStorage('user');
+  $account = $userStorage->load(0);
+  
+  if (!$entity->isPublished() || !$account->hasPermission('access content')) {
+    return;
+  }
+  
+  $rooms_id = [];
+  $files_id = [];
+
+  $oodsp_item_fields = _onlyoffice_docspace_get_oodsp_item_fields($entity);
+
+  foreach ($oodsp_item_fields as $oodsp_item_field) {
+    $field_items = $entity->get($oodsp_item_field);
+    foreach ($field_items as $field_item) {
+      if (!empty($field_item->target_id)) {
+        if ($field_item->type === 'manager') {
+          $rooms_id[] = $field_item->target_id;
+        }
+
+        if ($field_item->type === 'manager') {
+          $files_id[] = $field_item->target_id;
+        }
+      }
+    }
+  }
+
+  $files_id = array_unique($files_id);
+
+  foreach ($files_id as $file_id) {
+    $responseFileInfo = \Drupal::service('onlyoffice_docspace.request_manager')->getFileInfo($file_id);
+
+    if (!$responseFileInfo['error']) {
+      $folder_id = $responseFileInfo['data']['folderId'];
+
+      $responseFolderInfo = \Drupal::service('onlyoffice_docspace.request_manager')->getFolderInfo($folder_id);
+
+      if (!$responseFolderInfo['error']) {
+        $room_id = $responseFolderInfo['data']['pathParts'][1];
+        $rooms_id[] = $room_id;
+      } else {
+        \Drupal::messenger()->addError(print_r($responseShareRoom, true)); // ToDo: error 
+      }
+    } else {
+      \Drupal::messenger()->addError(print_r($responseShareRoom, true)); // ToDo: error 
+    }
+  }
+
+  $rooms_id = array_unique( $rooms_id );
+
+  foreach ($rooms_id as $room_id) {
+    $responseShareRoom = \Drupal::service('onlyoffice_docspace.request_manager')->shareRoomPublicUser($room_id);
+    if ($responseShareRoom['error']) {
+      \Drupal::messenger()->addError(print_r($responseShareRoom, true)); // ToDo: error 
+    }
+    \Drupal::messenger()->addStatus(print_r($responseShareRoom, true)); //ToDo: success 
+  }
+}
+
+function _onlyoffice_docspace_get_oodsp_item_fields(FieldableEntityInterface $entity) {
+  $field_definitions = $entity->getFieldDefinitions();
+  if (empty($field_definitions)) {
+    return [];
+  }
+
+  $field_type_manager = \Drupal::service('plugin.manager.field.field_type');
+  return array_keys(array_filter($field_definitions, function (FieldDefinitionInterface $definition) use ($field_type_manager) {
+    $type = $definition->getType();
+    $plugin_class = $field_type_manager->getPluginClass($type);
+    return is_subclass_of($plugin_class, OODSPItem::class) || $plugin_class === OODSPItem::class;
+  }));
 }
