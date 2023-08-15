@@ -23,15 +23,10 @@ namespace Drupal\onlyoffice_docspace\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Field\Plugin\Field\FieldFormatter\EntityReferenceFormatterBase;
 use Drupal\Core\Language\LanguageManagerInterface;
-use Drupal\Core\Access\AccessResult;
-use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
-use Drupal\Core\Field\Plugin\Field\FieldType\EntityReferenceItem;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
-use Drupal\file\Entity\File;
 use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -156,10 +151,6 @@ class OODSPFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    // if (!parent::isApplicable($field_definition)) {
-    //   return FALSE;
-    // }
-
     return true;
   }
 
@@ -199,30 +190,5 @@ class OODSPFormatter extends FormatterBase {
 
     return $element;
   }
-
-  // /**
-  //  * Method getting configuration for document editor service.
-  //  */
-  // private function getEditorConfig(File $file) {
-
-    
-  // }
-
-  /**
-   * {@inheritdoc}
-   */
-  // protected function needsEntityLoad(EntityReferenceItem $item) {
-  //   return parent::needsEntityLoad($item) && $item->isDisplayed();
-  // }
-
-  // /**
-  //  * {@inheritdoc}
-  //  */
-  // protected function checkAccess(EntityInterface $entity) {
-  //   // Only check access if the current file access control handler explicitly
-  //   // opts in by implementing FileAccessFormatterControlHandlerInterface.
-
-  //   return AccessResult::allowed();
-  // }
 
 }
