@@ -24,7 +24,6 @@ namespace Drupal\onlyoffice_docspace\Manager\RequestManager;
 use Drupal\Component\Serialization\Json;
 use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
 use Drupal\onlyoffice_docspace\Manager\ManagerBase;
-use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManager;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
 

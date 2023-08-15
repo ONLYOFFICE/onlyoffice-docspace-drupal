@@ -27,7 +27,6 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Routing\RedirectDestinationInterface;
-use Drupal\Core\Session\AccountInterface;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
 use Drupal\user\UserListBuilder;

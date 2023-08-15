@@ -236,15 +236,6 @@ class UsersForm extends FormBase {
         continue;
       }
 
-      if (!$action->getPlugin()->access($entity, $this->currentUser())) {
-        $this->messenger->addError($this->t('No access to execute %action on the @entity_type_label %entity_label.', [
-          '%action' => $action->label(),
-          '@entity_type_label' => $entity->getEntityType()->getLabel(),
-          '%entity_label' => $entity->label(),
-        ]));
-        continue;
-      }
-
       $count++;
 
       $data = [
