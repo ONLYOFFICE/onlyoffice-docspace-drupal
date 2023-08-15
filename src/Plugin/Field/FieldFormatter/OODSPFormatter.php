@@ -23,6 +23,7 @@ namespace Drupal\onlyoffice_docspace\Plugin\Field\FieldFormatter;
 
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
@@ -154,6 +155,72 @@ class OODSPFormatter extends FormatterBase {
     return true;
   }
 
+    /**
+   * {@inheritdoc}
+   */
+  public static function defaultSettings() {
+    return [
+      'width_unit' => '%',
+      'width' => 100,
+      'height_unit' => 'px',
+      'height' => 640,
+    ] + parent::defaultSettings();
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsForm(array $form, FormStateInterface $form_state) {
+    return parent::settingsForm($form, $form_state) + [
+      'width_unit' => [
+        '#type' => 'radios',
+        '#title' => $this->t('Width units'),
+        '#default_value' => $this->getSetting('width_unit'),
+        '#options' => [
+          '%' => $this->t('Percents'),
+          'px' => $this->t('Pixels'),
+        ],
+      ],
+      'width' => [
+        '#type' => 'number',
+        '#title' => $this->t('Width'),
+        '#default_value' => $this->getSetting('width'),
+        '#size' => 5,
+        '#maxlength' => 5,
+        '#min' => 0,
+        '#required' => TRUE,
+      ],
+      'height_unit' => [
+        '#type' => 'radios',
+        '#title' => $this->t('Height units'),
+        '#default_value' => $this->getSetting('height_unit'),
+        '#options' => [
+          '%' => $this->t('Percents'),
+          'px' => $this->t('Pixels'),
+        ],
+      ],
+      'height' => [
+        '#type' => 'number',
+        '#title' => $this->t('Height'),
+        '#default_value' => $this->getSetting('height'),
+        '#size' => 5,
+        '#maxlength' => 5,
+        '#min' => 0,
+        '#required' => TRUE,
+      ],
+    ];
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function settingsSummary() {
+    $summary = parent::settingsSummary();
+    $summary[] = $this->t('Width')->render() . ': ' . $this->getSetting('width') . $this->getSetting('width_unit');
+    $summary[] = $this->t('Height')->render() . ': ' . $this->getSetting('height') . $this->getSetting('height_unit');
+    return $summary;
+  }
+
   /**
    * {@inheritdoc}
    */
@@ -171,10 +238,15 @@ class OODSPFormatter extends FormatterBase {
         $delta,
       );
 
+      $editor_width = $this->getSetting('width') . $this->getSetting('width_unit');
+      $editor_height = $this->getSetting('height') . $this->getSetting('height_unit');
+
       $config = [
         'frameId' => $editorId,
         'id' => $item->target_id,
         'mode' => $item->type,
+        'width' => $editor_width,
+        'height' => $editor_height,
       ];
 
       $element[$delta] = [

@@ -158,3 +158,15 @@ msgstr "Выбрать файл"
 
 msgid "Remove"
 msgstr "Удалить"
+
+msgid "Width units"
+msgstr "Единицы ширины"
+
+msgid "Height units"
+msgstr "Единицы высоты"
+
+msgid "Percents"
+msgstr "Проценты"
+
+msgid "Pixels"
+msgstr "Пиксели"
