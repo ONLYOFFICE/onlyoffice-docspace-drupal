@@ -31,7 +31,7 @@ onlyoffice_docspace.page_login:
     _admin_route: TRUE
   defaults:
     _form: 'Drupal\onlyoffice_docspace\Form\LoginForm'
-    _title: 'ONLYOFFICE DocSpace'
+    _title: 'ONLYOFFICE DocSpace Login'
     scheme: null
   requirements:
     _permission: 'administer onlyoffice_docspace configuration'
