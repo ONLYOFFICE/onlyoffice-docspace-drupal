@@ -51,7 +51,7 @@ class SecurityManager extends ManagerBase implements SecurityManagerInterface {
    */
   public function __construct(Connection $database) {
     $this->database = $database;
-    $this->logger = $this->getLogger('onlyoffice');
+    $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
   /**

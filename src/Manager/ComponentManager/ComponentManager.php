@@ -54,7 +54,7 @@ class ComponentManager extends ManagerBase {
    */
   public function __construct(ModuleExtensionList $extension_list_module) {
     $this->extensionListModule = $extension_list_module;
-    $this->logger = $this->getLogger('onlyoffice');
+    $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
   /**

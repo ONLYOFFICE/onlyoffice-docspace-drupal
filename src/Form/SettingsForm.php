@@ -81,7 +81,7 @@ class SettingsForm extends ConfigFormBase {
     $this->requestManager = $request_manager;
     $this->securityManager = $security_manager;
     $this->componentManager = $component_manager;
-    $this->logger = $this->getLogger('onlyoffice');
+    $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
   /**
