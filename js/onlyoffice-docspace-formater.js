@@ -35,11 +35,11 @@
       }
     }
   ).catch(
-    // function() { TODO appReady
-    //   for ( var config of oodspConfigs ) {
-    //     DocSpaceComponent.renderError( config.frameId );
-    //   }
-    // }
+    function() {
+      for (var frameId in drupalSettings.OODSP) {
+        DocSpaceComponent.renderError(frameId);
+      }
+    }
   );
 
 })(Drupal);

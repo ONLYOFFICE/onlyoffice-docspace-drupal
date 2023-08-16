@@ -63,6 +63,9 @@ onlyoffice_docspace.users:
     - core/drupal.message
 
 onlyoffice_docspace.formater:
+  css:
+    base:
+      css/onlyoffice-docspace-formater.css: {}
   js:
     js/onlyoffice-docspace-formater.js: {}
   dependencies:

@@ -15,10 +15,11 @@
 
 .error-stub .unavailable-header {
     text-align: center;    
-    
+    margin-bottom: 10px;
 }
 
 .error-stub .unavailable-header img {
+    display: inline;
     vertical-align: middle;
 }
 

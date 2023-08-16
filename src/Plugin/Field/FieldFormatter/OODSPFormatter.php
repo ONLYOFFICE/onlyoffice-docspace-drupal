@@ -228,7 +228,7 @@ class OODSPFormatter extends FormatterBase {
       ];
 
       $element[$delta] = [
-        '#markup' => sprintf('<div id="%s" class="onlyoffice-docspace-block"></div>', $editorId),
+        '#markup' => sprintf('<div class="onlyoffice-docspace-wrapper"><div id="%s" class="onlyoffice-docspace-block"></div></div>', $editorId),
         '#cache' => [
           'max-age' => 0,
         ],
