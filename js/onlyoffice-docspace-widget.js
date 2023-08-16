@@ -58,7 +58,7 @@
     const onSelectFileCallback = (event) => {
       setInputValue(widgetId, 'target-id', event.id);
       setInputValue(widgetId, 'type', 'editor');
-      setInputValue(widgetId, 'title', event.label);
+      setInputValue(widgetId, 'title', event.title);
       setInputValue(widgetId, 'image', event.icon);
 
       $('img[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon)); //todo: add url to settings
