@@ -51,7 +51,7 @@
       const hashSettings = await DocSpace.SDK.frames[frameId].getHashSettings();
       const hash = await DocSpace.SDK.frames[frameId].createHash(pass.trim(), hashSettings);
 
-      if (hash === NULL || hash.length === "") {
+      if (hash === null || hash.length === "") {
         messages.clear();
         messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
       }

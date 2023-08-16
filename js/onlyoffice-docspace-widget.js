@@ -34,7 +34,7 @@
     event.preventDefault();
 
     const widgetId = getId(event.target.id);
-    const mode = event.target.dataset.mode || NULL;
+    const mode = event.target.dataset.mode || null;
     const title = event.target.dataset.title || "";
     const dialog = Drupal.dialog($oodspDialog, {
       title: title,

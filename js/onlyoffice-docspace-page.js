@@ -22,9 +22,9 @@
     function () {
       DocSpace.SDK.initManager({
         frameId: "oodsp-manager-frame",
-        showMenu: TRUE,
-        showFilter: TRUE,
-        showHeader: TRUE
+        showMenu: true,
+        showFilter: true,
+        showHeader: true
       });
     }
   );

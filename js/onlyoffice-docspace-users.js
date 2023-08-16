@@ -48,7 +48,7 @@
         }
       }
 
-      $usersForm.attr('hashGenerated', TRUE);
+      $usersForm.attr('hashGenerated', true);
       $usersForm.submit();
     }
   });

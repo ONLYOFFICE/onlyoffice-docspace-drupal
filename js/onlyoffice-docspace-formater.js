@@ -22,8 +22,8 @@
       for (var frameId in drupalSettings.OODSP) {
         DocSpaceComponent.initPublicDocSpace(
           frameId,
-          drupalSettings.OODSP[frameId]['width'] || NULL,
-          drupalSettings.OODSP[frameId]['height'] || NULL,
+          drupalSettings.OODSP[frameId]['width'] || null,
+          drupalSettings.OODSP[frameId]['height'] || null,
           function () {
             drupalSettings.OODSP[frameId].locale = DocSpaceComponent.locale;
             DocSpace.SDK.initFrame( drupalSettings.OODSP[frameId] );

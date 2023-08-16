@@ -28,6 +28,7 @@
     var passwordHash = $('input[name="passwordHash"]').val() || "";
 
     if (passwordHash.trim().length <= 0) {
+      event.preventDefault();
       const url = $('#edit-url').val().trim();
       const password = $('#edit-password').val();
 
@@ -66,9 +67,9 @@
           }
         );
 
-      return FALSE;
+      return false;
     } else {
-      return TRUE;
+      return true;
     }
   });
 
