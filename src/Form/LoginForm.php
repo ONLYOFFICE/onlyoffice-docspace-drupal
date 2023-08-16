@@ -191,7 +191,9 @@ class LoginForm extends FormBase {
    * {@inheritdoc}
    */
   public function validateForm(array &$form, FormStateInterface $form_state) {
-
+    if (empty($form_state->getValue('passwordHash'))) {
+      $form_state->setErrorByName('pass', $this->t('Password is empty!'));
+    }
   }
 
   /**

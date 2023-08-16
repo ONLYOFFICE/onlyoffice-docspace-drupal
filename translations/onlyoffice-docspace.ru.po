@@ -108,6 +108,9 @@ msgstr "Учетная запись DocSpace не была создана с п�
 msgid "Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin."
 msgstr "Бесшовный вход недоступен. Пользователям необходимо будет войти в DocSpace, чтобы получить доступ к плагину."
 
+msgid "Password is empty!"
+msgstr "Пароль пуст!"
+
 msgid "Owner"
 msgstr "Владелец"
 
