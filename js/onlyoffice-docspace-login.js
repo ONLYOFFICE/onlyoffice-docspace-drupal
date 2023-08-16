@@ -20,13 +20,13 @@
   const frameId = 'oodsp-login-frame';
 
   DocSpaceComponent.initScript()
-    .then(function(e) {
+    .then(function (e) {
       DocSpace.SDK.initSystem(
         {
           frameId: frameId,
           events: {
             onAppReady: async function () {
-              const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();  
+              const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
               if (userInfo && userInfo.email === DocSpaceComponent.currentUser){
                 window.location.replace(DocSpaceComponent.adminUrl);
               }
@@ -34,7 +34,7 @@
           }
         }
       );
-    }).catch(function() {
+    }).catch(function () {
       window.location.replace(DocSpaceComponent.adminUrl);
     });
 
@@ -42,7 +42,7 @@
   $loginForm = $('#onlyoffice-docspace-login');
 
   $('input[name="passwordHash"]').val('');
-  $loginForm.on('submit', async function(event) {
+  $loginForm.on('submit', async function (event) {
     var passwordHash = $('input[name="passwordHash"]').val() || "";
 
     if (passwordHash.trim().length <= 0) {
@@ -51,13 +51,13 @@
       const hashSettings = await DocSpace.SDK.frames[frameId].getHashSettings();
       const hash = await DocSpace.SDK.frames[frameId].createHash(pass.trim(), hashSettings);
 
-      if (hash === null || hash.length === "") {
+      if (hash === NULL || hash.length === "") {
         messages.clear();
         messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
       }
 
       DocSpace.SDK.frames[frameId].login(DocSpaceComponent.currentUser, hash)
-        .then(function(response) {
+        .then(function (response) {
               if(response.status && response.status !== 200) {
                 messages.clear();
                 messages.add(Drupal.t('User authentication failed.'), {type: 'error'});

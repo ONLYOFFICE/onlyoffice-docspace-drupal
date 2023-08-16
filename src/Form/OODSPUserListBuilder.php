@@ -277,8 +277,11 @@ class OODSPUserListBuilder extends UserListBuilder {
     else {
       return $this->t('Room admin');
     }
-  } 
+  }
 
+  /**
+   * Return label tooltip for unauthorized users.
+   */
   private function getLabelForUnauthorized() {
     $output  = '<b>' . $this->t('Problem with the account synchronization between Drupal and ONLYOFFICE DocSpace') . '</b></br></br>';
     $output .= '<b>' . $this->t('Possible cause:') . '</b> ' . $this->t('DocSpace account was not created via the DocSpace plugin for Drupal') . '</br></br>';

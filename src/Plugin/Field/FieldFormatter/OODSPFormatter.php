@@ -21,13 +21,12 @@ namespace Drupal\onlyoffice_docspace\Plugin\Field\FieldFormatter;
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-use Drupal\Core\Datetime\DateFormatterInterface;
-use Drupal\Core\Field\FormatterBase;
-use Drupal\Core\Form\FormStateInterface;
-use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
+use Drupal\Core\Field\FormatterBase;
+use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
+use Drupal\Core\Session\AccountInterface;
 use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -53,20 +52,6 @@ class OODSPFormatter extends FormatterBase {
   protected $componentManager;
 
   /**
-   * The date formatter service.
-   *
-   * @var \Drupal\Core\Datetime\DateFormatterInterface
-   */
-  protected $dateFormatter;
-
-  /**
-   * The language manager.
-   *
-   * @var \Drupal\Core\Language\LanguageManagerInterface
-   */
-  protected $languageManager;
-
-  /**
    * The page cache disabling policy.
    *
    * @var \Drupal\Core\PageCache\ResponsePolicy\KillSwitch
@@ -74,11 +59,11 @@ class OODSPFormatter extends FormatterBase {
   protected $pageCacheKillSwitch;
 
   /**
-   * A logger instance.
+   * Current user service.
    *
-   * @var \Psr\Log\LoggerInterface
+   * @var \Drupal\Core\Session\AccountInterface
    */
-  protected $logger;
+  protected $currentUser;
 
   /**
    * Construct the OnlyofficePreviewFormatter.
@@ -99,12 +84,10 @@ class OODSPFormatter extends FormatterBase {
    *   Any third party settings.
    * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
    *   The ONLYOFFICE DocSpace Component manager.
-   * @param \Drupal\Core\Datetime\DateFormatterInterface $date_formatter
-   *   The date formatter service.
-   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
-   *   The language manager.
    * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $page_cache_kill_switch
    *   The page cache disabling policy.
+   * @param \Drupal\Core\Session\AccountInterface $current_user
+   *   Current user service.
    */
   public function __construct(
     $plugin_id,
@@ -115,18 +98,14 @@ class OODSPFormatter extends FormatterBase {
     $view_mode,
     array $third_party_settings,
     ComponentManager $component_manager,
-    DateFormatterInterface $date_formatter,
-    LanguageManagerInterface $language_manager,
     KillSwitch $page_cache_kill_switch,
+    AccountInterface $current_user
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
 
     $this->componentManager = $component_manager;
-    $this->dateFormatter = $date_formatter;
-    $this->languageManager = $language_manager;
     $this->pageCacheKillSwitch = $page_cache_kill_switch;
-
-    $this->logger = \Drupal::service('logger.factory')->get('onlyoffice_docspace');
+    $this->currentUser = $current_user;
   }
 
   /**
@@ -142,9 +121,8 @@ class OODSPFormatter extends FormatterBase {
       $configuration['view_mode'],
       $configuration['third_party_settings'],
       $container->get('onlyoffice_docspace.component_manager'),
-      $container->get('date.formatter'),
-      $container->get('language_manager'),
       $container->get('page_cache_kill_switch'),
+      $container->get('current_user')
     );
   }
 
@@ -152,10 +130,10 @@ class OODSPFormatter extends FormatterBase {
    * {@inheritdoc}
    */
   public static function isApplicable(FieldDefinitionInterface $field_definition) {
-    return true;
+    return TRUE;
   }
 
-    /**
+  /**
    * {@inheritdoc}
    */
   public static function defaultSettings() {
@@ -228,7 +206,7 @@ class OODSPFormatter extends FormatterBase {
     $this->pageCacheKillSwitch->trigger();
 
     $element = [];
-    $element = $this->componentManager->buildComponent($element, \Drupal::currentUser()->getAccount());
+    $element = $this->componentManager->buildComponent($element, $this->currentUser);
 
     $element['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.formater';
 

@@ -18,29 +18,28 @@
 
 (function (Drupal) {
   DocSpaceComponent.initScript().then(
-    function() {
+    function () {
       for (var frameId in drupalSettings.OODSP) {
         DocSpaceComponent.initPublicDocSpace(
           frameId,
-          drupalSettings.OODSP[frameId]['width'] || null,
-          drupalSettings.OODSP[frameId]['height'] || null,
-          function() {
+          drupalSettings.OODSP[frameId]['width'] || NULL,
+          drupalSettings.OODSP[frameId]['height'] || NULL,
+          function () {
             drupalSettings.OODSP[frameId].locale = DocSpaceComponent.locale;
             DocSpace.SDK.initFrame( drupalSettings.OODSP[frameId] );
           },
-          function() {
+          function () {
             DocSpaceComponent.renderError(frameId);
           }
         );
       }
     }
   ).catch(
-    // function() {
+    // function() { TODO appReady
     //   for ( var config of oodspConfigs ) {
     //     DocSpaceComponent.renderError( config.frameId );
     //   }
     // }
   );
-
 
 })(Drupal);

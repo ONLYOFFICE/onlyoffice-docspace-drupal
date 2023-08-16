@@ -24,11 +24,11 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-use Drupal\Core\Routing\RouteMatchInterface;
 use Drupal\Core\Entity\EntityInterface;
-use Drupal\onlyoffice_docspace\Plugin\Field\FieldType\OODSPItem;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
+use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\onlyoffice_docspace\Plugin\Field\FieldType\OODSPItem;
 
 /**
  * Implements hook_help().
@@ -77,11 +77,11 @@ function onlyoffice_docspace_entity_update(EntityInterface $entity) {
 
   $userStorage = \Drupal::service('entity_type.manager')->getStorage('user');
   $account = $userStorage->load(0);
-  
+
   if (!$entity->isPublished() || !$account->hasPermission('access content')) {
     return;
   }
-  
+
   $rooms_id = [];
   $files_id = [];
 
@@ -115,25 +115,33 @@ function onlyoffice_docspace_entity_update(EntityInterface $entity) {
       if (!$responseFolderInfo['error']) {
         $room_id = $responseFolderInfo['data']['pathParts'][1];
         $rooms_id[] = $room_id;
-      } else {
-        \Drupal::messenger()->addError(print_r($responseShareRoom, true)); // ToDo: error 
       }
-    } else {
-      \Drupal::messenger()->addError(print_r($responseShareRoom, true)); // ToDo: error 
+      else {
+        \Drupal::messenger()->addError(print_r($responseShareRoom, TRUE)); // ToDo: error 
+      }
+    }
+    else {
+      \Drupal::messenger()->addError(print_r($responseShareRoom, TRUE)); // ToDo: error 
     }
   }
 
-  $rooms_id = array_unique( $rooms_id );
+  $rooms_id = array_unique($rooms_id);
 
   foreach ($rooms_id as $room_id) {
     $responseShareRoom = \Drupal::service('onlyoffice_docspace.request_manager')->shareRoomPublicUser($room_id);
     if ($responseShareRoom['error']) {
-      \Drupal::messenger()->addError(print_r($responseShareRoom, true)); // ToDo: error 
+      \Drupal::messenger()->addError(print_r($responseShareRoom, TRUE)); // ToDo: error 
     }
-    \Drupal::messenger()->addStatus(print_r($responseShareRoom, true)); //ToDo: success 
+    \Drupal::messenger()->addStatus(print_r($responseShareRoom, TRUE)); //ToDo: success 
   }
 }
 
+/**
+ * Determines the oodsp_item fields on an entity.
+ *
+ * @param \Drupal\Core\Entity\FieldableEntityInterface $entity
+ *   An entity whose fields to analyze.
+ */
 function _onlyoffice_docspace_get_oodsp_item_fields(FieldableEntityInterface $entity) {
   $field_definitions = $entity->getFieldDefinitions();
   if (empty($field_definitions)) {

@@ -66,7 +66,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       'data'  => NULL,
     ];
 
-    $currentUrl = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+    $currentUrl = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
     $currentLogin = $this->config('onlyoffice_docspace.settings')->get('login');
     $currentPasswordHash = $this->config('onlyoffice_docspace.settings')->get('passwordHash');
 
@@ -183,7 +183,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $responseConnect;
     }
 
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';;
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
 
     try {
       $response = $this->httpClient->request(
@@ -232,7 +232,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       $token = $responseConnect['data'];
     }
 
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
 
     try {
       $response = $this->httpClient->request(
@@ -276,10 +276,10 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function createPublicUser($url, $token){
+  public function createPublicUser($url, $token) {
     $responseDocSpaceUser = $this->getDocSpaceUser($url, OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN, $token);
 
-    if ($responseDocSpaceUser['error'] ) {
+    if ($responseDocSpaceUser['error']) {
       return $this->inviteToDocSpace(
         OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN,
         OODSPCredentialsController::OODSP_PUBLIC_USER_PASS,
@@ -288,7 +288,8 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
         2,
         $token
       );
-    } else {
+    }
+    else {
       return $this->setUserPassword(
         $responseDocSpaceUser['data']['id'],
         OODSPCredentialsController::OODSP_PUBLIC_USER_PASS,
@@ -301,12 +302,12 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
    * {@inheritdoc}
    */
   public function setUserPassword($user_id, $password_hash, $token) {
-    $result = array(
-        'error' => null,
-        'data'  => null,
-    );
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
 
     try {
       $response = $this->httpClient->request(
@@ -338,8 +339,8 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $result;
     }
     catch (\Exception $e) {
-        $result['error'] = self::ERROR_SET_USER_PASS;
-        return $result;
+      $result['error'] = self::ERROR_SET_USER_PASS;
+      return $result;
     }
 
   }
@@ -348,10 +349,10 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
    * {@inheritdoc}
    */
   public function getFileInfo($file_id) {
-    $result = array(
-      'error' => null,
-      'data'  => null,
-    );
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
     $responseConnect = $this->connectDocSpace();
 
@@ -359,7 +360,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $responseConnect;
     }
 
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
 
     try {
       $response = $this->httpClient->request(
@@ -386,8 +387,8 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $result;
     }
     catch (\Exception $e) {
-        $result['error'] = self::ERROR_GET_FILE_INFO;
-        return $result;
+      $result['error'] = self::ERROR_GET_FILE_INFO;
+      return $result;
     }
   }
 
@@ -395,10 +396,10 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
    * {@inheritdoc}
    */
   public function getFolderInfo($folder_id) {
-    $result = array(
-      'error' => null,
-      'data'  => null,
-    );
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
     $responseConnect = $this->connectDocSpace();
 
@@ -406,7 +407,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $responseConnect;
     }
 
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
 
     try {
       $response = $this->httpClient->request(
@@ -433,8 +434,8 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $result;
     }
     catch (\Exception $e) {
-        $result['error'] = self::ERROR_GET_FOLDER_INFO;
-        return $result;
+      $result['error'] = self::ERROR_GET_FOLDER_INFO;
+      return $result;
     }
 
   }
@@ -443,10 +444,10 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
    * {@inheritdoc}
    */
   public function shareRoomPublicUser($room_id) {
-    $result = array(
-      'error' => null,
-      'data'  => null,
-    );
+    $result = [
+      'error' => NULL,
+      'data'  => NULL,
+    ];
 
     $responseConnect = $this->connectDocSpace();
 
@@ -454,7 +455,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $responseConnect;
     }
 
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/';
+    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
 
     try {
       $response = $this->httpClient->request(
@@ -474,8 +475,8 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
                   'id' => $this->config('onlyoffice_docspace.settings')->get('publicUserId'),
                 ],
               ],
-                'message' => 'Invitation message',
-                'notify' => true,
+              'message' => 'Invitation message',
+              'notify' => TRUE,
             ]
           ),
           'method' => 'PUT',
@@ -493,8 +494,8 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $result;
     }
     catch (\Exception $e) {
-        $result['error'] = self::ERROR_SHARE_ROOM;
-        return $result;
+      $result['error'] = self::ERROR_SHARE_ROOM;
+      return $result;
     }
   }
 
@@ -547,7 +548,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
   }
 
   /**
-   * Get ONLYOFFICE DocSpace Token.
+   * Create Cookie Jar.
    */
   private function createCookieJar($cookieArray, $url) {
     return CookieJar::fromArray($cookieArray, parse_url($url, PHP_URL_HOST));

@@ -18,20 +18,20 @@
 
 (function ($, Drupal) {
   DocSpaceComponent.initScript()
-			.then(
-				function(e) {
-					DocSpace.SDK.initSystem(
-						{
-							frameId: 'oodsp-system-frame'
-						}
-					);
-				}
-			);
+    .then(
+      function (e) {
+        DocSpace.SDK.initSystem(
+          {
+            frameId: 'oodsp-system-frame'
+          }
+        );
+      }
+    );
 
   var $usersForm = $('#onlyoffice-docspace-users');
   $usersForm.removeAttr('hashGenerated');
 
-  $usersForm.on('submit', async function(event) {
+  $usersForm.on('submit', async function (event) {
     if ($('#edit-action').val() === 'onlyoffice_docspace_export_user_action' && !$usersForm.attr('hashGenerated')) {
       event.preventDefault();
       Drupal.showLoader();
@@ -48,22 +48,22 @@
         }
       }
 
-      $usersForm.attr('hashGenerated', true);
+      $usersForm.attr('hashGenerated', TRUE);
       $usersForm.submit();
     }
   });
 
-  const generatePass = function() {
-		var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
-		var passwordLength = 24;
-		var password = "";
+  const generatePass = function () {
+    var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
+    var passwordLength = 24;
+    var password = "";
 
-		for (var i = 0; i <= passwordLength; i++) {
-			var randomNumber = Math.floor(Math.random() * chars.length);
-			password += chars.substring(randomNumber, randomNumber + 1);
-		}
+    for (var i = 0; i <= passwordLength; i++) {
+      var randomNumber = Math.floor(Math.random() * chars.length);
+      password += chars.substring(randomNumber, randomNumber + 1);
+    }
 
-		return password;
-	}
+    return password;
+  }
 
 })(jQuery, Drupal);

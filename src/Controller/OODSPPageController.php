@@ -74,7 +74,7 @@ class OODSPPageController extends ControllerBase {
     $build['onlyoffice_docspace-admin-container'] = [];
 
     $build['onlyoffice_docspace-admin-container'] = $this->componentManager->buildComponent($build['onlyoffice_docspace-admin-container'], $this->currentUser());
-    
+
     $build['onlyoffice_docspace-admin-container']['#theme'] = 'onlyoffice_docspace_page';
     $build['onlyoffice_docspace-admin-container']['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.page';
 

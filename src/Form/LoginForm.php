@@ -116,7 +116,7 @@ class LoginForm extends FormBase {
     $form = $this->componentManager->buildComponent($form, $this->currentUser());
 
     $form['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.login';
-    
+
     $form['login-form'] = [
       '#type' => 'fieldset',
       '#title' => $this->t('Drupal requests access to your ONLYOFFICE DocSpace') . ' <span class="url-host">' . parse_url($this->config('onlyoffice_docspace.settings')->get('url') . '</span>', PHP_URL_HOST),
@@ -150,7 +150,7 @@ class LoginForm extends FormBase {
         'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/login-onlyoffice.svg',
       ],
     ];
-    
+
     $form['login-form']['pass'] = [
       '#type' => 'password',
       '#title' => $this->t('Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:', ['@user_email' => $this->currentUser()->getEmail()]),
@@ -166,7 +166,7 @@ class LoginForm extends FormBase {
     $form['login-form']['actions'] = ['#type' => 'actions'];
     $form['login-form']['actions']['submit'] = [
       '#type' => 'submit',
-      '#value' => $this->t('Log in')
+      '#value' => $this->t('Log in'),
     ];
 
     $form['oodsp-login-hidden-block'] = [
@@ -206,4 +206,5 @@ class LoginForm extends FormBase {
 
     $form_state->setRedirect('onlyoffice_docspace.page');
   }
+
 }

@@ -30,11 +30,11 @@
     selectorType: 'roomsOnly'
   }
 
-  $selectButtons.on('click', function(event) {
+  $selectButtons.on('click', function (event) {
     event.preventDefault();
 
     const widgetId = getId(event.target.id);
-    const mode = event.target.dataset.mode || null;
+    const mode = event.target.dataset.mode || NULL;
     const title = event.target.dataset.title || "";
     const dialog = Drupal.dialog($oodspDialog, {
       title: title,
@@ -54,7 +54,7 @@
       $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').addClass('hidden');
       dialog.close();
     }
-  
+
     const onSelectFileCallback = (event) => {
       setInputValue(widgetId, 'target-id', event.id);
       setInputValue(widgetId, 'type', 'editor');
@@ -68,12 +68,12 @@
       $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').addClass('hidden');
       dialog.close();
     }
-  
+
     const onCloseCallback = () => {
       DocSpace.SDK.frames['oodsp-selector-frame'].destroyFrame();
       dialog.close();
     }
-    
+
     modalConfig.mode = mode;
     switch (mode) {
       case 'room-selector':
@@ -82,6 +82,7 @@
           onCloseCallback: onCloseCallback
         }
         break;
+
       case 'file-selector':
         modalConfig.events = {
           onSelectCallback: onSelectFileCallback,
@@ -89,17 +90,17 @@
         }
         break;
     }
-    
+
     DocSpaceComponent.renderDocSpace(
       'oodsp-selector-frame',
-      function() {
+      function () {
           DocSpace.SDK.initFrame(modalConfig);
       }
     );
     dialog.showModal();
   });
 
-  $removeButtons.on('click', function(event) {
+  $removeButtons.on('click', function (event) {
     event.preventDefault();
 
     const widgetId = getId(event.target.id);
@@ -113,12 +114,11 @@
     $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').removeClass('hidden');
   });
 
-  $titleInputs.on('change', function(event) {
+  $titleInputs.on('change', function (event) {
     const widgetId = getId(event.target.id);
 
     setInputValue(widgetId, 'title', event.target.value);
   })
-
 
   const getId = function (id) {
     if (id.startsWith(PREFIX)) {

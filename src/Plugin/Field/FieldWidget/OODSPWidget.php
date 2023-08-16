@@ -85,7 +85,16 @@ class OODSPWidget extends WidgetBase {
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory service.
    */
-  public function __construct($plugin_id, $plugin_definition, FieldDefinitionInterface $field_definition, array $settings, array $third_party_settings, ComponentManager $component_manager, AccountInterface $current_user, ConfigFactoryInterface $config_factory) {
+  public function __construct(
+    $plugin_id,
+    $plugin_definition,
+    FieldDefinitionInterface $field_definition,
+    array $settings,
+    array $third_party_settings,
+    ComponentManager $component_manager,
+    AccountInterface $current_user,
+    ConfigFactoryInterface $config_factory
+  ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->componentManager = $component_manager;
     $this->currentUser = $current_user;
@@ -220,6 +229,12 @@ class OODSPWidget extends WidgetBase {
     return $element;
   }
 
+  /**
+   * Return absolute ONLYOFFICE DocSpace URL.
+   *
+   * @param string $url
+   *   The url.
+   */
   private function getAbsoluteDocSpaceUrl($url) {
     return rtrim($this->configFactory->get('onlyoffice_docspace.settings')->get('url'), "/") . parse_url($url)['path'];
   }

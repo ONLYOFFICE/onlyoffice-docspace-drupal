@@ -59,7 +59,7 @@ class ComponentManager extends ManagerBase {
 
   /**
    * Create ONLYOFFICE DocSpace Component.
-   * 
+   *
    * @param array $build
    *   An associative array containing the structure of the form.
    * @param \Drupal\Core\Session\AccountInterface $user
@@ -68,11 +68,11 @@ class ComponentManager extends ManagerBase {
   public function buildComponent(array $build, AccountInterface $user) {
     $isAnonymous = $user->isAnonymous();
     $email = $isAnonymous ? OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN : $user->getEmail();
-    
+
     if ($user->hasPermission('administer onlyoffice_docspace configuration')) {
       $error_message = $this->t('Go to the settings to configure ONLYOFFICE DocSpace connector.');
     }
-    else{
+    else {
       $error_message = $this->t('Portal unavailable! Please contact the administrator!');
     }
 
@@ -81,7 +81,7 @@ class ComponentManager extends ManagerBase {
     $build['#attached']['drupalSettings']['DocSpaceComponent'] = [
       'currentUser' => $email,
       'isPublic' => $isAnonymous,
-      'url' => rtrim($this->config('onlyoffice_docspace.settings')->get('url'),"/").'/',
+      'url' => rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/',
       'ajaxUrl' => Url::fromRoute('onlyoffice_docspace.credentilas')->setAbsolute()->toString(),
       'loginUrl' => Url::fromRoute('onlyoffice_docspace.page_login')->setAbsolute()->toString(),
       'adminUrl' => Url::fromRoute('onlyoffice_docspace.page')->setAbsolute()->toString(),
@@ -96,4 +96,5 @@ class ComponentManager extends ManagerBase {
 
     return $build;
   }
+
 }

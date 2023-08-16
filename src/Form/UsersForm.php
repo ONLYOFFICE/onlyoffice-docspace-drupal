@@ -97,7 +97,7 @@ class UsersForm extends FormBase {
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
    */
-  public function __construct(ContainerInterface $container, RequestManagerInterface $request_manager,  ComponentManager $component_manager, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger) {
+  public function __construct(ContainerInterface $container, RequestManagerInterface $request_manager, ComponentManager $component_manager, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger) {
     $this->requestManager = $request_manager;
     $this->componentManager = $component_manager;
     $this->entityTypeManager = $entity_type_manager;

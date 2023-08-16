@@ -19,12 +19,12 @@
 (function (Drupal) {
   DocSpaceComponent.renderDocSpace(
     'oodsp-manager-frame',
-    function() {
+    function () {
       DocSpace.SDK.initManager({
         frameId: "oodsp-manager-frame",
-        showMenu: true,
-        showFilter: true,
-        showHeader: true
+        showMenu: TRUE,
+        showFilter: TRUE,
+        showHeader: TRUE
       });
     }
   );

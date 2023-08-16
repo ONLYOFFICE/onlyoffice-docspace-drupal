@@ -24,7 +24,7 @@
   $('[data-drupal-messages-fallback]').show()
   const messages = new Drupal.Message(document.querySelector('[data-drupal-messages-fallback]'));
 
-  $settingsForm.on('submit', function(event) {
+  $settingsForm.on('submit', function (event) {
     var passwordHash = $('input[name="passwordHash"]').val() || "";
 
     if (passwordHash.trim().length <= 0) {
@@ -32,16 +32,16 @@
       const password = $('#edit-password').val();
 
       DocSpaceComponent.initScript(url)
-        .then(async function() {
+        .then(async function () {
           Drupal.showLoader();
 
           DocSpace.SDK.initSystem({
             frameId: "oodsp-settings-frame",
             events: {
-              "onAppReady": async function() {
+              "onAppReady": async function () {
                 const hashSettings = await DocSpace.SDK.frames['oodsp-settings-frame'].getHashSettings();
 
-                const hash  = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings);
+                const hash = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings);
                 $('input[name="passwordHash"]').val(hash);
 
                 const hashCurrentUser = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(generatePass(), hashSettings);
@@ -51,7 +51,7 @@
 
                 $settingsForm.submit();
               },
-              'onAppError': function() {
+              'onAppError': function () {
                 Drupal.hideLoader();
                 messages.clear();
                 messages.add(Drupal.t('ONLYOFFICE DocSpace cannot be reached.'), {type: 'error'});
@@ -59,16 +59,16 @@
             }
           });
         }).catch(
-          function() {
+          function () {
             Drupal.hideLoader();
             messages.clear();
             messages.add(Drupal.t('ONLYOFFICE DocSpace cannot be reached.'), {type: 'error'});
           }
         );
 
-      return false;
+      return FALSE;
     } else {
-      return true;
+      return TRUE;
     }
   });
 
@@ -82,7 +82,7 @@
     return rnd.substring(0, i);
   };
 
-  const generatePass = function() {
+  const generatePass = function () {
     var chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()";
     var passwordLength = 24;
     var password = "";

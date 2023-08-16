@@ -148,15 +148,39 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
     }
 
     if ($countError !== 0) {
-      $this->messenger()->addError($this->t('Invite with error for @count_errors/@count_users users', ['@count_errors' => $countError, '@count_users' => $countUsers]));
+      $this->messenger()->addError(
+        $this->t(
+          'Invite with error for @count_errors/@count_users users',
+          [
+            '@count_errors' => $countError,
+            '@count_users' => $countUsers,
+          ]
+        )
+      );
     }
 
     if ($countSkipped !== 0) {
-      $this->messenger()->addWarning($this->t('Invite skipped for @count_skipped/@count_users users', ['@count_skipped' => $countSkipped, '@count_users' => $countUsers]));
+      $this->messenger()->addWarning(
+        $this->t(
+          'Invite skipped for @count_skipped/@count_users users',
+          [
+            '@count_skipped' => $countSkipped,
+            '@count_users' => $countUsers,
+          ]
+        )
+      );
     }
 
     if ($countInvited !== 0) {
-      $this->messenger()->addStatus($this->t('Invite sucessed for @count_invited/@count_users users', ['@count_invited' => $countInvited, '@count_users' => $countUsers]));
+      $this->messenger()->addStatus(
+        $this->t(
+          'Invite sucessed for @count_invited/@count_users users',
+          [
+            '@count_invited' => $countInvited,
+            '@count_users' => $countUsers,
+          ]
+        )
+      );
     }
   }
 

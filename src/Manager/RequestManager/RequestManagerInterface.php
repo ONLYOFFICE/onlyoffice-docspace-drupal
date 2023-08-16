@@ -96,7 +96,7 @@ interface RequestManagerInterface {
   /**
    * Set ONLYOFFICE DocSpace user password.
    *
-   * @param string $user_id 
+   * @param string $user_id
    *   The ONLYOFFICE DocSpace user ID.
    * @param string $password_hash
    *   The ONLYOFFICE DocSpace user password hash.
@@ -108,7 +108,7 @@ interface RequestManagerInterface {
   /**
    * Get file information from ONLYOFFICE DocSpace.
    *
-   * @param string $file_id 
+   * @param string $file_id
    *   The ONLYOFFICE DocSpace file ID.
    */
   public function getFileInfo($file_id);
@@ -116,7 +116,7 @@ interface RequestManagerInterface {
   /**
    * Get folder information from ONLYOFFICE DocSpace.
    *
-   * @param string $folder_id 
+   * @param string $folder_id
    *   The ONLYOFFICE DocSpace folder ID.
    */
   public function getFolderInfo($folder_id);
@@ -124,8 +124,8 @@ interface RequestManagerInterface {
   /**
    * Share room public user ONLYOFFICE DocSpace.
    *
-   * @param string $room_id 
-   * The ONLYOFFICE DocSpace room ID.
+   * @param string $room_id
+   *   The ONLYOFFICE DocSpace room ID.
    */
   public function shareRoomPublicUser($room_id);
 

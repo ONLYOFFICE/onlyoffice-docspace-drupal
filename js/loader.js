@@ -17,13 +17,15 @@
 */
 
 (function ($, Drupal) {
-    if (!window.Drupal) window.Drupal = {};
+  if (!window.Drupal) {
+    window.Drupal = {};
+  }
 
-    Drupal.showLoader = function() {
-        $('#onlyoffice-docspace-loader').show();
-    };
+  Drupal.showLoader = function () {
+    $('#onlyoffice-docspace-loader').show();
+  };
 
-    Drupal.hideLoader = function() {
-        $('#onlyoffice-docspace-loader').hide();
-    };
+  Drupal.hideLoader = function () {
+    $('#onlyoffice-docspace-loader').hide();
+  };
 })(jQuery, Drupal);
