@@ -175,6 +175,7 @@ class OODSPWidget extends WidgetBase {
             '#type' => 'textfield',
             '#title' => new TranslatableMarkup('Title'),
             '#default_value' => $items[$delta]->title ?? '',
+            '#disabled' => TRUE,
             '#maxlength' => 1024,
             '#weight' => -11,
             '#wrapper_attributes' => [
