@@ -122,6 +122,10 @@ class OODSPWidget extends WidgetBase {
    */
   public function formElement(FieldItemListInterface $items, $delta, array $element, array &$form, FormStateInterface $form_state) {
     $element['#type'] = 'fieldset';
+    $element['#attributes'] = [
+      'class' => ['onlyoffice-docspace-widget'],
+    ];
+
     $element = $this->componentManager->buildComponent($element, $this->currentUser);
     $element['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.widget';
 

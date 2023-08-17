@@ -17,11 +17,8 @@
 */
 
 (function ($, Drupal) {
-  const PREFIX = 'edit-field-onlyoffice-docspace-';
-
   var $selectButtons = $('.oodsp-select-button');
   var $removeButtons = $('.oodsp-remove-button');
-  var $titleInputs = $('input[data-drupal-selector^="edit-field-onlyoffice-docspace-"][data-drupal-selector$="-fields-title"]');
   var $oodspDialog = $('<div id="oodspModalDialog"><div id="oodsp-selector-frame"></div></div>').appendTo('body');
   var modalConfig = {
     frameId: 'oodsp-selector-frame',
@@ -33,7 +30,7 @@
   $selectButtons.on('click', function (event) {
     event.preventDefault();
 
-    const widgetId = getId(event.target.id);
+    const widgetId = $(event.target).parents('.onlyoffice-docspace-widget').attr('id');
     const mode = event.target.dataset.mode || null;
     const title = event.target.dataset.title || "";
     const dialog = Drupal.dialog($oodspDialog, {
@@ -47,11 +44,11 @@
       setInputValue(widgetId, 'title', event[0].label);
       setInputValue(widgetId, 'image', event[0].icon);
 
-      $('img[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon)); //todo: add url to settings
-      $('input[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-items-title"]').val(event[0].label);
+      $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon)); //todo: add url to settings
+      $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event[0].label);
 
-      $('div[data-drupal-selector="' + PREFIX + widgetId + '-fields"]').removeClass('hidden');
-      $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').addClass('hidden');
+      $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
+      $('div[data-drupal-selector="' + widgetId + '-buttons"]').addClass('hidden');
       dialog.close();
     }
 
@@ -61,11 +58,11 @@
       setInputValue(widgetId, 'title', event.title);
       setInputValue(widgetId, 'image', event.icon);
 
-      $('img[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon)); //todo: add url to settings
-      $('input[data-drupal-selector="' + PREFIX + widgetId + '-fields-field-items-title"]').val(event.title);
+      $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon));
+      $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event.title);
 
-      $('div[data-drupal-selector="' + PREFIX + widgetId + '-fields"]').removeClass('hidden');
-      $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').addClass('hidden');
+      $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
+      $('div[data-drupal-selector="' + widgetId + '-buttons"]').addClass('hidden');
       dialog.close();
     }
 
@@ -103,33 +100,19 @@
   $removeButtons.on('click', function (event) {
     event.preventDefault();
 
-    const widgetId = getId(event.target.id);
+    const widgetId = $(event.target).parents('.onlyoffice-docspace-widget').attr('id');
 
     setInputValue(widgetId, 'target-id', '');
     setInputValue(widgetId, 'type', '');
     setInputValue(widgetId, 'title', '');
     setInputValue(widgetId, 'image', '');
 
-    $('div[data-drupal-selector="' + PREFIX + widgetId + '-fields"]').addClass('hidden');
-    $('div[data-drupal-selector="' + PREFIX + widgetId + '-buttons"]').removeClass('hidden');
+    $('div[data-drupal-selector="' + widgetId + '-fields"]').addClass('hidden');
+    $('div[data-drupal-selector="' + widgetId + '-buttons"]').removeClass('hidden');
   });
 
-  $titleInputs.on('change', function (event) {
-    const widgetId = getId(event.target.id);
-
-    setInputValue(widgetId, 'title', event.target.value);
-  })
-
-  const getId = function (id) {
-    if (id.startsWith(PREFIX)) {
-      id = id.slice(PREFIX.length);
-    }
-
-    return id.split('-')[0];
-  }
-
   const setInputValue = function (id, name, value) {
-    $('input[data-drupal-selector="' + PREFIX + id + '-' + name + '"]').val(value);
+    $('input[data-drupal-selector="' + id + '-' + name + '"]').val(value);
   }
 
 })(jQuery, Drupal);
