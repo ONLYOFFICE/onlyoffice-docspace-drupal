@@ -28,6 +28,7 @@ use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\FieldableEntityInterface;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
+use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
 use Drupal\onlyoffice_docspace\Plugin\Field\FieldType\OODSPItem;
 
 /**
@@ -82,8 +83,8 @@ function onlyoffice_docspace_entity_update(EntityInterface $entity) {
     return;
   }
 
-  $rooms_id = [];
-  $files_id = [];
+  $rooms = [];
+  $files = [];
 
   $oodsp_item_fields = _onlyoffice_docspace_get_oodsp_item_fields($entity);
 
@@ -92,20 +93,29 @@ function onlyoffice_docspace_entity_update(EntityInterface $entity) {
     foreach ($field_items as $field_item) {
       if (!empty($field_item->target_id)) {
         if ($field_item->type === 'manager') {
-          $rooms_id[] = $field_item->target_id;
+          $rooms[] = [
+            'id' => $field_item->target_id,
+            'title' => $field_item->title,
+            'access' => FALSE,
+          ];
         }
 
-        if ($field_item->type === 'manager') {
-          $files_id[] = $field_item->target_id;
+        if ($field_item->type === 'editor') {
+          $files[] = [
+            'id' => $field_item->target_id,
+            'title' => $field_item->title,
+            'access' => FALSE,
+          ];
         }
       }
     }
   }
 
-  $files_id = array_unique($files_id);
+  $rooms = _onlyoffice_docspace_unique_multidim_array($rooms, 'id');
+  $files = _onlyoffice_docspace_unique_multidim_array($files, 'id');
 
-  foreach ($files_id as $file_id) {
-    $responseFileInfo = \Drupal::service('onlyoffice_docspace.request_manager')->getFileInfo($file_id);
+  foreach ($files as &$file) {
+    $responseFileInfo = \Drupal::service('onlyoffice_docspace.request_manager')->getFileInfo($file['id']);
 
     if (!$responseFileInfo['error']) {
       $folder_id = $responseFileInfo['data']['folderId'];
@@ -114,25 +124,87 @@ function onlyoffice_docspace_entity_update(EntityInterface $entity) {
 
       if (!$responseFolderInfo['error']) {
         $room_id = $responseFolderInfo['data']['pathParts'][1];
-        $rooms_id[] = $room_id;
+        $file['room_id'] = $room_id;
       }
-      else {
-        \Drupal::messenger()->addError(print_r($responseShareRoom, TRUE)); // ToDo: error 
-      }
-    }
-    else {
-      \Drupal::messenger()->addError(print_r($responseShareRoom, TRUE)); // ToDo: error 
     }
   }
 
-  $rooms_id = array_unique($rooms_id);
+  $success_shared_rooms_id = [];
 
-  foreach ($rooms_id as $room_id) {
-    $responseShareRoom = \Drupal::service('onlyoffice_docspace.request_manager')->shareRoomPublicUser($room_id);
-    if ($responseShareRoom['error']) {
-      \Drupal::messenger()->addError(print_r($responseShareRoom, TRUE)); // ToDo: error 
+  foreach ($rooms as &$room) {
+    $responseShareRoom = \Drupal::service('onlyoffice_docspace.request_manager')->shareRoomPublicUser($room['id']);
+    if (!$responseShareRoom['error']) {
+      $room['access'] = TRUE;
+      $success_shared_rooms_id[] = $room['id'];
     }
-    \Drupal::messenger()->addStatus(print_r($responseShareRoom, TRUE)); //ToDo: success 
+  }
+
+  foreach ($files as &$file) {
+    if (array_key_exists('room_id', $file)) {
+      if (in_array($file['room_id'], $success_shared_rooms_id)) {
+        $file['access'] = TRUE;
+      }
+      else {
+        $responseShareRoom = \Drupal::service('onlyoffice_docspace.request_manager')->shareRoomPublicUser($file['room_id']);
+        if (!$responseShareRoom['error']) {
+          $file['access'] = TRUE;
+          $success_shared_rooms_id[] = $file['room_id'];
+        }
+      }
+    }
+  }
+
+  $success_shared_rooms = _onlyoffice_docspace_filter_array_by_key($rooms, 'access', TRUE, 'title');
+  $error_shared_rooms = _onlyoffice_docspace_filter_array_by_key($rooms, 'access', FALSE, 'title');
+  $success_shared_files = _onlyoffice_docspace_filter_array_by_key($files, 'access', TRUE, 'title');
+  $error_shared_files = _onlyoffice_docspace_filter_array_by_key($files, 'access', FALSE, 'title');
+
+  if (!empty($success_shared_rooms)) {
+    \Drupal::messenger()->addStatus(
+      t(
+        'ONLYOFFICE DocSpace: Rooms (@success_shared_rooms) is available for @user.',
+        [
+          '@success_shared_rooms' => implode(", ", $success_shared_rooms),
+          '@user' => OODSPCredentialsController::OODSP_PUBLIC_USER_FIRSTNAME . ' ' . OODSPCredentialsController::OODSP_PUBLIC_USER_LASTNAME,
+        ]
+      )
+    );
+  }
+
+  if (!empty($error_shared_rooms)) {
+    \Drupal::messenger()->addError(
+      t(
+        'ONLYOFFICE DocSpace: Rooms (@error_shared_rooms) sharing for @user failed!',
+        [
+          '@error_shared_rooms' => implode(", ", $error_shared_rooms),
+          '@user' => OODSPCredentialsController::OODSP_PUBLIC_USER_FIRSTNAME . ' ' . OODSPCredentialsController::OODSP_PUBLIC_USER_LASTNAME,
+        ]
+      )
+    );
+  }
+
+  if (!empty($success_shared_files)) {
+    \Drupal::messenger()->addStatus(
+      t(
+        'ONLYOFFICE DocSpace: Files (@success_shared_files) is available for @user.',
+        [
+          '@success_shared_files' => implode(", ", $success_shared_files),
+          '@user' => OODSPCredentialsController::OODSP_PUBLIC_USER_FIRSTNAME . ' ' . OODSPCredentialsController::OODSP_PUBLIC_USER_LASTNAME,
+        ]
+      )
+    );
+  }
+
+  if (!empty($error_shared_files)) {
+    \Drupal::messenger()->addError(
+      t(
+        'ONLYOFFICE DocSpace: Files (@error_shared_files) sharing for @user failed!',
+        [
+          '@error_shared_files' => implode(", ", $error_shared_files),
+          '@user' => OODSPCredentialsController::OODSP_PUBLIC_USER_FIRSTNAME . ' ' . OODSPCredentialsController::OODSP_PUBLIC_USER_LASTNAME,
+        ]
+      )
+    );
   }
 }
 
@@ -154,4 +226,57 @@ function _onlyoffice_docspace_get_oodsp_item_fields(FieldableEntityInterface $en
     $plugin_class = $field_type_manager->getPluginClass($type);
     return is_subclass_of($plugin_class, OODSPItem::class) || $plugin_class === OODSPItem::class;
   }));
+}
+
+/**
+ * Returns an array with unique values ​​by key.
+ *
+ * @param array $array
+ *   The target array.
+ * @param array $key
+ *   The target key.
+ */
+function _onlyoffice_docspace_unique_multidim_array($array, $key) {
+  $key_array = [];
+  $temp_array = [];
+  $i = 0;
+
+  foreach ($array as $val) {
+    if (!in_array($val[$key], $key_array)) {
+      $key_array[$i] = $val[$key];
+      $temp_array[$i] = $val;
+    }
+    $i++;
+  }
+
+  return $temp_array;
+}
+
+/**
+ * Returns an array of elements whose key property is equal to the values.
+ *
+ * @param array $array
+ *   The target array.
+ * @param array $key
+ *   The target key.
+ * @param array $value
+ *   The target value.
+ * @param array $return_value
+ *   The target return_value.
+ */
+function _onlyoffice_docspace_filter_array_by_key($array, $key, $value, $return_value = NULL) {
+  $result = [];
+
+  foreach ($array as $val) {
+    if ($val[$key] === $value) {
+      if (!empty($return_value)) {
+        $result[] = $val[$return_value];
+      }
+      else {
+        $result[] = $val;
+      }
+    }
+  }
+
+  return $result;
 }
