@@ -24,7 +24,8 @@
     frameId: 'oodsp-selector-frame',
     width: '400px',
     height: '500px',
-    selectorType: 'roomsOnly'
+    selectorType: 'roomsOnly',
+    locale: DocSpaceComponent.locale
   }
 
   $selectButtons.on('click', function (event) {

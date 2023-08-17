@@ -22,6 +22,7 @@ namespace Drupal\onlyoffice_docspace\Manager\ComponentManager;
  */
 
 use Drupal\Core\Extension\ModuleExtensionList;
+use Drupal\Core\Language\LanguageManagerInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
@@ -33,11 +34,28 @@ use Drupal\onlyoffice_docspace\Manager\ManagerBase;
 class ComponentManager extends ManagerBase {
 
   /**
+   * Locales for ONLYOFFICE DocSpace.
+   *
+   */
+   public const LOCALES = [
+    'az', 'bg', 'cs', 'de', 'el-GR', 'en-GB', 'en-US', 'es', 'fi', 'fr',
+    'hy-AM', 'it', 'ja-JP', 'ko-KR', 'lo-LA', 'lv', 'nl', 'pl', 'pt', 'pt-BR',
+    'ro', 'ru', 'sk', 'sl', 'tr', 'uk-UA', 'vi', 'zh-CN'
+  ];
+
+  /**
    * The list of available modules.
    *
    * @var \Drupal\Core\Extension\ModuleExtensionList
    */
   protected $extensionListModule;
+
+  /**
+   * The language manager.
+   *
+   * @var \Drupal\Core\Language\LanguageManagerInterface
+   */
+  protected $languageManager;
 
   /**
    * A logger instance.
@@ -51,10 +69,13 @@ class ComponentManager extends ManagerBase {
    *
    * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
    *   The module extension list.
+   * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
+   *   The language manager.
    */
-  public function __construct(ModuleExtensionList $extension_list_module) {
+  public function __construct(ModuleExtensionList $extension_list_module, LanguageManagerInterface $language_manager) {
     $this->extensionListModule = $extension_list_module;
     $this->logger = $this->getLogger('onlyoffice_docspace');
+    $this->languageManager = $language_manager;
   }
 
   /**
@@ -92,9 +113,31 @@ class ComponentManager extends ManagerBase {
         'onlyoffice'  => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/onlyoffice.svg',
         'unavailable' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/unavailable.svg',
       ],
+      'locale' => $this->get_locale_for_docspace(),
     ];
 
     return $build;
+  }
+
+  /**
+   * Return locale for ONLYOFFICE DocSpace.
+   */
+  public function get_locale_for_docspace() {
+    $locale = str_replace('_', '-', $this->languageManager->getCurrentLanguage()->getId());
+
+    if (in_array( $locale, self::LOCALES)) {
+      return $locale;
+    }
+    else {
+      $locale = explode('-', $locale)[0];
+      foreach (self::LOCALES as $value) {
+        if (str_starts_with($value, $locale)) {
+          return $value;
+        }
+      }
+    }
+
+    return 'en-US';
   }
 
 }

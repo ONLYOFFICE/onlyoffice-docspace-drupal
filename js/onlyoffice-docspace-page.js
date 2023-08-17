@@ -24,7 +24,8 @@
         frameId: "oodsp-manager-frame",
         showMenu: true,
         showFilter: true,
-        showHeader: true
+        showHeader: true,
+        locale: DocSpaceComponent.locale
       });
     }
   );
