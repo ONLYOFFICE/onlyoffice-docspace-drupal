@@ -1,6 +1,6 @@
 name: 'ONLYOFFICE DocSpace Connector'
 type: module
-description: 'Description!!!!!'
+description: 'This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal.'
 core_version_requirement: ^9 || ^10
 package: ONLYOFFICE
 configure: onlyoffice_docspace.settings_form

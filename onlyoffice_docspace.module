@@ -36,12 +36,12 @@ use Drupal\onlyoffice_docspace\Plugin\Field\FieldType\OODSPItem;
  */
 function onlyoffice_docspace_help($route_name, RouteMatchInterface $route_match) {
   switch ($route_name) {
-    case 'help.page.onlyoffice':
+    case 'help.page.onlyoffice_docspace':
       $output = '<h3>' . t('About') . '</h3>';
-      $output .= '<p>' . t('The ONLYOFFICE connector allows users to edit office documents, spreadsheets, and presentations in the Media module from Drupal using ONLYOFFICE Docs packaged as Document Server. Users are able to collaborate on documents in real-time and preview files on public pages.') . '</p>';
+      $output .= '<p>' . t('The ONLYOFFICE DocSpace Connector allows using the room-based environment for effective document collaboration right within Drupal. Users are able to create Collaboration and Custom rooms with the pre-set access level, edit and co-author all types of office files.') . '</p>';
 
       $output .= '<h3>' . t('Installation and configuration') . '</h3>';
-      $output .= '<p>' . t('Explore how to install and configure the ONLYOFFICE connector for Drupal on the <a href=":onlyoffice-drupal">official project page</a>.', [':onlyoffice-drupal' => 'https://github.com/ONLYOFFICE/onlyoffice-drupal']) . '</p>';
+      $output .= '<p>' . t('As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=":onlyoffice-docspace-drupal">official project page</a>.', [':onlyoffice-docspace-drupal' => 'https://github.com/ONLYOFFICE/onlyoffice-docspace-drupal']) . '</p>';
 
       return $output;
   }
