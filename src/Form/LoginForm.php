@@ -119,7 +119,7 @@ class LoginForm extends FormBase {
 
     $form['login-form'] = [
       '#type' => 'fieldset',
-      '#title' => $this->t('Drupal requests access to your ONLYOFFICE DocSpace') . ' <span class="url-host">' . parse_url($this->config('onlyoffice_docspace.settings')->get('url') . '</span>', PHP_URL_HOST),
+      '#title' => $this->t('Drupal requests access to your ONLYOFFICE DocSpace') . ' <span class="url-host">' . parse_url($this->config('onlyoffice_docspace.settings')->get('url'), PHP_URL_HOST) . '</span>',
     ];
 
     $form['login-form']['header'] = [
