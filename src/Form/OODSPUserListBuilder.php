@@ -122,6 +122,7 @@ class OODSPUserListBuilder extends UserListBuilder {
     $entity_query = $this->storage->getQuery();
     $entity_query->accessCheck(TRUE);
     $entity_query->condition('uid', 0, '<>');
+    $entity_query->condition('mail', NULL, 'IS NOT NULL');
     $entity_query->pager(10);
     $header = $this->buildHeader();
     $entity_query->tableSort($header);
