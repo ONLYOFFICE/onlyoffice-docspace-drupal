@@ -165,8 +165,8 @@ msgstr "Авторизация не удалась!"
 msgid "Please contact the administrator."
 msgstr "Пожалуйста, свяжитесь с администратором."
 
-msgid "Please proceed to the DocSpace plugin and enter your password to restore access."
-msgstr "Пожалуйста, перейдите к плагину DocSpace и введите свой пароль, чтобы восстановить доступ."
+msgid "Please go to <a href="@login_page">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
+msgstr "Пожалуйста, перейдите на <a href="@login_page">cтраницу входа ONLYOFFICE DocSpace</a> и введите свой пароль, чтобы восстановить доступ."
 
 msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
 msgstr "Перейдите в настройки, чтобы настроить коннектор ONLYOFFICE DocSpace."

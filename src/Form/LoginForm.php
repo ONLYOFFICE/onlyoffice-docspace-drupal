@@ -25,6 +25,7 @@ use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
+use Drupal\Core\Url;
 use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -112,6 +113,8 @@ class LoginForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
+    $redirect = \Drupal::request()->query->get('redirect');
+
     $form = [];
     $form = $this->componentManager->buildComponent($form, $this->currentUser());
 
@@ -163,6 +166,13 @@ class LoginForm extends FormBase {
       '#default_value' => NULL,
     ];
 
+    if (!empty($redirect)) {
+      $form['login-form']['redirect'] = [
+        '#type' => 'hidden',
+        '#default_value' => Url::fromUserInput('/' . ltrim($redirect, '/'))->toString(),
+      ];
+    }
+
     $form['login-form']['actions'] = ['#type' => 'actions'];
     $form['login-form']['actions']['submit'] = [
       '#type' => 'submit',
@@ -204,7 +214,18 @@ class LoginForm extends FormBase {
 
     $this->securityManager->setPasswordHash($this->currentUser()->id(), $passwordHash);
 
-    $form_state->setRedirect('onlyoffice_docspace.page');
+    try {
+      $redirect = $form_state->getValue('redirect');
+
+      if (!empty($redirect)) {
+        $form_state->setRedirectUrl(Url::fromUserInput('/' . ltrim($redirect, '/')));
+      } else {
+        $form_state->setRedirect('onlyoffice_docspace.page');
+      }
+    } 
+    catch (\Exception $e) {
+      $form_state->setRedirect('onlyoffice_docspace.page');
+    }
   }
 
 }

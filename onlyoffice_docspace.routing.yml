@@ -34,7 +34,7 @@ onlyoffice_docspace.page_login:
     _title: 'ONLYOFFICE DocSpace Login'
     scheme: null
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'access content'
 
 onlyoffice_docspace.credentilas:
   path: '/credentilas'

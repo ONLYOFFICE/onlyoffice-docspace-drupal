@@ -23,6 +23,7 @@ namespace Drupal\onlyoffice_docspace\Manager\ComponentManager;
 
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Language\LanguageManagerInterface;
+use Drupal\Core\Path\CurrentPathStack;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\Url;
 use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
@@ -56,6 +57,13 @@ class ComponentManager extends ManagerBase {
    * @var \Drupal\Core\Language\LanguageManagerInterface
    */
   protected $languageManager;
+  
+  /**
+   * The current path.
+   *
+   * @var \Drupal\Core\Path\CurrentPathStack
+   */
+  protected $currentPath;
 
   /**
    * A logger instance.
@@ -71,11 +79,15 @@ class ComponentManager extends ManagerBase {
    *   The module extension list.
    * @param \Drupal\Core\Language\LanguageManagerInterface $language_manager
    *   The language manager.
+   * @param \Drupal\Core\Path\CurrentPathStack $current_path
+   *   The current path.
    */
-  public function __construct(ModuleExtensionList $extension_list_module, LanguageManagerInterface $language_manager) {
+  public function __construct(ModuleExtensionList $extension_list_module, LanguageManagerInterface $language_manager, CurrentPathStack $current_path) {
     $this->extensionListModule = $extension_list_module;
-    $this->logger = $this->getLogger('onlyoffice_docspace');
     $this->languageManager = $language_manager;
+    $this->currentPath = $current_path;
+
+    $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
   /**
@@ -101,8 +113,13 @@ class ComponentManager extends ManagerBase {
     $unauthorized_message = $this->t('Please contact the administrator.');
     
     if (!$isAnonymous) {
-      $unauthorized_message = $this->t('Please proceed to the DocSpace plugin and enter your password to restore access.');
-    } 
+      $unauthorized_message = $this->t(
+        'Please go to <a href="@login_page">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access.',
+        [
+          '@login_page' => Url::fromRoute('onlyoffice_docspace.page_login', [], ['query' => ['redirect' => $this->currentPath->getPath()]])->toString()
+        ]
+      );
+    }
 
     $build['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.component';
 

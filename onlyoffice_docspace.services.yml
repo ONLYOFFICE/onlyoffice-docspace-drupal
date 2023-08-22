@@ -1,7 +1,7 @@
 services:
   onlyoffice_docspace.component_manager:
     class: Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
-    arguments: ['@extension.list.module', '@language_manager']
+    arguments: ['@extension.list.module', '@language_manager', '@path.current']
     
   onlyoffice_docspace.request_manager:
     class: Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManager

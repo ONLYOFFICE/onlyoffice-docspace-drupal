@@ -27,15 +27,15 @@
           events: {
             onAppReady: async function () {
               const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
-              if (userInfo && userInfo.email === DocSpaceComponent.currentUser){
-                window.location.replace(DocSpaceComponent.adminUrl);
+              if (userInfo && userInfo.email === DocSpaceComponent.currentUser) {
+                window.location.replace(Url$('input[name="redirect"]').val() || DocSpaceComponent.admin);
               }
             }
           }
         }
       );
     }).catch(function () {
-      window.location.replace(DocSpaceComponent.adminUrl);
+      window.location.replace($('input[name="redirect"]').val() || DocSpaceComponent.adminUrl);
     });
 
   const messages = new Drupal.Message();

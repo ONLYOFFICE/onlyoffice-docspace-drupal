@@ -26,7 +26,7 @@
           drupalSettings.OODSP[frameId]['height'] || null,
           function () {
             drupalSettings.OODSP[frameId].locale = DocSpaceComponent.locale;
-            DocSpace.SDK.initFrame( drupalSettings.OODSP[frameId] );
+            DocSpace.SDK.initFrame(drupalSettings.OODSP[frameId]);
           },
           function () {
             DocSpaceComponent.renderError(frameId);
