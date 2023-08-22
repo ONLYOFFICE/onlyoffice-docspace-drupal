@@ -21,6 +21,7 @@ namespace Drupal\onlyoffice_docspace\Form;
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DateFormatterInterface;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityStorageInterface;
@@ -75,6 +76,13 @@ class OODSPUserListBuilder extends UserListBuilder {
   protected $extensionListModule;
 
   /**
+   * The factory for configuration objects.
+   *
+   * @var \Drupal\Core\Config\ConfigFactoryInterface
+   */
+  protected $configFactory;
+
+  /**
    * Constructs a new OODSPUserListBuilder object.
    *
    * @param \Drupal\Core\Entity\EntityTypeInterface $entity_type
@@ -91,13 +99,25 @@ class OODSPUserListBuilder extends UserListBuilder {
    *   The ONLYOFFICE DocSpace security manager.
    * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
    *   The module extension list.
+   * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
+   *   The factory for configuration objects.
    */
-  public function __construct(EntityTypeInterface $entity_type, EntityStorageInterface $storage, DateFormatterInterface $date_formatter, RedirectDestinationInterface $redirect_destination, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, ModuleExtensionList $extension_list_module) {
+  public function __construct(
+    EntityTypeInterface $entity_type,
+    EntityStorageInterface $storage,
+    DateFormatterInterface $date_formatter,
+    RedirectDestinationInterface $redirect_destination,
+    RequestManagerInterface $request_manager,
+    SecurityManagerInterface $security_manager,
+    ModuleExtensionList $extension_list_module,
+    ConfigFactoryInterface $config_factory
+  ) {
     parent::__construct($entity_type, $storage, $date_formatter, $redirect_destination);
 
     $this->requestManager = $request_manager;
     $this->securityManager = $security_manager;
     $this->extensionListModule = $extension_list_module;
+    $this->configFactory = $config_factory;
   }
 
   /**
@@ -111,7 +131,8 @@ class OODSPUserListBuilder extends UserListBuilder {
       $container->get('redirect.destination'),
       $container->get('onlyoffice_docspace.request_manager'),
       $container->get('onlyoffice_docspace.security_manager'),
-      $container->get('extension.list.module')
+      $container->get('extension.list.module'),
+      $container->get('config.factory')
     );
   }
 
@@ -123,7 +144,22 @@ class OODSPUserListBuilder extends UserListBuilder {
     $entity_query->accessCheck(TRUE);
     $entity_query->condition('uid', 0, '<>');
     $entity_query->condition('mail', NULL, 'IS NOT NULL');
-    $entity_query->pager(10);
+
+    try {
+      $settins_view_user_admin_people = $this->configFactory->get('views.view.user_admin_people');
+      if ($settins_view_user_admin_people) {
+        $display = $settins_view_user_admin_people->get('display');
+        $items_per_page = ($display['default']['display_options']['pager']['options']['items_per_page']);
+
+        if (!empty($items_per_page)) {
+          $entity_query->pager($items_per_page);
+        }
+      }
+    }
+    catch (\Exception $e) {
+
+    }
+
     $header = $this->buildHeader();
     $entity_query->tableSort($header);
     $uids = $entity_query->execute();
