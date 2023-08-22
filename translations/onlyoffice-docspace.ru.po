@@ -159,6 +159,15 @@ msgstr "Не удалось выполнить аутентификацию по
 msgid "Portal unavailable! Please contact the administrator!"
 msgstr "Портал недоступен! Пожалуйста, свяжитесь с администратором!"
 
+msgid "Authorization unsuccessful!"
+msgstr "Авторизация не удалась!"
+
+msgid "Please contact the administrator."
+msgstr "Пожалуйста, свяжитесь с администратором."
+
+msgid "Please proceed to the DocSpace plugin and enter your password to restore access."
+msgstr "Пожалуйста, перейдите к плагину DocSpace и введите свой пароль, чтобы восстановить доступ."
+
 msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
 msgstr "Перейдите в настройки, чтобы настроить коннектор ONLYOFFICE DocSpace."
 

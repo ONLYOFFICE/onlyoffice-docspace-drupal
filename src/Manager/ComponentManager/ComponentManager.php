@@ -97,6 +97,13 @@ class ComponentManager extends ManagerBase {
       $error_message = $this->t('Portal unavailable! Please contact the administrator!');
     }
 
+    $unauthorized_header = $this->t('Authorization unsuccessful');
+    $unauthorized_message = $this->t('Please contact the administrator.');
+    
+    if (!$isAnonymous) {
+      $unauthorized_message = $this->t('Please proceed to the DocSpace plugin and enter your password to restore access.');
+    } 
+
     $build['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.component';
 
     $build['#attached']['drupalSettings']['DocSpaceComponent'] = [
@@ -108,6 +115,8 @@ class ComponentManager extends ManagerBase {
       'adminUrl' => Url::fromRoute('onlyoffice_docspace.page')->setAbsolute()->toString(),
       'messages' => [
         'error' => $error_message,
+        'unauthorized_header' => $unauthorized_header,
+        'unauthorized_message' => $unauthorized_message,
       ],
       'images' => [
         'onlyoffice'  => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/onlyoffice.svg',
