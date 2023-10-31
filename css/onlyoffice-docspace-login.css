@@ -24,7 +24,7 @@
   max-width: 400px;
 }
 
-#edit-login-form div {
+#edit-login-form .center {
   text-align: center;
 }
 

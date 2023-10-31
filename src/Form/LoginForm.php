@@ -128,6 +128,9 @@ class LoginForm extends FormBase {
     $form['login-form']['header'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
+      '#attributes' => [
+        'class' => ['center'],
+      ],
     ];
 
     $form['login-form']['header']['drupal_logo'] = [
@@ -176,6 +179,7 @@ class LoginForm extends FormBase {
     $form['login-form']['actions'] = ['#type' => 'actions'];
     $form['login-form']['actions']['submit'] = [
       '#type' => 'submit',
+      '#button_type' => 'primary',
       '#value' => $this->t('Log in'),
     ];
 
