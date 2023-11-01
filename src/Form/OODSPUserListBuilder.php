@@ -28,6 +28,7 @@ use Drupal\Core\Entity\EntityStorageInterface;
 use Drupal\Core\Entity\EntityTypeInterface;
 use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Routing\RedirectDestinationInterface;
+use Drupal\Core\Utility\TableSort;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
 use Drupal\user\UserListBuilder;
@@ -160,14 +161,41 @@ class OODSPUserListBuilder extends UserListBuilder {
 
     }
 
+    \Drupal::logger('locale')->error("148-t");
+
     $header = $this->buildHeader();
-    $entity_query->tableSort($header);
+
+    if (TableSort::getOrder($header, \Drupal::request())['name'] != $header['docspace_user_status']['data']) {
+      $entity_query->tableSort($header);
+    }
+
     $uids = $entity_query->execute();
 
     $entities = $this->storage->loadMultiple($uids);
     $entities = $this->loadDocSpaceInfo($entities);
 
+    if (TableSort::getOrder($header, \Drupal::request())['name'] == $header['docspace_user_status']['data']) {
+      \Drupal::logger('locale')->error("15-t");
+      $this->sortByDocSpaceUserStatus($entities, TableSort::getSort($header, \Drupal::request()));
+    }
+
     return $entities;
+  }
+
+  private function sortByDocSpaceUserStatus(&$entities, $order) {
+    usort(
+      $entities,
+      function ( $a, $b ) use( $order ) {
+        if ( $a->docspaceStatus === $b->docspaceStatus ) {
+          return 0;
+        }
+        if ( empty( $order ) || 'ASC' === strtoupper($order) ) {
+          return ( $a->docspaceStatus > $b->docspaceStatus ) ? -1 : 1;
+        } else {
+          return ( $a->docspaceStatus < $b->docspaceStatus ) ? -1 : 1;
+        }
+      }
+    );
   }
 
   /**
@@ -182,6 +210,8 @@ class OODSPUserListBuilder extends UserListBuilder {
 
     $header['docspace_user_status'] = [
       'data' => $this->t('DocSpace User Status'),
+      'field' => 'docspace_user_status',
+      'specifier' => 'docspace_user_status',
       'class' => [RESPONSIVE_PRIORITY_LOW],
     ];
 
