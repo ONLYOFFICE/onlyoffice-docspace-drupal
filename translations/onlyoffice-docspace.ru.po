@@ -78,9 +78,6 @@ msgstr "Публичный пользователь DocSpace не создан! 
 msgid "Public DocSpace user already created, but failed to update authorization."
 msgstr "Публичный пользователь DocSpace уже создан, но ему не удалось обновить авторизацию."
 
-msgid "Public DocSpace user was not created. View content will not be available on public pages."
-msgstr "Публичный пользователь DocSpace не создан. Просмотр контента будет недоступен на общедоступных страницах."
-
 msgid "Public DocSpace user successfully created."
 msgstr "Публичный пользователь DocSpace успешно создан."
 
@@ -90,8 +87,8 @@ msgstr "Пользователь @user_email уже существует в DocS
 msgid "User @user_email successfully created in DocSpace with role Room Admin."
 msgstr "Пользователь @user_email успешно создан в DocSpace с ролью Администратора Комнаты."
 
-msgid "Error create user @user_email in DocSpace!"
-msgstr "Ошибка при создании пользователя @user_email в DocSpace!"
+msgid "Error create user @user_email in DocSpace! The limit of paid DocSpace users may have been reached."
+msgstr "Ошибка при создании пользователя @user_email в DocSpace! Возможно, достигнут лимит платных пользователей DocSpace."
 
 msgid "To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!"
 msgstr "Чтобы добавить новых пользователей в ONLYOFFICE DocSpace, выберите нескольких пользователей и нажмите <b>Пригласить в DocSpace</b>. Все новые пользователи будут добавляться с ролью <b>Пользователь</b>. Если вы хотите изменить роль, перейдите в Аккаунты. Роль <b>Администратор комнаты</b> платная!"
@@ -141,8 +138,8 @@ msgstr "Ошибка получения пользователей ONLYOFFICE Do
 msgid "Invitation failed for @count_errors/@count_users user(s)"
 msgstr "Приглашение закончилось с ошибкой для @count_errors/@count_users пользователя(ей)"
 
-msgid "Invitation skipped for @count_skipped/@count_users user(s)"
-msgstr "Приглашение пропущено для @count_skipped/@count_users пользователя(ей)"
+msgid "Invitation skipped for @count_skipped/@count_users user(s). User(s) with the indicated email(s) may already exist in DocSpace."
+msgstr "Приглашение пропущено для @count_skipped/@count_users пользователя(ей). Пользователь(и) с указанным адресом электронной почты могут уже существовать в DocSpace."
 
 msgid "Invitation successfully sent to @count_invited/@count_users user(s)"
 msgstr "Приглашение успешно отправлено @count_invited/@count_users пользователю(ям)"

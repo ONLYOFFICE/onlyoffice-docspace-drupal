@@ -282,7 +282,7 @@ class SettingsForm extends ConfigFormBase {
       $this->messenger()->addWarning($this->t('Public DocSpace user already created, but failed to update authorization.'));
     }
     elseif ($responseCreatePublicUser['error']) {
-      $this->messenger()->addWarning($this->t('Public DocSpace user was not created. View content will not be available on public pages.'));
+      $this->messenger()->addWarning($this->t('Public DocSpace user was not created! View content will not be available on public pages.'));
     }
     else {
       $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseCreatePublicUser['data']['id'])->save();
@@ -304,7 +304,7 @@ class SettingsForm extends ConfigFormBase {
       );
 
       if ($responseInviteToDocSpace['error']) {
-        $this->messenger()->addError($this->t('Error create user @user_email in DocSpace!', ['@user_email' => $currentUser->getEmail()]));
+        $this->messenger()->addError($this->t('Error create user @user_email in DocSpace! The limit of paid DocSpace users may have been reached.', ['@user_email' => $currentUser->getEmail()]));
       }
       else {
         $this->securityManager->setPasswordHash($currentUser->id(), $form_state->getValue('currentUserPasswordHash'));
