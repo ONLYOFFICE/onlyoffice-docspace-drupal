@@ -163,9 +163,11 @@ class OODSPUserListBuilder extends UserListBuilder {
     $header = $this->buildHeader();
     $entity_query->tableSort($header);
     $uids = $entity_query->execute();
-    $this->loadDocSpaceUsers();
 
-    return $this->storage->loadMultiple($uids);
+    $entities = $this->storage->loadMultiple($uids);
+    $entities = $this->loadDocSpaceInfo($entities);
+
+    return $entities;
   }
 
   /**
@@ -205,20 +207,7 @@ class OODSPUserListBuilder extends UserListBuilder {
     $row['status'] = [];
     $row['status']['data']['#markup'] = $status;
 
-    $docSpaceUserStatus = -1;
-    $docSpaceUserRoleLabel = '';
-
-    for ($i = 0; $i < count($this->listDocSpaceUsers); ++$i) {
-      if ($this->listDocSpaceUsers[$i]['email'] === $entity->getEmail()) {
-        $docSpaceUserStatus = $this->listDocSpaceUsers[$i]['activationStatus'];
-        $docSpaceUserRoleLabel = $this->getDocSpaceUserRoleLabel($this->listDocSpaceUsers[$i]);
-      }
-    }
-
-    $user_pass = $this->securityManager->getPasswordHash($entity->id());
-
-    if ($docSpaceUserStatus === 0 || $docSpaceUserStatus === 1) {
-      if (!empty($user_pass)) {
+    if ($entity->docspaceStatus === 0 || $entity->docspaceStatus === 1) {
         $row['docspace_user_status']['data'] = [
           '#type' => 'html_tag',
           '#tag' => 'img',
@@ -226,37 +215,36 @@ class OODSPUserListBuilder extends UserListBuilder {
             'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/done.svg',
           ],
         ];
-      }
-      else {
-        $row['docspace_user_status']['data'] = [
+    }
+    else if ($entity->docspaceStatus === -1) {
+      $row['docspace_user_status']['data'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => ['tooltip'],
+        ],
+        'tooltip' => [
           '#type' => 'html_tag',
           '#tag' => 'div',
+          '#value' => $this->getLabelForUnauthorized(),
           '#attributes' => [
-            'class' => ['tooltip'],
+            'class' => ['tooltip-message'],
           ],
-          'tooltip' => [
-            '#type' => 'html_tag',
-            '#tag' => 'div',
-            '#value' => $this->getLabelForUnauthorized(),
-            '#attributes' => [
-              'class' => ['tooltip-message'],
-            ],
+        ],
+        'status' => [
+          '#type' => 'html_tag',
+          '#tag' => 'img',
+          '#attributes' => [
+            'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/not_authorization.svg',
           ],
-          'status' => [
-            '#type' => 'html_tag',
-            '#tag' => 'img',
-            '#attributes' => [
-              'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/not_authorization.svg',
-            ],
-          ],
-        ];
-      }
+        ],
+      ];
     }
     else {
       $row['docspace_user_status']['data']['#markup'] = '';
     }
 
-    $row['docspace_user_type']['data']['#markup'] = $docSpaceUserRoleLabel;
+    $row['docspace_user_type']['data']['#markup'] = $entity->docspaceRole;
 
     return $row;
   }
@@ -283,13 +271,37 @@ class OODSPUserListBuilder extends UserListBuilder {
   /**
    * Load users from ONLYOFFICE DocSpace.
    */
-  private function loadDocSpaceUsers() {
+  private function loadDocSpaceInfo($entities) {
     $responseDocSpaceUsers = $this->requestManager->getDocSpaceUsers();
 
     if (!$responseDocSpaceUsers['error']) {
       $this->listDocSpaceUsers = $responseDocSpaceUsers['data'];
       $this->isConnectedToDocSpace = TRUE;
+
+      foreach ($entities as $entity) {
+        $entity->docspaceStatus = -2;
+        $entity->docspaceRole = '';  
+        
+        $countDocSpaceUsers = count($this->listDocSpaceUsers);
+
+        for ($t = 0; $t < $countDocSpaceUsers; $t++) {
+          if ($this->listDocSpaceUsers[$t]['email'] === $entity->getEmail()) {
+            $entity->docspaceStatus = $this->listDocSpaceUsers[$t]['activationStatus'];
+            $entity->docspaceRole = $this->getDocSpaceUserRoleLabel($this->listDocSpaceUsers[$t]);
+            
+            if ($entity->docspaceStatus === 0 || $entity->docspaceStatus === 1) {
+              $userPass = $this->securityManager->getPasswordHash($entity->id());
+
+              if (empty($userPass)) {
+                $entity->docspaceStatus = -1;
+              }
+            }
+          }
+        }
+      }
     }
+
+    return $entities;
   }
 
   /**
