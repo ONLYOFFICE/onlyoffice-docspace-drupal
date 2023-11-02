@@ -36,9 +36,8 @@ class ComponentManager extends ManagerBase {
 
   /**
    * Locales for ONLYOFFICE DocSpace.
-   *
    */
-   public const LOCALES = [
+  public const LOCALES = [
     'az', 'bg', 'cs', 'de', 'el-GR', 'en-GB', 'en-US', 'es', 'fi', 'fr',
     'hy-AM', 'it', 'ja-JP', 'ko-KR', 'lo-LA', 'lv', 'nl', 'pl', 'pt', 'pt-BR',
     'ro', 'ru', 'sk', 'sl', 'tr', 'uk-UA', 'vi', 'zh-CN'
@@ -57,7 +56,7 @@ class ComponentManager extends ManagerBase {
    * @var \Drupal\Core\Language\LanguageManagerInterface
    */
   protected $languageManager;
-  
+
   /**
    * The current path.
    *
@@ -111,7 +110,7 @@ class ComponentManager extends ManagerBase {
 
     $unauthorized_header = $this->t('Authorization unsuccessful');
     $unauthorized_message = $this->t('Please contact the administrator.');
-    
+
     if (!$isAnonymous) {
       $unauthorized_message = $this->t(
         'Please go to <a href="@login_page">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access.',

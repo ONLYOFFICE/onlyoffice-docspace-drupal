@@ -226,7 +226,7 @@ class LoginForm extends FormBase {
       } else {
         $form_state->setRedirect('onlyoffice_docspace.page');
       }
-    } 
+    }
     catch (\Exception $e) {
       $form_state->setRedirect('onlyoffice_docspace.page');
     }

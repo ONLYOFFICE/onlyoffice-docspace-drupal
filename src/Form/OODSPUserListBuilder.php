@@ -310,15 +310,15 @@ class OODSPUserListBuilder extends UserListBuilder {
 
       foreach ($entities as $entity) {
         $entity->docspaceStatus = -2;
-        $entity->docspaceRole = '';  
-        
+        $entity->docspaceRole = '';
+
         $countDocSpaceUsers = count($this->listDocSpaceUsers);
 
         for ($t = 0; $t < $countDocSpaceUsers; $t++) {
           if ($this->listDocSpaceUsers[$t]['email'] === $entity->getEmail()) {
             $entity->docspaceStatus = $this->listDocSpaceUsers[$t]['activationStatus'];
             $entity->docspaceRole = $this->getDocSpaceUserRoleLabel($this->listDocSpaceUsers[$t]);
-            
+
             if ($entity->docspaceStatus === 0 || $entity->docspaceStatus === 1) {
               $userPass = $this->securityManager->getPasswordHash($entity->id());
 
