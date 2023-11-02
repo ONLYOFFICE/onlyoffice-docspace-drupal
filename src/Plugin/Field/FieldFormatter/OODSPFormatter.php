@@ -225,7 +225,7 @@ class OODSPFormatter extends FormatterBase {
         'mode' => $item->type,
         'width' => $editor_width,
         'height' => $editor_height,
-        'editorGoBack' => false,
+        'editorGoBack' => FALSE,
       ];
 
       $element[$delta] = [

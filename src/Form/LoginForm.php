@@ -223,7 +223,8 @@ class LoginForm extends FormBase {
 
       if (!empty($redirect)) {
         $form_state->setRedirectUrl(Url::fromUserInput('/' . ltrim($redirect, '/')));
-      } else {
+      }
+      else {
         $form_state->setRedirect('onlyoffice_docspace.page');
       }
     }

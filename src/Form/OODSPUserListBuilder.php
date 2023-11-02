@@ -182,22 +182,6 @@ class OODSPUserListBuilder extends UserListBuilder {
     return $entities;
   }
 
-  private function sortByDocSpaceUserStatus(&$entities, $order) {
-    usort(
-      $entities,
-      function ( $a, $b ) use( $order ) {
-        if ( $a->docspaceStatus === $b->docspaceStatus ) {
-          return 0;
-        }
-        if ( empty( $order ) || 'ASC' === strtoupper($order) ) {
-          return ( $a->docspaceStatus > $b->docspaceStatus ) ? -1 : 1;
-        } else {
-          return ( $a->docspaceStatus < $b->docspaceStatus ) ? -1 : 1;
-        }
-      }
-    );
-  }
-
   /**
    * {@inheritdoc}
    */
@@ -238,15 +222,15 @@ class OODSPUserListBuilder extends UserListBuilder {
     $row['status']['data']['#markup'] = $status;
 
     if ($entity->docspaceStatus === 0 || $entity->docspaceStatus === 1) {
-        $row['docspace_user_status']['data'] = [
-          '#type' => 'html_tag',
-          '#tag' => 'img',
-          '#attributes' => [
-            'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/done.svg',
-          ],
-        ];
+      $row['docspace_user_status']['data'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'img',
+        '#attributes' => [
+          'src' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/done.svg',
+        ],
+      ];
     }
-    else if ($entity->docspaceStatus === -1) {
+    elseif ($entity->docspaceStatus === -1) {
       $row['docspace_user_status']['data'] = [
         '#type' => 'html_tag',
         '#tag' => 'div',
@@ -300,8 +284,11 @@ class OODSPUserListBuilder extends UserListBuilder {
 
   /**
    * Load users from ONLYOFFICE DocSpace.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface[] $entities
+   *   The user entities.
    */
-  private function loadDocSpaceInfo($entities) {
+  private function loadDocSpaceInfo(array $entities) {
     $responseDocSpaceUsers = $this->requestManager->getDocSpaceUsers();
 
     if (!$responseDocSpaceUsers['error']) {
@@ -332,6 +319,31 @@ class OODSPUserListBuilder extends UserListBuilder {
     }
 
     return $entities;
+  }
+
+  /**
+   * Sort user entities by DocSpace user status.
+   *
+   * @param \Drupal\Core\Entity\EntityInterface[] $entities
+   *   The user entities.
+   * @param string $order
+   *   Can be ASC or DESC.
+   */
+  private function sortByDocSpaceUserStatus(&$entities, $order) {
+    usort(
+      $entities,
+      function ($a, $b) use ($order) {
+        if ($a->docspaceStatus === $b->docspaceStatus) {
+          return 0;
+        }
+        if (empty($order) || 'ASC' === strtoupper($order)) {
+          return ($a->docspaceStatus > $b->docspaceStatus) ? -1 : 1;
+        }
+        else {
+          return ($a->docspaceStatus < $b->docspaceStatus) ? -1 : 1;
+        }
+      }
+    );
   }
 
   /**

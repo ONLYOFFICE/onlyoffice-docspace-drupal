@@ -79,7 +79,7 @@ function onlyoffice_docspace_entity_presave(EntityInterface $entity) {
   $userStorage = \Drupal::service('entity_type.manager')->getStorage('user');
   $account = $userStorage->load(0);
 
-  if (!method_exists($entity,'isPublished') || !$entity->isPublished() || !$account->hasPermission('access content')) {
+  if (!method_exists($entity, 'isPublished') || !$entity->isPublished() || !$account->hasPermission('access content')) {
     return;
   }
 

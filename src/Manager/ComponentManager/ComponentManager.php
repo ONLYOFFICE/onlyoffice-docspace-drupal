@@ -40,7 +40,7 @@ class ComponentManager extends ManagerBase {
   public const LOCALES = [
     'az', 'bg', 'cs', 'de', 'el-GR', 'en-GB', 'en-US', 'es', 'fi', 'fr',
     'hy-AM', 'it', 'ja-JP', 'ko-KR', 'lo-LA', 'lv', 'nl', 'pl', 'pt', 'pt-BR',
-    'ro', 'ru', 'sk', 'sl', 'tr', 'uk-UA', 'vi', 'zh-CN'
+    'ro', 'ru', 'sk', 'sl', 'tr', 'uk-UA', 'vi', 'zh-CN',
   ];
 
   /**
@@ -115,7 +115,11 @@ class ComponentManager extends ManagerBase {
       $unauthorized_message = $this->t(
         'Please go to <a href="@login_page">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access.',
         [
-          '@login_page' => Url::fromRoute('onlyoffice_docspace.page_login', [], ['query' => ['redirect' => $this->currentPath->getPath()]])->toString()
+          '@login_page' => Url::fromRoute(
+            'onlyoffice_docspace.page_login',
+            [],
+            ['query' => ['redirect' => $this->currentPath->getPath()]]
+          )->toString(),
         ]
       );
     }
@@ -138,7 +142,7 @@ class ComponentManager extends ManagerBase {
         'onlyoffice'  => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/onlyoffice.svg',
         'unavailable' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/unavailable.svg',
       ],
-      'locale' => $this->get_locale_for_docspace(),
+      'locale' => $this->getLocaleForDocspace(),
     ];
 
     return $build;
@@ -147,10 +151,10 @@ class ComponentManager extends ManagerBase {
   /**
    * Return locale for ONLYOFFICE DocSpace.
    */
-  public function get_locale_for_docspace() {
+  public function getLocaleForDocspace() {
     $locale = str_replace('_', '-', $this->languageManager->getCurrentLanguage()->getId());
 
-    if (in_array( $locale, self::LOCALES)) {
+    if (in_array($locale, self::LOCALES)) {
       return $locale;
     }
     else {
