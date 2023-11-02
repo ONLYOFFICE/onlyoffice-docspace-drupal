@@ -19,14 +19,14 @@ jobs:
       - name: Build Artifact
         run: |
           cd ${{ github.workspace }}
-          mkdir -p ./deploy/onlyoffice-drupal
-          rsync -av --exclude='deploy' ./ ./deploy/onlyoffice-drupal
-          cd ./deploy/onlyoffice-drupal
+          mkdir -p ./deploy/onlyoffice-docspace-drupal
+          rsync -av --exclude='deploy' ./ ./deploy/onlyoffice-docspace-drupal
+          cd ./deploy/onlyoffice-docspace-drupal
           rm -rf ./.github/
           rm -rf ./.git/
           rm ./.gitignore
       - name: Upload Artifact
         uses: actions/upload-artifact@v3
         with:
-          name: onlyoffice-drupal-${{ steps.info.outputs.version }}
+          name: onlyoffice-docspace-drupal-${{ steps.info.outputs.version }}
           path: deploy

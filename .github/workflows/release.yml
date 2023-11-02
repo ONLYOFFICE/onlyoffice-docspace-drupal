@@ -25,19 +25,19 @@ jobs:
       - name: Build Artifact
         run: |
           cd ${{ github.workspace }}
-          mkdir -p ./onlyoffice-drupal
-          rsync -av --exclude='onlyoffice-drupal' ./ ./onlyoffice-drupal
-          cd ./onlyoffice-drupal
+          mkdir -p ./onlyoffice-docspace-drupal
+          rsync -av --exclude='onlyoffice-docspace-drupal' ./ ./onlyoffice-docspace-drupal
+          cd ./onlyoffice-docspace-drupal
           rm -rf ./.github/
           rm -rf ./.git/
           rm ./.gitignore
           cd $cwd
       - name: Pack Artifact
-        run: zip -r onlyoffice-drupal-${{ steps.info.outputs.version }}.zip onlyoffice-drupal
+        run: zip -r onlyoffice-docspace-drupal-${{ steps.info.outputs.version }}.zip onlyoffice-docspace-drupal
       - name: Create Release
         uses: ncipollo/release-action@v1
         id: create_release
         with:
-          artifacts: "onlyoffice-drupal-${{ steps.info.outputs.version }}.zip"
+          artifacts: "onlyoffice-docspace-drupal-${{ steps.info.outputs.version }}.zip"
           bodyFile: RELEASE.md
           tag: v${{ steps.info.outputs.version }}
