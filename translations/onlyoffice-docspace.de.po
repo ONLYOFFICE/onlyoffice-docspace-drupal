@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
 "POT-Creation-Date: 2022-03-03 11:00+0000\n"
-"PO-Revision-Date: 2022-04-04 13:01+0300\n"
+"PO-Revision-Date: 2023-11-13 10:59+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -13,25 +13,25 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal."
-msgstr ""
+msgstr "Dieses Modul ermöglicht die Nutzung von ONLYOFFICE DocSpace, einer raumbasierten Umgebung für die effektive Zusammenarbeit mit Dokumenten, direkt in Drupal."
 
 msgid "The ONLYOFFICE DocSpace Connector allows using the room-based environment for effective document collaboration right within Drupal. Users are able to create Collaboration and Custom rooms with the pre-set access level, edit and co-author all types of office files."
-msgstr ""
+msgstr "Der ONLYOFFICE DocSpace-Konnektor ermöglicht die Nutzung einer raumbasierten Umgebung für die effektive Zusammenarbeit an Dokumenten direkt in Drupal. Benutzer sind in der Lage, Zusammenarbeit und benutzerdefinierte Räume mit der voreingestellten Zugriffsstufe zu erstellen, zu bearbeiten und alle Arten von Office-Dateien zu verfassen."
 
-msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=":onlyoffice-docspace-drupal">official project page</a>."
-msgstr ""
+msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=\":onlyoffice-docspace-drupal\">official project page</a>."
+msgstr "Als Drupal-Administrator gehen Sie zu Erweitern -> Neues Modul hinzufügen und laden das Plugin-Archiv hoch. Klicken Sie anschließend auf Installieren. Um das Plugin zu konfigurieren, geben Sie Ihre ONLYOFFICE DocSpace-Adresse, Login und Passwort des Administrators ein. Erfahren Sie mehr Details auf der <a href=\":onlyoffice-docspace-drupal\">offiziellen Seite des Projekts</a>."
 
 msgid "ONLYOFFICE DocSpace Users"
 msgstr "ONLYOFFICE DocSpace-Benutzer"
 
 msgid "ONLYOFFICE DocSpace Login"
-msgstr ""
+msgstr "Login für ONLYOFFICE DocSpace"
 
 msgid "Administer ONLYOFFICE DocSpace connector"
-msgstr ""
+msgstr "ONLYOFFICE DocSpace-Konnektor verwalten"
 
 msgid "ONLYOFFICE DocSpace Connector settings"
 msgstr "ONLYOFFICE DocSpace-Konnektors verwalten"
@@ -49,7 +49,7 @@ msgid "Password"
 msgstr "Kennwort"
 
 msgid "The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access."
-msgstr "Der aktuelle Benutzer wird zu DocSpace mit der Rolle <b>Raumadministrator</b> hinzugefügt. Der <b>Drupal-Viewer</b>-Benutzer wird zu DocSpace mit Nur-Ansicht-Zugang hinzugefügt."
+msgstr "Der aktuelle Benutzer wird zu DocSpace mit der Rolle <b>Raumadministrator</b> hinzugefügt. Der <b>WordPress-Viewer</b>-Benutzer wird zu DocSpace mit Nur-Ansicht-Zugang hinzugefügt."
 
 msgid "DocSpace Users"
 msgstr "DocSpace-Benutzer"
@@ -115,7 +115,7 @@ msgid "Seamless login is unavailable. Users will need to login into DocSpace to 
 msgstr "Die nahtlose Anmeldung ist nicht verfügbar. Die Benutzer müssen sich bei DocSpace anmelden, um Zugriff auf das Plugin zu haben."
 
 msgid "Password is empty!"
-msgstr ""
+msgstr "Das Passwort ist leer!"
 
 msgid "Owner"
 msgstr "Besitzer"
@@ -162,8 +162,8 @@ msgstr "Autorisierung fehlgeschlagen!"
 msgid "Please contact the administrator."
 msgstr "Bitte wenden Sie sich an den Administrator."
 
-msgid "Please go to <a href="@login_page">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
-msgstr ""
+msgid "Please go to <a href=\"@login_page\">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
+msgstr "Bitte gehen Sie zur <a href=\"@login_page\">Anmeldungsseite von ONLYOFFICE DocSpace</a> und geben Sie Ihr Passwort ein, um den Zugang wiederherzustellen."
 
 msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
 msgstr "Gehen Sie zu den Einstellungen, um ONLYOFFICE DocSpace Plugin zu konfigurieren."

@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
 "POT-Creation-Date: 2022-03-03 11:00+0000\n"
-"PO-Revision-Date: 2022-04-04 13:01+0300\n"
+"PO-Revision-Date: 2023-11-01 17:05+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -13,31 +13,28 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
-"X-Generator: Poedit 3.0.1\n"
+"X-Generator: Poedit 3.4.1\n"
 
 msgid "This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal."
-msgstr ""
+msgstr "Este módulo permite usar o ONLYOFFICE DocSpace, um ambiente baseado em sala para colaboração eficaz de documentos, diretamente no Drupal."
 
 msgid "The ONLYOFFICE DocSpace Connector allows using the room-based environment for effective document collaboration right within Drupal. Users are able to create Collaboration and Custom rooms with the pre-set access level, edit and co-author all types of office files."
-msgstr ""
+msgstr "O ONLYOFFICE DocSpace Connector permite usar o ambiente baseado em sala para colaboração eficaz de documentos diretamente no Drupal. Os usuários podem criar salas de colaboração e personalizadas com o nível de acesso predefinido, editar e coautor todos os tipos de arquivos do Office."
 
-msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=":onlyoffice-docspace-drupal">official project page</a>."
-msgstr ""
+msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=\":onlyoffice-docspace-drupal\">official project page</a>."
+msgstr "Como administrador do Drupal, vá para Estender -> Adicionar novo módulo e carregue o arquivo do plugin. Quando terminar, clique em Instalar. Para configurar o plugin, insira seu endereço ONLYOFFICE DocSpace, login de administrador e senha. Saiba mais detalhes na <a href=\":onlyoffice-docspace-drupal\">página oficial do projeto</a>."
 
 msgid "ONLYOFFICE DocSpace Users"
 msgstr "Usuários do ONLYOFFICE DocSpace"
 
 msgid "ONLYOFFICE DocSpace Login"
-msgstr ""
-
-msgid ""
-msgstr "Администрирование коннектора ONLYOFFICE DocSpace"
+msgstr "Login do ONLYOFFICE DocSpace"
 
 msgid "ONLYOFFICE DocSpace Connector settings"
-msgstr ""
+msgstr "Configurações do conector ONLYOFFICE DocSpace"
 
 msgid "Manage ONLYOFFICE DocSpace Connector settings."
-msgstr ""
+msgstr "Gerencie as configurações do ONLYOFFICE DocSpace Connector."
 
 msgid "DocSpace Service Address"
 msgstr "Endereço do serviço DocSpace"
@@ -79,7 +76,7 @@ msgid "Public DocSpace user already created, but failed to update authorization.
 msgstr "Usuário público do DocSpace já criado, mas não conseguiu atualizar a autorização."
 
 msgid "Public DocSpace user successfully created."
-msgstr "Usuário público do DocSpace criado com sucesso.""
+msgstr "Usuário público do DocSpace criado com sucesso."
 
 msgid "User @user_email already exists in DocSpace!"
 msgstr "O usuário @user_email já existe no DocSpace!"
@@ -115,7 +112,7 @@ msgid "Seamless login is unavailable. Users will need to login into DocSpace to 
 msgstr "O login contínuo não está disponível. Os usuários precisarão fazer login no DocSpace para ter acesso ao plugin."
 
 msgid "Password is empty!"
-msgstr ""
+msgstr "A senha está vazia!"
 
 msgid "Owner"
 msgstr "Proprietário"
@@ -148,7 +145,7 @@ msgid "Drupal requests access to your ONLYOFFICE DocSpace"
 msgstr "Drupal solicita acesso ao seu ONLYOFFICE DocSpace"
 
 msgid "Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:"
-msgstr "Sua conta <b>%s</b> será sincronizada com seu DocSpace. Por favor, insira sua senha DocSpace no campo abaixo:"
+msgstr "Sua conta <b>@user_email</b> será sincronizada com seu DocSpace. Por favor, insira sua senha DocSpace no campo abaixo:"
 
 msgid "User authentication failed."
 msgstr "Falha na autenticação do usuário."
@@ -162,11 +159,11 @@ msgstr "Autorização sem sucesso!"
 msgid "Please contact the administrator."
 msgstr "Entrar em contato com o administrador."
 
-msgid "Please go to <a href="@login_page">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
-msgstr ""
+msgid "Please go to <a href=\"@login_page\">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
+msgstr "Acesse a <a href=\"@login_page\">página de login do ONLYOFFICE DocSpace</a> e digite sua senha para restaurar o acesso."
 
 msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
-msgstr "msgstr "Vá para as configurações para configurar o conector ONLYOFFICE DocSpace.""
+msgstr "\"Vá para as configurações para configurar o conector ONLYOFFICE DocSpace.\""
 
 msgid "Select room"
 msgstr "Selecione o quarto"
@@ -178,13 +175,13 @@ msgid "Remove"
 msgstr "Remover"
 
 msgid "Width units"
-msgstr ""
+msgstr "Unidades de largura"
 
 msgid "Height units"
-msgstr ""
+msgstr "Unidades de altura"
 
 msgid "Percents"
-msgstr ""
+msgstr "Porcentagens"
 
 msgid "Pixels"
-msgstr ""
+msgstr "Píxels"
