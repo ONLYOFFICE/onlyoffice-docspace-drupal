@@ -1,0 +1,190 @@
+# Russian translation of ONLYOFFICE DocSpace Connector
+# (c) Copyright Ascensio System SIA 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
+"POT-Creation-Date: 2022-03-03 11:00+0000\n"
+"PO-Revision-Date: 2023-11-13 10:59+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Generator: Poedit 3.4.1\n"
+
+msgid "This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal."
+msgstr "Dieses Modul ermöglicht die Nutzung von ONLYOFFICE DocSpace, einer raumbasierten Umgebung für die effektive Zusammenarbeit mit Dokumenten, direkt in Drupal."
+
+msgid "The ONLYOFFICE DocSpace Connector allows using the room-based environment for effective document collaboration right within Drupal. Users are able to create Collaboration and Custom rooms with the pre-set access level, edit and co-author all types of office files."
+msgstr "Der ONLYOFFICE DocSpace-Konnektor ermöglicht die Nutzung einer raumbasierten Umgebung für die effektive Zusammenarbeit an Dokumenten direkt in Drupal. Benutzer sind in der Lage, Zusammenarbeit und benutzerdefinierte Räume mit der voreingestellten Zugriffsstufe zu erstellen, zu bearbeiten und alle Arten von Office-Dateien zu verfassen."
+
+msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=\":onlyoffice-docspace-drupal\">official project page</a>."
+msgstr "Als Drupal-Administrator gehen Sie zu Erweitern -> Neues Modul hinzufügen und laden das Plugin-Archiv hoch. Klicken Sie anschließend auf Installieren. Um das Plugin zu konfigurieren, geben Sie Ihre ONLYOFFICE DocSpace-Adresse, Login und Passwort des Administrators ein. Erfahren Sie mehr Details auf der <a href=\":onlyoffice-docspace-drupal\">offiziellen Seite des Projekts</a>."
+
+msgid "ONLYOFFICE DocSpace Users"
+msgstr "ONLYOFFICE DocSpace-Benutzer"
+
+msgid "ONLYOFFICE DocSpace Login"
+msgstr "Login für ONLYOFFICE DocSpace"
+
+msgid "Administer ONLYOFFICE DocSpace connector"
+msgstr "ONLYOFFICE DocSpace-Konnektor verwalten"
+
+msgid "ONLYOFFICE DocSpace Connector settings"
+msgstr "ONLYOFFICE DocSpace-Konnektors verwalten"
+
+msgid "Manage ONLYOFFICE DocSpace Connector settings."
+msgstr "Einstellungen des ONLYOFFICE DocSpace-Konnektors verwalten."
+
+msgid "DocSpace Service Address"
+msgstr "DocSpace Service-Adresse"
+
+msgid "Login"
+msgstr "Anmeldung"
+
+msgid "Password"
+msgstr "Kennwort"
+
+msgid "The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access."
+msgstr "Der aktuelle Benutzer wird zu DocSpace mit der Rolle <b>Raumadministrator</b> hinzugefügt. Der <b>Drupal Viewer</b>-Benutzer wird zu DocSpace mit Nur-Ansicht-Zugang hinzugefügt."
+
+msgid "DocSpace Users"
+msgstr "DocSpace-Benutzer"
+
+msgid "To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press"
+msgstr "Um neue Benutzer zu ONLYOFFICE DocSpace hinzuzufügen und mit dem Plugin zu arbeiten, drücken Sie bitte"
+
+msgid "Export Now"
+msgstr "Jetzt exportieren"
+
+msgid "ONLYOFFICE DocSpace cannot be reached."
+msgstr "ONLYOFFICE DocSpace ist nicht erreichbar."
+
+msgid "Invalid credentials. Please try again!"
+msgstr "Ungültige Anmeldedaten. Bitte versuchen Sie es erneut!"
+
+msgid "Error getting data user. Please try again!"
+msgstr "Fehler beim Abrufen von Benutzerdaten. Bitte versuchen Sie es erneut!"
+
+msgid "The specified user is not a DocSpace administrator!"
+msgstr "Der angegebene Benutzer ist kein DocSpace-Administrator!"
+
+msgid "Public DocSpace user was not created! View content will not be available on public pages."
+msgstr "Öffentlicher DocSpace-Benutzer wurde nicht erstellt! Inhalte werden auf öffentlichen Seiten nicht verfügbar sein."
+
+msgid "Public DocSpace user already created, but failed to update authorization."
+msgstr "Öffentlicher DocSpace-Benutzer wurde bereits erstellt, aber die Berechtigung konnte nicht aktualisiert werden."
+
+msgid "Public DocSpace user successfully created."
+msgstr "Öffentlicher DocSpace-Benutzer erfolgreich erstellt."
+
+msgid "User @user_email already exists in DocSpace!"
+msgstr "Benutzer @user_email existiert bereits in DocSpace!"
+
+msgid "User @user_email successfully created in DocSpace with role Room Admin."
+msgstr "Benutzer @user_email wurde erfolgreich in DocSpace mit der Rolle Raumadministrator erstellt."
+
+msgid "Error create user @user_email in DocSpace! The limit of paid DocSpace users may have been reached."
+msgstr "Fehler beim Erstellen des Benutzer @user_email in DocSpace! Das Limit der zahlenden DocSpace-Benutzer ist möglicherweise erreicht."
+
+msgid "To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!"
+msgstr "Um neue Benutzer zu ONLYOFFICE DocSpace hinzuzufügen, wählen Sie mehrere Benutzer aus und klicken Sie auf <b>Zu DocSpace einladen</b>. Alle neuen Benutzer werden mit der Rolle <b>Benutzer</b> hinzugefügt. Wenn Sie die Rolle ändern möchten, gehen Sie zu Konten. Die Rolle <b>Raumadministrator</b> ist kostenpflichtig!"
+
+msgid "Invite to DocSpace"
+msgstr "Zu DocSpace einladen"
+
+msgid "DocSpace User Status"
+msgstr "DocSpace-Benutzerstatus"
+
+msgid "DocSpace User Type"
+msgstr "DocSpace-Benutzertyp"
+
+msgid "Problem with the account synchronization between Drupal and ONLYOFFICE DocSpace"
+msgstr "Problem mit der Kontosynchronisation zwischen Drupal und ONLYOFFICE DocSpace"
+
+msgid "Possible cause:"
+msgstr "Mögliche Ursache:"
+
+msgid "DocSpace account was not created via the DocSpace plugin for Drupal"
+msgstr "DocSpace-Konto wurde nicht über das DocSpace-Plugin für Drupal erstellt"
+
+msgid "Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin."
+msgstr "Die nahtlose Anmeldung ist nicht verfügbar. Die Benutzer müssen sich bei DocSpace anmelden, um Zugriff auf das Plugin zu haben."
+
+msgid "Password is empty!"
+msgstr "Das Passwort ist leer!"
+
+msgid "Owner"
+msgstr "Besitzer"
+
+msgid "DocSpace admin"
+msgstr "DocSpace-Administrator"
+
+msgid "Power user"
+msgstr "Power-Benutzer"
+
+msgid "User"
+msgstr "Benutzer"
+
+msgid "Room admin"
+msgstr "Raumadministrator"
+
+msgid "Error getting users from ONLYOFFICE DocSpace"
+msgstr "Fehler beim Abrufen von Benutzern aus ONLYOFFICE DocSpace"
+
+msgid "Invitation failed for @count_errors/@count_users user(s)"
+msgstr "Einladung für @count_errors/@count_users Benutzer fehlgeschlagen"
+
+msgid "Invitation skipped for @count_skipped/@count_users user(s). User(s) with the indicated email(s) may already exist in DocSpace."
+msgstr "Einladung für @count_skipped/@count_users Benutzer übersprungen. Benutzer mit der/den angegebenen E-Mail-Adresse(n) sind möglicherweise bereits in DocSpace vorhanden."
+
+msgid "Invitation successfully sent to @count_invited/@count_users user(s)"
+msgstr "Einladung erfolgreich an @count_invited/@count_users Benutzer gesendet"
+
+msgid "Drupal requests access to your ONLYOFFICE DocSpace"
+msgstr "Drupal fordert Zugang zu Ihrem ONLYOFFICE DocSpace an"
+
+msgid "Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:"
+msgstr "Ihr Konto <b>%s</b> wird mit Ihrem DocSpace synchronisiert. Bitte geben Sie Ihr DocSpace-Passwort in das untenstehende Feld ein:"
+
+msgid "User authentication failed."
+msgstr "Benutzerauthentifizierung fehlgeschlagen."
+
+msgid "Portal unavailable! Please contact the administrator!"
+msgstr "Das Portal ist nicht verfügbar! Bitte kontaktieren Sie den Administrator!"
+
+msgid "Authorization unsuccessful!"
+msgstr "Autorisierung fehlgeschlagen!"
+
+msgid "Please contact the administrator."
+msgstr "Bitte wenden Sie sich an den Administrator."
+
+msgid "Please go to <a href=\"@login_page\">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
+msgstr "Bitte gehen Sie zur <a href=\"@login_page\">Anmeldungsseite von ONLYOFFICE DocSpace</a> und geben Sie Ihr Passwort ein, um den Zugang wiederherzustellen."
+
+msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
+msgstr "Gehen Sie zu den Einstellungen, um ONLYOFFICE DocSpace Plugin zu konfigurieren."
+
+msgid "Select room"
+msgstr "Raum wählen"
+
+msgid "Select file"
+msgstr "Datei wählen"
+
+msgid "Remove"
+msgstr "Entfernen"
+
+msgid "Width units"
+msgstr "Breiteneinheiten"
+
+msgid "Height units"
+msgstr "Höheneinheiten"
+
+msgid "Percents"
+msgstr "Prozentsätze"
+
+msgid "Pixels"
+msgstr "Bildpunkte"

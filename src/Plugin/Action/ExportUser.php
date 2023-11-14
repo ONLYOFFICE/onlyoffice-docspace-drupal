@@ -162,7 +162,7 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
     if ($countSkipped !== 0) {
       $this->messenger()->addWarning(
         $this->t(
-          'Invitation skipped for @count_skipped/@count_users user(s)',
+          'Invitation skipped for @count_skipped/@count_users user(s). User(s) with the indicated email(s) may already exist in DocSpace.',
           [
             '@count_skipped' => $countSkipped,
             '@count_users' => $countUsers,
