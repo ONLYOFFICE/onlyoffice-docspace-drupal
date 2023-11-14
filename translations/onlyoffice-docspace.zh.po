@@ -109,7 +109,7 @@ msgid "Possible cause:"
 msgstr "可能原因："
 
 msgid "DocSpace account was not created via the DocSpace plugin for Drupal"
-msgstr "协作空间账户未通过 WordPress 协作空间插件创建"
+msgstr "协作空间账户未通过 Drupal 协作空间插件创建"
 
 msgid "Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin."
 msgstr "无缝登录功能不可用。用户需要登录协作空间才能访问插件。"

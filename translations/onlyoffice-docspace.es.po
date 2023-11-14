@@ -48,8 +48,8 @@ msgstr "Login"
 msgid "Password"
 msgstr "Contraseña"
 
-msgid "The current user will be added to DocSpace with the <b>Room admin</b> role. <b>WordPress Viewer</b> user will be added to DocSpace with View Only access."
-msgstr "El usuario actual se añadirá a DocSpace con el rol <b>Administrador de sala</b>. El usuario <b>Visualizador de WordPress</b> se añadirá a DocSpace con acceso de Solo visualización."
+msgid "The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access."
+msgstr "El usuario actual se añadirá a DocSpace con el rol <b>Administrador de sala</b>. El usuario <b>Visualizador de Drupal</b> se añadirá a DocSpace con acceso de Solo visualización."
 
 msgid "DocSpace Users"
 msgstr "Usuarios de DocSpace"
