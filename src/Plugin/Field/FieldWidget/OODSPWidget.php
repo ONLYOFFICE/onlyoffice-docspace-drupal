@@ -22,6 +22,7 @@ namespace Drupal\onlyoffice_docspace\Plugin\Field\FieldWidget;
  */
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Extension\ModuleExtensionList;
 use Drupal\Core\Field\FieldDefinitionInterface;
 use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
@@ -66,6 +67,13 @@ class OODSPWidget extends WidgetBase {
   protected $configFactory;
 
   /**
+   * The list of available modules.
+   *
+   * @var \Drupal\Core\Extension\ModuleExtensionList
+   */
+  protected $extensionListModule;
+
+  /**
    * Constructs a MediaLibraryWidget widget.
    *
    * @param string $plugin_id
@@ -84,6 +92,8 @@ class OODSPWidget extends WidgetBase {
    *   Current user service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   Config factory service.
+   * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
+   *   The module extension list.
    */
   public function __construct(
     $plugin_id,
@@ -93,12 +103,14 @@ class OODSPWidget extends WidgetBase {
     array $third_party_settings,
     ComponentManager $component_manager,
     AccountInterface $current_user,
-    ConfigFactoryInterface $config_factory
+    ConfigFactoryInterface $config_factory,
+    ModuleExtensionList $extension_list_module
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
     $this->componentManager = $component_manager;
     $this->currentUser = $current_user;
     $this->configFactory = $config_factory;
+    $this->extensionListModule = $extension_list_module;
   }
 
   /**
@@ -113,7 +125,8 @@ class OODSPWidget extends WidgetBase {
       $configuration['third_party_settings'],
       $container->get('onlyoffice_docspace.component_manager'),
       $container->get('current_user'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('extension.list.module'),
     );
   }
 
@@ -166,6 +179,7 @@ class OODSPWidget extends WidgetBase {
             'width' => '100',
             'height' => '100',
             'class' => ['oodsp-image'],
+            'onerror' => 'if (this.src != "' . $this->getDefaultWidgetImage($items[$delta]->type) . '") this.src = "' . $this->getDefaultWidgetImage($items[$delta]->type) . '";',
           ],
           '#weight' => -12,
         ],
@@ -242,6 +256,21 @@ class OODSPWidget extends WidgetBase {
    */
   private function getAbsoluteDocSpaceUrl($url) {
     return rtrim($this->configFactory->get('onlyoffice_docspace.settings')->get('url'), "/") . parse_url($url)['path'];
+  }
+
+  /**
+   * Returns default widget image.
+   *
+   * @param string $type
+   *   The item type.
+   */
+  private function getDefaultWidgetImage($type) {
+    $images = [
+      'manager' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/room-icon.svg',
+      'editor' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/file-icon.svg',
+    ];
+
+    return $images[$type];
   }
 
 }

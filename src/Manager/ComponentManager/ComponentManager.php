@@ -141,6 +141,8 @@ class ComponentManager extends ManagerBase {
       'images' => [
         'onlyoffice'  => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/onlyoffice.svg',
         'unavailable' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/unavailable.svg',
+        'room-icon'   => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/room-icon.svg',
+        'file-icon'   => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/file-icon.svg',
       ],
       'locale' => $this->getLocaleForDocspace(),
     ];

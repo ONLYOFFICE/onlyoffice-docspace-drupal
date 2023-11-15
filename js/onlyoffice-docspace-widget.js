@@ -43,9 +43,14 @@
       setInputValue(widgetId, 'target-id', event[0].id);
       setInputValue(widgetId, 'type', 'manager');
       setInputValue(widgetId, 'title', event[0].label);
-      setInputValue(widgetId, 'image', event[0].icon);
+      setInputValue(widgetId, 'image', event[0].icon ?? "");
 
-      $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon)); //todo: add url to settings
+      if (event[0].icon) {
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon));
+      } else {
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.images['room-icon']);
+      }
+
       $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event[0].label);
 
       $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
@@ -57,9 +62,14 @@
       setInputValue(widgetId, 'target-id', event.id);
       setInputValue(widgetId, 'type', 'editor');
       setInputValue(widgetId, 'title', event.title);
-      setInputValue(widgetId, 'image', event.icon);
+      setInputValue(widgetId, 'image', event.icon ?? "");
 
-      $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon));
+      if (event.icon)
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon));
+      else {
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.images['file-icon']);
+      }
+
       $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event.title);
 
       $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
