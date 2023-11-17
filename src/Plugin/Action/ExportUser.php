@@ -129,11 +129,13 @@ class ExportUser extends ActionBase implements ContainerFactoryPluginInterface {
         $countSkipped++;
       }
       else {
+        $firstName = $lastName = preg_replace("/[^\p{L}\p{M} \-]/u", "-", $entity->getAccountName());
+
         $responseInvite = $this->requestManager->inviteToDocSpace(
             $entity->getEmail(),
             $passwordHash,
-            '',
-            '',
+            $firstName,
+            $lastName,
             2
           );
 

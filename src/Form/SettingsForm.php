@@ -294,11 +294,13 @@ class SettingsForm extends ConfigFormBase {
     $responseDocSpaceUser = $this->requestManager->getDocSpaceUser($url, $currentUser->getEmail(), $token);
 
     if ($responseDocSpaceUser['error']) {
+      $firstName = $lastName = preg_replace("/[^\p{L}\p{M} \-]/u", "-", $currentUser->getAccountName());
+
       $responseInviteToDocSpace = $this->requestManager->inviteToDocSpace(
         $currentUser->getEmail(),
         $form_state->getValue('currentUserPasswordHash'),
-        '',
-        '',
+        $firstName,
+        $lastName,
         1,
         $token
       );
