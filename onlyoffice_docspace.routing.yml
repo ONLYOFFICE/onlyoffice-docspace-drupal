@@ -23,7 +23,7 @@ onlyoffice_docspace.page:
     _title: 'ONLYOFFICE DocSpace'
     scheme: null
   requirements:
-    _permission: 'access administration pages'
+    _permission: 'administer site configuration'
 
 onlyoffice_docspace.page_login:
   path: '/admin/content/onlyoffice-docspace/login'
