@@ -29,6 +29,7 @@ use Drupal\Core\Url;
 use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 /**
  * Defines the ONLYOFFICE DocSpace users export form.
@@ -64,6 +65,13 @@ class LoginForm extends FormBase {
   protected $extensionListModule;
 
   /**
+   * The request stack.
+   *
+   * @var \Symfony\Component\HttpFoundation\RequestStack
+   */
+  protected $requestStack;
+
+  /**
    * A logger instance.
    *
    * @var \Psr\Log\LoggerInterface
@@ -81,12 +89,15 @@ class LoginForm extends FormBase {
    *   The messenger.
    * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
    *   The module extension list.
+   * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
+   *   The request stack.
    */
-  public function __construct(SecurityManagerInterface $security_manager, ComponentManager $component_manager, MessengerInterface $messenger, ModuleExtensionList $extension_list_module) {
+  public function __construct(SecurityManagerInterface $security_manager, ComponentManager $component_manager, MessengerInterface $messenger, ModuleExtensionList $extension_list_module, RequestStack $request_stack) {
     $this->securityManager = $security_manager;
     $this->componentManager = $component_manager;
     $this->messenger = $messenger;
     $this->extensionListModule = $extension_list_module;
+    $this->requestStack = $request_stack;
     $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
@@ -99,6 +110,7 @@ class LoginForm extends FormBase {
       $container->get('onlyoffice_docspace.component_manager'),
       $container->get('messenger'),
       $container->get('extension.list.module'),
+      $container->get('request_stack'),
     );
   }
 
@@ -113,7 +125,7 @@ class LoginForm extends FormBase {
    * {@inheritdoc}
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
-    $redirect = \Drupal::request()->query->get('redirect');
+    $redirect = $this->requestStack->getCurrentRequest()->query->get('redirect');
 
     $form = [];
     $form = $this->componentManager->buildComponent($form, $this->currentUser());
