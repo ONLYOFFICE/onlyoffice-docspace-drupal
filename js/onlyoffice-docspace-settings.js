@@ -52,10 +52,23 @@
 
                 $settingsForm.submit();
               },
-              'onAppError': function () {
+              'onAppError': function (e) {
                 Drupal.hideLoader();
                 messages.clear();
-                messages.add(Drupal.t('ONLYOFFICE DocSpace cannot be reached.'), {type: 'error'});
+
+                if ( e === "The current domain is not set in the Content Security Policy (CSP) settings." ) {
+                  messages.add(
+                    Drupal.t(
+                      'The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>.',
+                      {
+                        '@developer_tools': stripTrailingSlash(url) + '/portal-settings/developer-tools/javascript-sdk'
+                      }
+                    ),
+                    {type: 'error'}
+                  );
+                } else {
+                  addNotice( e, 'error' );
+                }
               }
             }
           });
@@ -95,5 +108,11 @@
 
     return password;
   };
+
+  const stripTrailingSlash = ( str ) => {
+		return str.endsWith( '/' )
+			? str.slice( 0, -1 )
+			: str;
+	};
 
 })(jQuery, Drupal);

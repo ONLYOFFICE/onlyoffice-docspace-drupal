@@ -188,3 +188,6 @@ msgstr "Pourcentage"
 
 msgid "Pixels"
 msgstr "Pixels"
+
+msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
+msgstr "Le domaine actuel n'est pas défini dans les paramètres de la Politique de sécurité du contenu (CSP). Veuillez l'ajouter via <a href=\"@developer_tools\" target=\"_blank\">la section Outils de développement</a>."
