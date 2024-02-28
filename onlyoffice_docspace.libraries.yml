@@ -1,3 +1,7 @@
+onlyoffice_docspace.docspace-integration-sdk:
+  js:
+    assets/js/docspace-integration-sdk.js: {}
+
 onlyoffice_docspace.utils:
   css:
     base:
