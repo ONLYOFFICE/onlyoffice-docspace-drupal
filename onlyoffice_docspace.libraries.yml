@@ -1,10 +1,11 @@
-onlyoffice_docspace.component:
+onlyoffice_docspace.utils:
   css:
     base:
-      assets/css/docspace-component-api.css: {}
+      css/onlyoffice-docspace-utils.css: {}
   js:
-    assets/js/docspace-component-api.js: {}
+    js/onlyoffice-docspace-utils.js: {}
   dependencies:
+    - core/jquery
     - core/drupal
     - core/drupalSettings
 
