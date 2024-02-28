@@ -188,7 +188,7 @@ class SettingsForm extends ConfigFormBase {
       '#theme' => 'status_messages',
       '#message_list' => [
         'warning' => [
-          $this->t('The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access.'),
+          $this->t('The current user will be added to DocSpace with the <b>Room admin</b> role.'),
         ],
       ],
       '#status_headings' => [
@@ -267,27 +267,6 @@ class SettingsForm extends ConfigFormBase {
     $url = $form_state->getValue('url');
     $url = '/' === substr($url, -1) ? $url : $url . '/';
     $token = $this->config('onlyoffice_docspace.settings')->get('token');
-
-    $responseCreatePublicUser = $this->requestManager->createPublicUser($url, $token);
-
-    if ($responseCreatePublicUser['error'] === $this->requestManager::ERROR_USER_INVITE) {
-      $this->messenger()->addWarning($this->t('Public DocSpace user was not created! View content will not be available on public pages.'));
-    }
-    elseif ($responseCreatePublicUser['error'] === $this->requestManager::ERROR_SET_USER_PASS) {
-      $responseDocSpaceUser = $this->requestManager->getDocSpaceUser($url, OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN, $token);
-
-      if (!$responseDocSpaceUser['error']) {
-        $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseDocSpaceUser['data']['id'])->save();
-      }
-      $this->messenger()->addWarning($this->t('Public DocSpace user already created, but failed to update authorization.'));
-    }
-    elseif ($responseCreatePublicUser['error']) {
-      $this->messenger()->addWarning($this->t('Public DocSpace user was not created! View content will not be available on public pages.'));
-    }
-    else {
-      $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseCreatePublicUser['data']['id'])->save();
-      $this->messenger()->addStatus($this->t('Public DocSpace user successfully created.'));
-    }
 
     $currentUser = $this->currentUser();
 

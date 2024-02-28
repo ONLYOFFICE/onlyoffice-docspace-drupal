@@ -31,12 +31,6 @@ use Symfony\Component\HttpFoundation\Request;
  * Returns responses for ONLYOFFICE DocSpace Credentials route.
  */
 class OODSPCredentialsController extends ControllerBase {
-
-  public const OODSP_PUBLIC_USER_LOGIN = 'drupalviewer@onlyoffice.com';
-  public const OODSP_PUBLIC_USER_PASS = '8c6b8b3e59010d7c925a47039f749d86fbdc9b37257cd262f2dae7c84a106505';
-  public const OODSP_PUBLIC_USER_FIRSTNAME = 'Drupal';
-  public const OODSP_PUBLIC_USER_LASTNAME = 'Viewer';
-
   /**
    * The ONLYOFFICE DocSpace security manager.
    *
@@ -80,33 +74,23 @@ class OODSPCredentialsController extends ControllerBase {
   public function credentials(Request $request) {
     $user = $this->currentUser()->getAccount();
 
-    if ($user->isAnonymous()) {
-      return new JsonResponse(self::OODSP_PUBLIC_USER_PASS, 200);
-    }
-    else {
-      $body = json_decode($request->getContent());
+    $body = json_decode($request->getContent());
 
-      if (!$body) {
-        $this->logger->error('The request body is missing.');
-        return new JsonResponse(
-          ['error' => 1, 'message' => 'The request body is missing.'],
-          400
-        );
-      }
-
-      if (isset($body->public) && $body->public === TRUE) {
-        return new JsonResponse(self::OODSP_PUBLIC_USER_PASS, 200);
-      }
-
-      $hash = $this->securityManager->getPasswordHash($user->id());
-
-      if (empty($hash)) {
-        return new JsonResponse(NULL, 404);
-      }
-
-      return new JsonResponse($hash, 200);
+    if (!$body) {
+      $this->logger->error('The request body is missing.');
+      return new JsonResponse(
+        ['error' => 1, 'message' => 'The request body is missing.'],
+        400
+      );
     }
 
+    $hash = $this->securityManager->getPasswordHash($user->id());
+
+    if (empty($hash)) {
+      return new JsonResponse(NULL, 404);
+    }
+
+    return new JsonResponse($hash, 200);
   }
 
 }

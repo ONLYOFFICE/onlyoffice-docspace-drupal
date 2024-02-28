@@ -22,7 +22,6 @@ namespace Drupal\onlyoffice_docspace\Manager\RequestManager;
  */
 
 use Drupal\Component\Serialization\Json;
-use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
 use Drupal\onlyoffice_docspace\Manager\ManagerBase;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Cookie\CookieJar;
@@ -276,31 +275,6 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
   /**
    * {@inheritdoc}
    */
-  public function createPublicUser($url, $token) {
-    $responseDocSpaceUser = $this->getDocSpaceUser($url, OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN, $token);
-
-    if ($responseDocSpaceUser['error']) {
-      return $this->inviteToDocSpace(
-        OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN,
-        OODSPCredentialsController::OODSP_PUBLIC_USER_PASS,
-        OODSPCredentialsController::OODSP_PUBLIC_USER_FIRSTNAME,
-        OODSPCredentialsController::OODSP_PUBLIC_USER_LASTNAME,
-        2,
-        $token
-      );
-    }
-    else {
-      return $this->setUserPassword(
-        $responseDocSpaceUser['data']['id'],
-        OODSPCredentialsController::OODSP_PUBLIC_USER_PASS,
-        $token
-      );
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
   public function setUserPassword($user_id, $password_hash, $token) {
     $result = [
       'error' => NULL,
@@ -343,160 +317,6 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $result;
     }
 
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getFileInfo($file_id) {
-    $result = [
-      'error' => NULL,
-      'data'  => NULL,
-    ];
-
-    $responseConnect = $this->connectDocSpace();
-
-    if ($responseConnect['error']) {
-      return $responseConnect;
-    }
-
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
-
-    try {
-      $response = $this->httpClient->request(
-        'GET',
-        $url . 'api/2.0/files/file/' . $file_id,
-        [
-          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
-          'cookies' => $this->createCookieJar(
-            ['asc_auth_key' => $responseConnect['data']],
-            $url
-          ),
-          'method' => 'GET',
-        ]
-      );
-
-      if ($response->getStatusCode() !== 200) {
-        $result['error'] = self::ERROR_GET_FILE_INFO;
-        return $result;
-      }
-
-      $body = Json::decode((string) $response->getBody());
-      $result['data'] = $body['response'];
-
-      return $result;
-    }
-    catch (\Exception $e) {
-      $result['error'] = self::ERROR_GET_FILE_INFO;
-      return $result;
-    }
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function getFolderInfo($folder_id) {
-    $result = [
-      'error' => NULL,
-      'data'  => NULL,
-    ];
-
-    $responseConnect = $this->connectDocSpace();
-
-    if ($responseConnect['error']) {
-      return $responseConnect;
-    }
-
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
-
-    try {
-      $response = $this->httpClient->request(
-        'GET',
-        $url . 'api/2.0/files/' . $folder_id,
-        [
-          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
-          'cookies' => $this->createCookieJar(
-            ['asc_auth_key' => $responseConnect['data']],
-            $url
-          ),
-          'method' => 'GET',
-        ]
-      );
-
-      if ($response->getStatusCode() !== 200) {
-        $result['error'] = self::ERROR_GET_FOLDER_INFO;
-        return $result;
-      }
-
-      $body = Json::decode((string) $response->getBody());
-      $result['data'] = $body['response'];
-
-      return $result;
-    }
-    catch (\Exception $e) {
-      $result['error'] = self::ERROR_GET_FOLDER_INFO;
-      return $result;
-    }
-
-  }
-
-  /**
-   * {@inheritdoc}
-   */
-  public function shareRoomPublicUser($room_id) {
-    $result = [
-      'error' => NULL,
-      'data'  => NULL,
-    ];
-
-    $responseConnect = $this->connectDocSpace();
-
-    if ($responseConnect['error']) {
-      return $responseConnect;
-    }
-
-    $url = rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/';
-
-    try {
-      $response = $this->httpClient->request(
-        'PUT',
-        $url . 'api/2.0/files/rooms/' . $room_id . '/share',
-        [
-          'headers' => ['Content-Type' => 'application/json; charset=utf-8'],
-          'cookies' => $this->createCookieJar(
-            ['asc_auth_key' => $responseConnect['data']],
-            $url
-          ),
-          'body' => Json::encode(
-            [
-              'invitations' => [
-                [
-                  'access' => 2,
-                  'id' => $this->config('onlyoffice_docspace.settings')->get('publicUserId'),
-                ],
-              ],
-              'message' => 'Invitation message',
-              'notify' => TRUE,
-            ]
-          ),
-          'method' => 'PUT',
-        ]
-      );
-
-      if ($response->getStatusCode() !== 200) {
-        $result['error'] = self::ERROR_SHARE_ROOM;
-        return $result;
-      }
-
-      $body = Json::decode((string) $response->getBody());
-      $result['data'] = $body['response'];
-
-      return $result;
-    }
-    catch (\Exception $e) {
-      $result['error'] = self::ERROR_SHARE_ROOM;
-      return $result;
-    }
   }
 
   /**
