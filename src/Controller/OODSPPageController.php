@@ -23,7 +23,7 @@ namespace Drupal\onlyoffice_docspace\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\Core\Routing\RouteMatchInterface;
-use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
+use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -33,11 +33,11 @@ use Symfony\Component\HttpFoundation\Request;
 class OODSPPageController extends ControllerBase {
 
   /**
-   * The ONLYOFFICE DocSpace Component manager.
+   * The ONLYOFFICE DocSpace Utils manager.
    *
-   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   * @var \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
    */
-  protected $componentManager;
+  protected $utilsManager;
 
   /**
    * A logger instance.
@@ -49,11 +49,11 @@ class OODSPPageController extends ControllerBase {
   /**
    * Constructs an OODSPPageController object.
    *
-   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
-   *   The ONLYOFFICE DocSpace Request manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
+   *   The ONLYOFFICE DocSpace Utils manager.
    */
-  public function __construct(ComponentManager $component_manager) {
-    $this->componentManager = $component_manager;
+  public function __construct(UtilsManager $utils_manager) {
+    $this->utilsManager = $utils_manager;
     $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
@@ -62,7 +62,7 @@ class OODSPPageController extends ControllerBase {
    */
   public static function create(ContainerInterface $container) {
     return new static(
-      $container->get('onlyoffice_docspace.component_manager')
+      $container->get('onlyoffice_docspace.utils_manager')
     );
   }
 
@@ -73,7 +73,7 @@ class OODSPPageController extends ControllerBase {
     $build = [];
     $build['onlyoffice_docspace-admin-container'] = [];
 
-    $build['onlyoffice_docspace-admin-container'] = $this->componentManager->buildComponent($build['onlyoffice_docspace-admin-container'], $this->currentUser());
+    $build['onlyoffice_docspace-admin-container'] = $this->utilsManager->buildComponent($build['onlyoffice_docspace-admin-container'], $this->currentUser());
 
     $build['onlyoffice_docspace-admin-container']['#theme'] = 'onlyoffice_docspace_page';
     $build['onlyoffice_docspace-admin-container']['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.page';

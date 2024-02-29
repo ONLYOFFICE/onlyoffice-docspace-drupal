@@ -26,8 +26,8 @@ use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
 use Drupal\Core\Url;
-use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
 
@@ -44,11 +44,11 @@ class LoginForm extends FormBase {
   protected $securityManager;
 
   /**
-   * The ONLYOFFICE DocSpace Component manager.
+   * The ONLYOFFICE DocSpace Utils manager.
    *
-   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   * @var \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
    */
-  protected $componentManager;
+  protected $utilsManager;
 
   /**
    * The messenger.
@@ -83,8 +83,8 @@ class LoginForm extends FormBase {
    *
    * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
    *   The ONLYOFFICE DocSpace Security manager.
-   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
-   *   The ONLYOFFICE DocSpace Component manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
+   *   The ONLYOFFICE DocSpace Utils manager.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
    * @param \Drupal\Core\Extension\ModuleExtensionList $extension_list_module
@@ -92,9 +92,9 @@ class LoginForm extends FormBase {
    * @param \Symfony\Component\HttpFoundation\RequestStack $request_stack
    *   The request stack.
    */
-  public function __construct(SecurityManagerInterface $security_manager, ComponentManager $component_manager, MessengerInterface $messenger, ModuleExtensionList $extension_list_module, RequestStack $request_stack) {
+  public function __construct(SecurityManagerInterface $security_manager, UtilsManager $utils_manager, MessengerInterface $messenger, ModuleExtensionList $extension_list_module, RequestStack $request_stack) {
     $this->securityManager = $security_manager;
-    $this->componentManager = $component_manager;
+    $this->utilsManager = $utils_manager;
     $this->messenger = $messenger;
     $this->extensionListModule = $extension_list_module;
     $this->requestStack = $request_stack;
@@ -107,7 +107,7 @@ class LoginForm extends FormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('onlyoffice_docspace.security_manager'),
-      $container->get('onlyoffice_docspace.component_manager'),
+      $container->get('onlyoffice_docspace.utils_manager'),
       $container->get('messenger'),
       $container->get('extension.list.module'),
       $container->get('request_stack'),
@@ -128,7 +128,7 @@ class LoginForm extends FormBase {
     $redirect = $this->requestStack->getCurrentRequest()->query->get('redirect');
 
     $form = [];
-    $form = $this->componentManager->buildComponent($form, $this->currentUser());
+    $form = $this->utilsManager->buildComponent($form, $this->currentUser());
 
     $form['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.login';
 

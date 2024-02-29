@@ -27,7 +27,7 @@ use Drupal\Core\Field\FormatterBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\PageCache\ResponsePolicy\KillSwitch;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
+use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -45,11 +45,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class OODSPFormatter extends FormatterBase {
 
   /**
-   * The ONLYOFFICE DocSpace Component manager.
+   * The ONLYOFFICE DocSpace Utils manager.
    *
-   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   * @var \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
    */
-  protected $componentManager;
+  protected $utilsManager;
 
   /**
    * The page cache disabling policy.
@@ -82,8 +82,8 @@ class OODSPFormatter extends FormatterBase {
    *   The view mode.
    * @param array $third_party_settings
    *   Any third party settings.
-   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
-   *   The ONLYOFFICE DocSpace Component manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
+   *   The ONLYOFFICE DocSpace Utils manager.
    * @param \Drupal\Core\PageCache\ResponsePolicy\KillSwitch $page_cache_kill_switch
    *   The page cache disabling policy.
    * @param \Drupal\Core\Session\AccountInterface $current_user
@@ -97,13 +97,13 @@ class OODSPFormatter extends FormatterBase {
     $label,
     $view_mode,
     array $third_party_settings,
-    ComponentManager $component_manager,
+    UtilsManager $utils_manager,
     KillSwitch $page_cache_kill_switch,
     AccountInterface $current_user
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $label, $view_mode, $third_party_settings);
 
-    $this->componentManager = $component_manager;
+    $this->utilsManager = $utils_manager;
     $this->pageCacheKillSwitch = $page_cache_kill_switch;
     $this->currentUser = $current_user;
   }
@@ -120,7 +120,7 @@ class OODSPFormatter extends FormatterBase {
       $configuration['label'],
       $configuration['view_mode'],
       $configuration['third_party_settings'],
-      $container->get('onlyoffice_docspace.component_manager'),
+      $container->get('onlyoffice_docspace.utils_manager'),
       $container->get('page_cache_kill_switch'),
       $container->get('current_user')
     );
@@ -206,7 +206,7 @@ class OODSPFormatter extends FormatterBase {
     $this->pageCacheKillSwitch->trigger();
 
     $element = [];
-    $element = $this->componentManager->buildComponent($element, $this->currentUser);
+    $element = $this->utilsManager->buildComponent($element, $this->currentUser);
 
     $element['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.formater';
 
@@ -216,26 +216,36 @@ class OODSPFormatter extends FormatterBase {
         $delta,
       );
 
-      $editor_width = $this->getSetting('width') . $this->getSetting('width_unit');
-      $editor_height = $this->getSetting('height') . $this->getSetting('height_unit');
+      $editorWidth = $this->getSetting('width') . $this->getSetting('width_unit');
+      $editorHeight = $this->getSetting('height') . $this->getSetting('height_unit');
 
       $config = [
         'frameId' => $editorId,
         'id' => $item->target_id,
         'mode' => $item->type,
-        'width' => $editor_width,
-        'height' => $editor_height,
         'editorGoBack' => FALSE,
       ];
 
       $element[$delta] = [
-        '#markup' => sprintf('<div class="onlyoffice-docspace-wrapper"><div id="%s" class="onlyoffice-docspace-block"></div></div>', $editorId),
+        '#type' => 'container',
+        '#attributes' => [
+          'class' => 'onlyoffice-docspace-wrapper',
+          'style' => 'width:' . $editorWidth . ';height:' . $editorHeight,
+        ],
+        'body' => [
+          '#type' => 'html_tag',
+          '#tag' => 'div',
+          '#attributes' => [
+            'id' => $editorId,
+            'class' => 'onlyoffice-docspace-block',
+          ],
+        ],
         '#cache' => [
           'max-age' => 0,
         ],
       ];
 
-      $element['#attached']['drupalSettings']['OODSP'][$editorId] = $config;
+      $element['#attached']['drupalSettings']['OODSPFormatterData'][$editorId] = $config;
 
     }
 

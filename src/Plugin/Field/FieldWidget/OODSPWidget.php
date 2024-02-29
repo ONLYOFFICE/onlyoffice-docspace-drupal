@@ -29,7 +29,7 @@ use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
-use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
+use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -46,11 +46,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 class OODSPWidget extends WidgetBase {
 
   /**
-   * The ONLYOFFICE DocSpace Component manager.
+   * The ONLYOFFICE DocSpace Utils manager.
    *
-   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   * @var \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
    */
-  protected $componentManager;
+  protected $utilsManager;
 
   /**
    * Current user service.
@@ -86,8 +86,8 @@ class OODSPWidget extends WidgetBase {
    *   The widget settings.
    * @param array $third_party_settings
    *   Any third party settings.
-   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
-   *   The ONLYOFFICE DocSpace Request manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
+   *   The ONLYOFFICE DocSpace Utils manager.
    * @param \Drupal\Core\Session\AccountInterface $current_user
    *   Current user service.
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
@@ -101,13 +101,13 @@ class OODSPWidget extends WidgetBase {
     FieldDefinitionInterface $field_definition,
     array $settings,
     array $third_party_settings,
-    ComponentManager $component_manager,
+    UtilsManager $utils_manager,
     AccountInterface $current_user,
     ConfigFactoryInterface $config_factory,
     ModuleExtensionList $extension_list_module
   ) {
     parent::__construct($plugin_id, $plugin_definition, $field_definition, $settings, $third_party_settings);
-    $this->componentManager = $component_manager;
+    $this->utilsManager = $utils_manager;
     $this->currentUser = $current_user;
     $this->configFactory = $config_factory;
     $this->extensionListModule = $extension_list_module;
@@ -123,7 +123,7 @@ class OODSPWidget extends WidgetBase {
       $configuration['field_definition'],
       $configuration['settings'],
       $configuration['third_party_settings'],
-      $container->get('onlyoffice_docspace.component_manager'),
+      $container->get('onlyoffice_docspace.utils_manager'),
       $container->get('current_user'),
       $container->get('config.factory'),
       $container->get('extension.list.module'),
@@ -139,7 +139,7 @@ class OODSPWidget extends WidgetBase {
       'class' => ['onlyoffice-docspace-widget'],
     ];
 
-    $element = $this->componentManager->buildComponent($element, $this->currentUser);
+    $element = $this->utilsManager->buildComponent($element, $this->currentUser);
     $element['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.widget';
 
     $element['target_id'] = [

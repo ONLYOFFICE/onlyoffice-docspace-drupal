@@ -25,10 +25,9 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
-use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -51,11 +50,11 @@ class SettingsForm extends ConfigFormBase {
   protected $securityManager;
 
   /**
-   * The ONLYOFFICE DocSpace Component manager.
+   * The ONLYOFFICE DocSpace Utils manager.
    *
-   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   * @var \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
    */
-  protected $componentManager;
+  protected $utilsManager;
 
   /**
    * A logger instance.
@@ -73,14 +72,14 @@ class SettingsForm extends ConfigFormBase {
    *   The aggregator fetcher plugin manager.
    * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
    *   The ONLYOFFICE DocSpace Security manager.
-   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
-   *   The ONLYOFFICE DocSpace Component manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
+   *   The ONLYOFFICE DocSpace Utils manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, ComponentManager $component_manager) {
+  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, UtilsManager $utils_manager) {
     parent::__construct($config_factory);
     $this->requestManager = $request_manager;
     $this->securityManager = $security_manager;
-    $this->componentManager = $component_manager;
+    $this->utilsManager = $utils_manager;
     $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
@@ -92,7 +91,7 @@ class SettingsForm extends ConfigFormBase {
       $container->get('config.factory'),
       $container->get('onlyoffice_docspace.request_manager'),
       $container->get('onlyoffice_docspace.security_manager'),
-      $container->get('onlyoffice_docspace.component_manager')
+      $container->get('onlyoffice_docspace.utils_manager')
     );
   }
 
@@ -115,7 +114,7 @@ class SettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = [];
-    $form = $this->componentManager->buildComponent($form, $this->currentUser());
+    $form = $this->utilsManager->buildComponent($form, $this->currentUser());
 
     $form['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.settings';
 

@@ -22,10 +22,10 @@
   var $oodspDialog = $('<div id="oodspModalDialog"><div id="oodsp-selector-frame"></div></div>').appendTo('body');
   var modalConfig = {
     frameId: 'oodsp-selector-frame',
-    width: '400px',
-    height: '500px',
+    width: "100%",
+    height: "100%",
     selectorType: 'roomsOnly',
-    locale: DocSpaceComponent.locale
+    locale: drupalSettings.OODSP_Settings.locale
   }
 
   $selectButtons.on('click', function (event) {
@@ -36,7 +36,8 @@
     const title = event.target.dataset.title || "";
     const dialog = Drupal.dialog($oodspDialog, {
       title: title,
-      width: '400px'
+      width: '400px',
+      height: '500px'
     });
 
     const onSelectRoomCallback = (event) => {
@@ -46,9 +47,9 @@
       setInputValue(widgetId, 'image', event[0].icon ?? "");
 
       if (event[0].icon) {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon));
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event[0].icon));
       } else {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.images['room-icon']);
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['room-icon']);
       }
 
       $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event[0].label);
@@ -65,9 +66,9 @@
       setInputValue(widgetId, 'image', event.icon ?? "");
 
       if (event.icon)
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon));
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl.getAbsoluteUrl(event.icon));
       else {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.images['file-icon']);
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['file-icon']);
       }
 
       $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event.title);
@@ -99,10 +100,10 @@
         break;
     }
 
-    DocSpaceComponent.renderDocSpace(
+    Drupal.OODSP_Utils.initLoginManager(
       'oodsp-selector-frame',
-      function () {
-          DocSpace.SDK.initFrame(modalConfig);
+      function() {
+        DocSpace.SDK.initFrame(modalConfig);
       }
     );
     dialog.showModal();
