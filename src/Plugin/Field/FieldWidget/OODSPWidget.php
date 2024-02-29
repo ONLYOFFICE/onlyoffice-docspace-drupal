@@ -162,6 +162,15 @@ class OODSPWidget extends WidgetBase {
       '#default_value' => $items[$delta]->image ?? '',
     ];
 
+    $element['request_token'] = [
+      '#type' => 'hidden',
+      '#default_value' => $items[$delta]->request_token ?? '',
+    ];
+
+    if (empty($items[$delta]->request_token)) {
+      $publicIndex = 'hidden';
+    }
+
     $element['fields'] = [
       '#type' => 'html_tag',
       '#tag' => 'div',
@@ -187,19 +196,17 @@ class OODSPWidget extends WidgetBase {
           '#type' => 'html_tag',
           '#tag' => 'div',
           '#attributes' => [
-            'class' => ['oodsp-container-items'],
+            'class' => ['oodsp-container-items', 'form-item__label'],
+          ],
+          'type' => [
+            '#type' => 'html_tag',
+            '#tag' => 'div',
+            '#value' => '<p><span class="value">' . $this->getTitleType($items[$delta]->type) .'</span><img class="public-index ' . $publicIndex . '" src="/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/public.svg" /></p>',
           ],
           'title' => [
-            '#type' => 'textfield',
-            '#title' => new TranslatableMarkup('Title'),
-            '#default_value' => $items[$delta]->title ?? '',
-            '#disabled' => TRUE,
-            '#maxlength' => 1024,
-            '#weight' => -11,
-            '#wrapper_attributes' => [
-              'id' => 'title',
-              'class' => ['oodsp-container-inline'],
-            ],
+            '#type' => 'html_tag',
+            '#tag' => 'div',
+            '#value' => '<p>' . 'Title: <span class="value">' . $items[$delta]->title ?? '' . '</span></p>',
           ],
         ],
       ],
@@ -268,6 +275,21 @@ class OODSPWidget extends WidgetBase {
     $images = [
       'manager' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/room-icon.svg',
       'editor' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/file-icon.svg',
+    ];
+
+    return $images[$type];
+  }
+
+  /**
+   * Returns title for type entity.
+   *
+   * @param string $type
+   *   The item type.
+   */
+  private function getTitleType($type) {
+    $images = [
+      'manager' => $this->t('DocSpace Room'),
+      'editor' => $this->t('DocSpace Title'),
     ];
 
     return $images[$type];

@@ -122,7 +122,7 @@ class UtilsManager extends ManagerBase {
           ]
         );
       }
-
+    } else {
       $messageUnauthorizedHeader = $this->t('Access denied!');
       $messageUnauthorizedMessage = $this->t('Please log in to the site!');
     }
@@ -134,7 +134,7 @@ class UtilsManager extends ManagerBase {
       'currentUser' => $currentUser,
       'isPublic' => $isAnonymous,
       'isAnonymous' => $isAnonymous,
-      'url' => "https:483.434.43.43/",
+      'url' => rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/',
       'ajaxUrl' => Url::fromRoute('onlyoffice_docspace.credentilas')->setAbsolute()->toString(),
       'loginUrl' => Url::fromRoute('onlyoffice_docspace.page_login')->setAbsolute()->toString(),
       'adminUrl' => Url::fromRoute('onlyoffice_docspace.page')->setAbsolute()->toString(),
@@ -148,6 +148,10 @@ class UtilsManager extends ManagerBase {
         'unavailable' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/unavailable.svg',
         'room-icon'   => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/room-icon.svg',
         'file-icon'   => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/file-icon.svg',
+      ],
+      'labels' => [
+        'room' => $this->t('DocSapce Room'),
+        'file' => $this->t('DocSapce File'),
       ],
       'locale' => $this->getLocaleForDocspace(),
     ];

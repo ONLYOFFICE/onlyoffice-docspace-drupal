@@ -224,7 +224,12 @@ class OODSPFormatter extends FormatterBase {
         'id' => $item->target_id,
         'mode' => $item->type,
         'editorGoBack' => FALSE,
+        'requestToken' => $item->request_token,
       ];
+
+      if (!empty($item->request_token)) {
+        $config['rootPath']     = '/rooms/share';
+      }
 
       $element[$delta] = [
         '#type' => 'container',

@@ -64,10 +64,23 @@
 }
 
 .oodsp-container-items {
-  flex: 1 1 var(--file-widget-form-item-min-width);
-  max-width: 100%;
+  height: 100px !important;
+  display: flex !important;;
+  justify-content: center !important;
+  flex-direction: column !important;
+  vertical-align: middle !important;
 }
 
 .hidden {
   display: none!important;
+}
+
+.oodsp-container-items p {
+  margin: 5px 0;
+}
+
+.oodsp-container-items img {
+  margin-left: 5px;
+  display: inline-block;
+  position: absolute;
 }

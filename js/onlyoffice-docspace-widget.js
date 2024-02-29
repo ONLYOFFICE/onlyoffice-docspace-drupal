@@ -46,13 +46,25 @@
       setInputValue(widgetId, 'title', event[0].label);
       setInputValue(widgetId, 'image', event[0].icon ?? "");
 
+      const requestTokens = event[0].requestTokens;
+      const requestToken = requestTokens ? requestTokens[0].requestToken : null;
+
+      setInputValue(widgetId, 'request-token', requestToken);
+
+      if (requestToken !== null && requestToken !== "") {
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').removeClass('hidden');
+      } else {
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').addClass('hidden');
+      }
+
       if (event[0].icon) {
         $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event[0].icon));
       } else {
         $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['room-icon']);
       }
 
-      $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event[0].label);
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .value').text(drupalSettings.OODSP_Settings.labels['room']);
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-title"] .value').text(event[0].label);
 
       $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
       $('div[data-drupal-selector="' + widgetId + '-buttons"]').addClass('hidden');
@@ -65,13 +77,25 @@
       setInputValue(widgetId, 'title', event.title);
       setInputValue(widgetId, 'image', event.icon ?? "");
 
+      const requestTokens = event.requestTokens;
+      const requestToken = requestTokens ? requestTokens[0].requestToken : null;
+
+      setInputValue(widgetId, 'reques-token', requestToken);
+
+      if (requestToken !== null && requestToken !== "") {
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').removeClass('hidden');
+      } else {
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').addClass('hidden');
+      }
+
       if (event.icon)
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl.getAbsoluteUrl(event.icon));
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event.icon));
       else {
         $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['file-icon']);
       }
 
-      $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event.title);
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .value').text(drupalSettings.OODSP_Settings.labels['file']);
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-title"] .value').text(event.title);
 
       $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
       $('div[data-drupal-selector="' + widgetId + '-buttons"]').addClass('hidden');
@@ -118,6 +142,7 @@
     setInputValue(widgetId, 'type', '');
     setInputValue(widgetId, 'title', '');
     setInputValue(widgetId, 'image', '');
+    setInputValue(widgetId, 'request-token', '');
 
     $('div[data-drupal-selector="' + widgetId + '-fields"]').addClass('hidden');
     $('div[data-drupal-selector="' + widgetId + '-buttons"]').removeClass('hidden');
