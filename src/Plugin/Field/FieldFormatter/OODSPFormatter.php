@@ -228,7 +228,7 @@ class OODSPFormatter extends FormatterBase {
       ];
 
       if (!empty($item->request_token)) {
-        $config['rootPath']     = '/rooms/share';
+        $config['rootPath'] = '/rooms/share';
       }
 
       $element[$delta] = [

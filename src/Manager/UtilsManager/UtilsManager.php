@@ -122,7 +122,8 @@ class UtilsManager extends ManagerBase {
           ]
         );
       }
-    } else {
+    }
+    else {
       $messageUnauthorizedHeader = $this->t('Access denied!');
       $messageUnauthorizedMessage = $this->t('Please log in to the site!');
     }
