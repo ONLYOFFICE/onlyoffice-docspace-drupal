@@ -48,8 +48,8 @@ msgstr "Логин"
 msgid "Password"
 msgstr "Пароль"
 
-msgid "The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access."
-msgstr "Текущий пользователь будет добавлен в DocSpace с ролью <b>Администратор комнаты</b>. Пользователь <b>Drupal Viewer</b> будет добавлен в DocSpace с доступом только для просмотра."
+msgid "The current user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "Текущий пользователь будет добавлен в DocSpace с ролью <b>Администратор комнаты</b>."
 
 msgid "DocSpace Users"
 msgstr "Пользователи DocSpace"
@@ -71,15 +71,6 @@ msgstr "Ошибка получения данных пользователя. �
 
 msgid "The specified user is not a DocSpace administrator!"
 msgstr "Указанный пользователь не является администратором DocSpace!"
-
-msgid "Public DocSpace user was not created! View content will not be available on public pages."
-msgstr "Публичный пользователь DocSpace не создан! Просмотр контента будет недоступен на общедоступных страницах."
-
-msgid "Public DocSpace user already created, but failed to update authorization."
-msgstr "Публичный пользователь DocSpace уже создан, но ему не удалось обновить авторизацию."
-
-msgid "Public DocSpace user successfully created."
-msgstr "Публичный пользователь DocSpace успешно создан."
 
 msgid "User @user_email already exists in DocSpace!"
 msgstr "Пользователь @user_email уже существует в DocSpace!"
@@ -191,3 +182,15 @@ msgstr "Пиксели"
 
 msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
 msgstr "Текущий домен не указан в настройках политики безопасности контента (CSP). Пожалуйста, добавьте его через раздел <a href=\"@developer_tools\" target=\"_blank\">Инструменты разработчика</a>."
+
+msgid "DocSapce Room"
+msgstr "DocSapce Комната"
+
+msgid "DocSapce File"
+msgstr "DocSapce Файл"
+
+msgid "Access denied!"
+msgstr "Доступ запрещен!"
+
+msgstr "Please log in to the site!"
+msgstr "Пожалуйста, авторизуйтесь на сайте!"
