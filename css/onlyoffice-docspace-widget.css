@@ -84,3 +84,7 @@
   display: inline-block;
   position: absolute;
 }
+
+.oodsp-container-items span.font-weight-normal {
+  font-weight: normal;
+}

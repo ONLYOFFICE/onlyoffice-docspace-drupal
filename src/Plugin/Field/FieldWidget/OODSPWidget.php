@@ -28,7 +28,6 @@ use Drupal\Core\Field\FieldItemListInterface;
 use Drupal\Core\Field\WidgetBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Session\AccountInterface;
-use Drupal\Core\StringTranslation\TranslatableMarkup;
 use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
@@ -201,12 +200,12 @@ class OODSPWidget extends WidgetBase {
           'type' => [
             '#type' => 'html_tag',
             '#tag' => 'div',
-            '#value' => '<p><span class="value">' . $this->getTitleType($items[$delta]->type) .'</span><img class="public-index ' . $publicIndex . '" src="/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/public.svg" /></p>',
+            '#value' => '<p><span class="value">' . $this->getTitleType($items[$delta]->type) . '</span><img class="public-index ' . $publicIndex . '" src="/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/public.svg" /></p>',
           ],
           'title' => [
             '#type' => 'html_tag',
             '#tag' => 'div',
-            '#value' => '<p>' . 'Title: <span class="value">' . $items[$delta]->title ?? '' . '</span></p>',
+            '#value' => '<p>' . $this->getTranslateTilte() . ': <span class="value font-weight-normal">' . ($items[$delta]->title ?? '') . '</span></p>',
           ],
         ],
       ],
@@ -289,10 +288,17 @@ class OODSPWidget extends WidgetBase {
   private function getTitleType($type) {
     $images = [
       'manager' => $this->t('DocSpace Room'),
-      'editor' => $this->t('DocSpace Title'),
+      'editor' => $this->t('DocSpace File'),
     ];
 
     return $images[$type];
+  }
+
+  /**
+   * Returns translate.
+   */
+  private function getTranslateTilte() {
+    return $this->t('Title');
   }
 
 }
