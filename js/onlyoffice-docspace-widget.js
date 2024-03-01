@@ -80,7 +80,7 @@
       const requestTokens = event.requestTokens;
       const requestToken = requestTokens ? requestTokens[0].requestToken : null;
 
-      setInputValue(widgetId, 'reques-token', requestToken);
+      setInputValue(widgetId, 'request-token', requestToken);
 
       if (requestToken !== null && requestToken !== "") {
         $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').removeClass('hidden');
