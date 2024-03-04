@@ -48,8 +48,8 @@ msgstr "Login"
 msgid "Password"
 msgstr "Password"
 
-msgid "The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access."
-msgstr "L'utente corrente verrà aggiunto a DocSpace nel ruolo di <b>Amministratore della stanza</b>. L'utente <b>Drupal Viewer</b> verrà aggiunto a DocSpace con accesso di sola visualizzazione."
+msgid "The current user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "L'utente corrente verrà aggiunto a DocSpace nel ruolo di <b>Amministratore della stanza</b>."
 
 msgid "DocSpace Users"
 msgstr "Utenti di DocSpace"
@@ -71,15 +71,6 @@ msgstr "Errore durante il recupero dei dati utente. Ti preghiamo di riprovare!"
 
 msgid "The specified user is not a DocSpace administrator!"
 msgstr "L'utente specificato non è un amministratore di DocSpace!"
-
-msgid "Public DocSpace user was not created! View content will not be available on public pages."
-msgstr "L'utente DocSpace pubblico non è stato creato! La visualizzazione del contenuto non sarà disponibile sulle pagine pubbliche."
-
-msgid "Public DocSpace user already created, but failed to update authorization."
-msgstr "Utente DocSpace pubblico è già stato creato, ma non è riuscito ad aggiornare l'autorizzazione."
-
-msgid "Public DocSpace user successfully created."
-msgstr "Utente DocSpace pubblico è stato creato correttamente."
 
 msgid "User @user_email already exists in DocSpace!"
 msgstr "L'utente @user_email già esiste in DocSpace!"
@@ -191,3 +182,15 @@ msgstr "Pixel"
 
 msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
 msgstr "Il dominio corrente non è impostato nelle impostazioni della Content Security Policy (CSP). Aggiungilo tramite <a href=\"@developer_tools\" target=\"_blank\">la sezione Strumenti per sviluppatori</a>."
+
+msgid "DocSapce Room"
+msgstr "DocSapce Stanza"
+
+msgid "DocSapce File"
+msgstr "DocSapce File"
+
+msgid "Access denied!"
+msgstr "Accesso negato!"
+
+msgstr "Please log in to the site!"
+msgstr "Ti preghiamo di effettuare il login al sito!"

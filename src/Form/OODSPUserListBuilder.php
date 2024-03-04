@@ -221,7 +221,9 @@ class OODSPUserListBuilder extends UserListBuilder {
     $row['status'] = [];
     $row['status']['data']['#markup'] = $status;
 
-    if ($entity->docspaceStatus === 0 || $entity->docspaceStatus === 1) {
+    if ($entity->docspaceStatus === 0
+        || $entity->docspaceStatus === 1
+        || $entity->docspaceStatus === 2) {
       $row['docspace_user_status']['data'] = [
         '#type' => 'html_tag',
         '#tag' => 'img',
@@ -306,7 +308,9 @@ class OODSPUserListBuilder extends UserListBuilder {
             $entity->docspaceStatus = $this->listDocSpaceUsers[$t]['activationStatus'];
             $entity->docspaceRole = $this->getDocSpaceUserRoleLabel($this->listDocSpaceUsers[$t]);
 
-            if ($entity->docspaceStatus === 0 || $entity->docspaceStatus === 1) {
+            if ($entity->docspaceStatus === 0
+                || $entity->docspaceStatus === 1
+                || $entity->docspaceStatus === 2) {
               $userPass = $this->securityManager->getPasswordHash($entity->id());
 
               if (empty($userPass)) {

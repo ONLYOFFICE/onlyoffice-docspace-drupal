@@ -32,7 +32,7 @@
       const url = $('#edit-url').val().trim();
       const password = $('#edit-password').val();
 
-      DocSpaceComponent.initScript(url)
+      DocspaceIntegrationSdk.initScript('oodsp-api-js', url)
         .then(async function () {
           Drupal.showLoader();
 
@@ -110,9 +110,9 @@
   };
 
   const stripTrailingSlash = ( str ) => {
-		return str.endsWith( '/' )
-			? str.slice( 0, -1 )
-			: str;
-	};
+    return str.endsWith( '/' )
+        ? str.slice( 0, -1 )
+        : str;
+  };
 
 })(jQuery, Drupal);

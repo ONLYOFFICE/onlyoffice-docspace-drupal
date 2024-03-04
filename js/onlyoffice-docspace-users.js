@@ -17,7 +17,7 @@
 */
 
 (function ($, Drupal) {
-  DocSpaceComponent.initScript()
+  DocspaceIntegrationSdk.initScript('oodsp-api-js', drupalSettings.OODSP_Settings.url)
     .then(
       function (e) {
         DocSpace.SDK.initSystem(

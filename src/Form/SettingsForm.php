@@ -25,10 +25,9 @@ use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
-use Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController;
-use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
 use Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -51,11 +50,11 @@ class SettingsForm extends ConfigFormBase {
   protected $securityManager;
 
   /**
-   * The ONLYOFFICE DocSpace Component manager.
+   * The ONLYOFFICE DocSpace Utils manager.
    *
-   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   * @var \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
    */
-  protected $componentManager;
+  protected $utilsManager;
 
   /**
    * A logger instance.
@@ -73,14 +72,14 @@ class SettingsForm extends ConfigFormBase {
    *   The aggregator fetcher plugin manager.
    * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
    *   The ONLYOFFICE DocSpace Security manager.
-   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
-   *   The ONLYOFFICE DocSpace Component manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
+   *   The ONLYOFFICE DocSpace Utils manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, ComponentManager $component_manager) {
+  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, UtilsManager $utils_manager) {
     parent::__construct($config_factory);
     $this->requestManager = $request_manager;
     $this->securityManager = $security_manager;
-    $this->componentManager = $component_manager;
+    $this->utilsManager = $utils_manager;
     $this->logger = $this->getLogger('onlyoffice_docspace');
   }
 
@@ -92,7 +91,7 @@ class SettingsForm extends ConfigFormBase {
       $container->get('config.factory'),
       $container->get('onlyoffice_docspace.request_manager'),
       $container->get('onlyoffice_docspace.security_manager'),
-      $container->get('onlyoffice_docspace.component_manager')
+      $container->get('onlyoffice_docspace.utils_manager')
     );
   }
 
@@ -115,7 +114,7 @@ class SettingsForm extends ConfigFormBase {
    */
   public function buildForm(array $form, FormStateInterface $form_state) {
     $form = [];
-    $form = $this->componentManager->buildComponent($form, $this->currentUser());
+    $form = $this->utilsManager->buildComponent($form, $this->currentUser());
 
     $form['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.settings';
 
@@ -188,7 +187,7 @@ class SettingsForm extends ConfigFormBase {
       '#theme' => 'status_messages',
       '#message_list' => [
         'warning' => [
-          $this->t('The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access.'),
+          $this->t('The current user will be added to DocSpace with the <b>Room admin</b> role.'),
         ],
       ],
       '#status_headings' => [
@@ -267,27 +266,6 @@ class SettingsForm extends ConfigFormBase {
     $url = $form_state->getValue('url');
     $url = '/' === substr($url, -1) ? $url : $url . '/';
     $token = $this->config('onlyoffice_docspace.settings')->get('token');
-
-    $responseCreatePublicUser = $this->requestManager->createPublicUser($url, $token);
-
-    if ($responseCreatePublicUser['error'] === $this->requestManager::ERROR_USER_INVITE) {
-      $this->messenger()->addWarning($this->t('Public DocSpace user was not created! View content will not be available on public pages.'));
-    }
-    elseif ($responseCreatePublicUser['error'] === $this->requestManager::ERROR_SET_USER_PASS) {
-      $responseDocSpaceUser = $this->requestManager->getDocSpaceUser($url, OODSPCredentialsController::OODSP_PUBLIC_USER_LOGIN, $token);
-
-      if (!$responseDocSpaceUser['error']) {
-        $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseDocSpaceUser['data']['id'])->save();
-      }
-      $this->messenger()->addWarning($this->t('Public DocSpace user already created, but failed to update authorization.'));
-    }
-    elseif ($responseCreatePublicUser['error']) {
-      $this->messenger()->addWarning($this->t('Public DocSpace user was not created! View content will not be available on public pages.'));
-    }
-    else {
-      $this->config('onlyoffice_docspace.settings')->set('publicUserId', $responseCreatePublicUser['data']['id'])->save();
-      $this->messenger()->addStatus($this->t('Public DocSpace user successfully created.'));
-    }
 
     $currentUser = $this->currentUser();
 

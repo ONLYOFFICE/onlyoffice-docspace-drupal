@@ -19,7 +19,7 @@
 (function ($, Drupal) {
   const frameId = 'oodsp-login-frame';
 
-  DocSpaceComponent.initScript()
+  DocspaceIntegrationSdk.initScript('oodsp-api-js', drupalSettings.OODSP_Settings.url)
     .then(function (e) {
       DocSpace.SDK.initSystem(
         {
@@ -27,15 +27,15 @@
           events: {
             onAppReady: async function () {
               const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
-              if (userInfo && userInfo.email === DocSpaceComponent.currentUser) {
-                window.location.replace(Url$('input[name="redirect"]').val() || DocSpaceComponent.admin);
+              if (userInfo && userInfo.email === drupalSettings.OODSP_Settings.currentUser) {
+                window.location.replace(Url$('input[name="redirect"]').val() || drupalSettings.OODSP_Settings.adminUrl);
               }
             }
           }
         }
       );
     }).catch(function () {
-      window.location.replace($('input[name="redirect"]').val() || DocSpaceComponent.adminUrl);
+      window.location.replace($('input[name="redirect"]').val() || drupalSettings.OODSP_Settings.adminUrl);
     });
 
   const messages = new Drupal.Message();
@@ -56,7 +56,7 @@
         messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
       }
 
-      DocSpace.SDK.frames[frameId].login(DocSpaceComponent.currentUser, hash)
+      DocSpace.SDK.frames[frameId].login(drupalSettings.OODSP_Settings.currentUser, hash)
         .then(function (response) {
               if(response.status && response.status !== 200) {
                 messages.clear();

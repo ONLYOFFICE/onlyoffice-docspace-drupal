@@ -25,8 +25,8 @@ use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\Core\Form\FormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Messenger\MessengerInterface;
-use Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager;
 use Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface;
+use Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -42,11 +42,11 @@ class UsersForm extends FormBase {
   protected $requestManager;
 
   /**
-   * The ONLYOFFICE DocSpace Component manager.
+   * The ONLYOFFICE DocSpace Utils manager.
    *
-   * @var \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager
+   * @var \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
    */
-  protected $componentManager;
+  protected $utilsManager;
 
   /**
    * The entity type manager.
@@ -90,16 +90,16 @@ class UsersForm extends FormBase {
    *   The service container this object should use.
    * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The ONLYOFFICE DocSpace Request manager.
-   * @param \Drupal\onlyoffice_docspace\Manager\ComponentManager\ComponentManager $component_manager
-   *   The ONLYOFFICE DocSpace Component manager.
+   * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
+   *   The ONLYOFFICE DocSpace Utils manager.
    * @param \Drupal\Core\Entity\EntityTypeManagerInterface $entity_type_manager
    *   The entity type manager.
    * @param \Drupal\Core\Messenger\MessengerInterface $messenger
    *   The messenger.
    */
-  public function __construct(ContainerInterface $container, RequestManagerInterface $request_manager, ComponentManager $component_manager, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger) {
+  public function __construct(ContainerInterface $container, RequestManagerInterface $request_manager, UtilsManager $utils_manager, EntityTypeManagerInterface $entity_type_manager, MessengerInterface $messenger) {
     $this->requestManager = $request_manager;
-    $this->componentManager = $component_manager;
+    $this->utilsManager = $utils_manager;
     $this->entityTypeManager = $entity_type_manager;
     $this->userListBuilder = OODSPUserListBuilder::createInstance($container, $entity_type_manager->getDefinition("user"));
     $this->messenger = $messenger;
@@ -117,7 +117,7 @@ class UsersForm extends FormBase {
     return new static(
       $container,
       $container->get('onlyoffice_docspace.request_manager'),
-      $container->get('onlyoffice_docspace.component_manager'),
+      $container->get('onlyoffice_docspace.utils_manager'),
       $container->get('entity_type.manager'),
       $container->get('messenger'),
     );
@@ -195,7 +195,7 @@ class UsersForm extends FormBase {
       ],
     ];
 
-    $form = $this->componentManager->buildComponent($form, $this->currentUser());
+    $form = $this->utilsManager->buildComponent($form, $this->currentUser());
 
     $form['#attached']['library'][] = 'onlyoffice_docspace/onlyoffice_docspace.users';
 

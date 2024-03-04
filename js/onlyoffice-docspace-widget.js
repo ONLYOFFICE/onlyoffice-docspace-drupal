@@ -22,10 +22,10 @@
   var $oodspDialog = $('<div id="oodspModalDialog"><div id="oodsp-selector-frame"></div></div>').appendTo('body');
   var modalConfig = {
     frameId: 'oodsp-selector-frame',
-    width: '400px',
-    height: '500px',
+    width: "100%",
+    height: "100%",
     selectorType: 'roomsOnly',
-    locale: DocSpaceComponent.locale
+    locale: drupalSettings.OODSP_Settings.locale
   }
 
   $selectButtons.on('click', function (event) {
@@ -36,7 +36,8 @@
     const title = event.target.dataset.title || "";
     const dialog = Drupal.dialog($oodspDialog, {
       title: title,
-      width: '400px'
+      width: '400px',
+      height: '500px'
     });
 
     const onSelectRoomCallback = (event) => {
@@ -45,13 +46,25 @@
       setInputValue(widgetId, 'title', event[0].label);
       setInputValue(widgetId, 'image', event[0].icon ?? "");
 
-      if (event[0].icon) {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event[0].icon));
+      const requestTokens = event[0].requestTokens;
+      const requestToken = requestTokens ? requestTokens[0].requestToken : null;
+
+      setInputValue(widgetId, 'request-token', requestToken);
+
+      if (requestToken !== null && requestToken !== "") {
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').removeClass('hidden');
       } else {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.images['room-icon']);
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').addClass('hidden');
       }
 
-      $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event[0].label);
+      if (event[0].icon) {
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event[0].icon));
+      } else {
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['room-icon']);
+      }
+
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .value').text(drupalSettings.OODSP_Settings.labels['room']);
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-title"] .value').text(event[0].label);
 
       $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
       $('div[data-drupal-selector="' + widgetId + '-buttons"]').addClass('hidden');
@@ -64,13 +77,25 @@
       setInputValue(widgetId, 'title', event.title);
       setInputValue(widgetId, 'image', event.icon ?? "");
 
-      if (event.icon)
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.getAbsoluteUrl(event.icon));
-      else {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', DocSpaceComponent.images['file-icon']);
+      const requestTokens = event.requestTokens;
+      const requestToken = requestTokens ? requestTokens[0].requestToken : null;
+
+      setInputValue(widgetId, 'request-token', requestToken);
+
+      if (requestToken !== null && requestToken !== "") {
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').removeClass('hidden');
+      } else {
+        $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .public-index').addClass('hidden');
       }
 
-      $('input[data-drupal-selector="' + widgetId + '-fields-field-items-title"]').val(event.title);
+      if (event.icon)
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event.icon));
+      else {
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['file-icon']);
+      }
+
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .value').text(drupalSettings.OODSP_Settings.labels['file']);
+      $('div[data-drupal-selector="' + widgetId + '-fields-field-items-title"] .value').text(event.title);
 
       $('div[data-drupal-selector="' + widgetId + '-fields"]').removeClass('hidden');
       $('div[data-drupal-selector="' + widgetId + '-buttons"]').addClass('hidden');
@@ -99,10 +124,10 @@
         break;
     }
 
-    DocSpaceComponent.renderDocSpace(
+    Drupal.OODSP_Utils.initLoginManager(
       'oodsp-selector-frame',
-      function () {
-          DocSpace.SDK.initFrame(modalConfig);
+      function() {
+        DocSpace.SDK.initFrame(modalConfig);
       }
     );
     dialog.showModal();
@@ -117,6 +142,7 @@
     setInputValue(widgetId, 'type', '');
     setInputValue(widgetId, 'title', '');
     setInputValue(widgetId, 'image', '');
+    setInputValue(widgetId, 'request-token', '');
 
     $('div[data-drupal-selector="' + widgetId + '-fields"]').addClass('hidden');
     $('div[data-drupal-selector="' + widgetId + '-buttons"]').removeClass('hidden');

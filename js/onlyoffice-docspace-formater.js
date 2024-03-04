@@ -17,27 +17,64 @@
 */
 
 (function (Drupal) {
-  DocSpaceComponent.initScript().then(
-    function () {
-      for (var frameId in drupalSettings.OODSP) {
-        DocSpaceComponent.initPublicDocSpace(
+  DocspaceIntegrationSdk.initScript("oodsp-api-js", drupalSettings.OODSP_Settings.url).then(
+    function() {
+      for (var frameId in drupalSettings.OODSPFormatterData) {
+        drupalSettings.OODSPFormatterData[frameId]['width'] = "100%";
+        drupalSettings.OODSPFormatterData[frameId]['height'] = "100%";
+        drupalSettings.OODSPFormatterData[frameId].locale = drupalSettings.OODSP_Settings.locale;
+        if (drupalSettings.OODSP_Settings.isAnonymous) {
+          if (! drupalSettings.OODSPFormatterData[frameId].hasOwnProperty('requestToken')
+                || drupalSettings.OODSPFormatterData[frameId].requestToken.length <= 0) {
+            Drupal.OODSP_Utils.renderError(frameId, {
+              header: drupalSettings.OODSP_Settings.messages.unauthorizedHeader,
+              message: drupalSettings.OODSP_Settings.messages.unauthorizedMessage,
+            });
+            continue;
+          }
+
+          DocspaceIntegrationSdk.logout(
+            frameId,
+            function() {
+              DocSpace.SDK.initFrame(drupalSettings.OODSPFormatterData[frameId]);
+            }
+          );
+          continue;
+        }
+
+        DocspaceIntegrationSdk.loginByPasswordHash(
           frameId,
-          drupalSettings.OODSP[frameId]['width'] || null,
-          drupalSettings.OODSP[frameId]['height'] || null,
+          drupalSettings.OODSP_Settings.currentUser,
           function () {
-            drupalSettings.OODSP[frameId].locale = DocSpaceComponent.locale;
-            DocSpace.SDK.initFrame(drupalSettings.OODSP[frameId]);
+            return Drupal.OODSP_Utils.getPasswordHash()
           },
           function () {
-            DocSpaceComponent.renderError(frameId);
+            DocSpace.SDK.initFrame(drupalSettings.OODSPFormatterData[frameId]);
+          },
+          function () {
+            if (! drupalSettings.OODSPFormatterData[frameId].hasOwnProperty('requestToken')
+                  || drupalSettings.OODSPFormatterData[frameId].requestToken.length <= 0) {
+              Drupal.OODSP_Utils.renderError(frameId, {
+                header: drupalSettings.OODSP_Settings.messages.unauthorizedHeader,
+                message: drupalSettings.OODSP_Settings.messages.unauthorizedMessage,
+              });
+              return;
+            }
+
+            DocspaceIntegrationSdk.logout(
+              frameId,
+              function () {
+                DocSpace.SDK.initFrame( config );
+              }
+            );
           }
         );
       }
     }
   ).catch(
     function() {
-      for (var frameId in drupalSettings.OODSP) {
-        DocSpaceComponent.renderError(frameId);
+      for (var frameId in drupalSettings.OODSPFormatterData) {
+        Drupal.OODSP_Utils.renderError(frameId, {message: drupalSettings.OODSP_Settings.messages.docspaceUnavailable});
       }
     }
   );

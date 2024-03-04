@@ -17,15 +17,15 @@
 */
 
 (function (Drupal) {
-  DocSpaceComponent.renderDocSpace(
-    'oodsp-manager-frame',
-    function () {
+  Drupal.OODSP_Utils.initLoginManager(
+    "oodsp-manager-frame",
+    function() {
       DocSpace.SDK.initManager({
         frameId: "oodsp-manager-frame",
         showMenu: true,
         showFilter: true,
         showHeader: true,
-        locale: DocSpaceComponent.locale
+        locale: drupalSettings.OODSP_Settings.locale
       });
     }
   );

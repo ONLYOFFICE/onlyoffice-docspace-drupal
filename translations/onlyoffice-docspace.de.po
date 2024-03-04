@@ -48,8 +48,8 @@ msgstr "Anmeldung"
 msgid "Password"
 msgstr "Kennwort"
 
-msgid "The current user will be added to DocSpace with the <b>Room admin</b> role. <b>Drupal Viewer</b> user will be added to DocSpace with View Only access."
-msgstr "Der aktuelle Benutzer wird zu DocSpace mit der Rolle <b>Raumadministrator</b> hinzugefügt. Der <b>Drupal Viewer</b>-Benutzer wird zu DocSpace mit Nur-Ansicht-Zugang hinzugefügt."
+msgid "The current user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "Der aktuelle Benutzer wird zu DocSpace mit der Rolle <b>Raumadministrator</b> hinzugefügt."
 
 msgid "DocSpace Users"
 msgstr "DocSpace-Benutzer"
@@ -71,15 +71,6 @@ msgstr "Fehler beim Abrufen von Benutzerdaten. Bitte versuchen Sie es erneut!"
 
 msgid "The specified user is not a DocSpace administrator!"
 msgstr "Der angegebene Benutzer ist kein DocSpace-Administrator!"
-
-msgid "Public DocSpace user was not created! View content will not be available on public pages."
-msgstr "Öffentlicher DocSpace-Benutzer wurde nicht erstellt! Inhalte werden auf öffentlichen Seiten nicht verfügbar sein."
-
-msgid "Public DocSpace user already created, but failed to update authorization."
-msgstr "Öffentlicher DocSpace-Benutzer wurde bereits erstellt, aber die Berechtigung konnte nicht aktualisiert werden."
-
-msgid "Public DocSpace user successfully created."
-msgstr "Öffentlicher DocSpace-Benutzer erfolgreich erstellt."
 
 msgid "User @user_email already exists in DocSpace!"
 msgstr "Benutzer @user_email existiert bereits in DocSpace!"
@@ -191,3 +182,15 @@ msgstr "Bildpunkte"
 
 msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
 msgstr "Die aktuelle Domäne ist nicht in den Einstellungen der Content Security Policy (CSP) festgelegt. Bitte fügen Sie sie über den Abschnitt <a href=\"@developer_tools\" target=\"_blank\">Entwickler-Tools</a> hinzu."
+
+msgid "DocSapce Room"
+msgstr "DocSapce Raum"
+
+msgid "DocSapce File"
+msgstr "DocSapce Datei"
+
+msgid "Access denied!"
+msgstr "Zugriff verweigert!"
+
+msgstr "Please log in to the site!"
+msgstr "Bitte loggen Sie sich auf der Seite ein!"

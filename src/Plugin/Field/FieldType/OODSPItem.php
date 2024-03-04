@@ -61,6 +61,9 @@ class OODSPItem extends FieldItemBase {
     $properties['image'] = DataDefinition::create('string')
       ->setLabel(t('Image'));
 
+    $properties['request_token'] = DataDefinition::create('string')
+      ->setLabel(t('Request Token'));
+
     return $properties;
   }
 
@@ -87,6 +90,11 @@ class OODSPItem extends FieldItemBase {
         ],
         'image' => [
           'description' => "Image url for DocSpace entity",
+          'type' => 'varchar',
+          'length' => 1024,
+        ],
+        'request_token' => [
+          'description' => "DocSpace entity requestToken",
           'type' => 'varchar',
           'length' => 1024,
         ],
