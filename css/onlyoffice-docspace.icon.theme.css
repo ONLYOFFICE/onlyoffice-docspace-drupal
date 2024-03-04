@@ -1,0 +1,23 @@
+/**
+ *
+ * (c) Copyright Ascensio System SIA 2023
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ */
+
+.field-icon-onlyoffice-docspace {
+  background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzYiIGhlaWdodD0iMzYiIHZpZXdCb3g9IjAgMCAzNiAzNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggb3BhY2l0eT0iMC41IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE2LjI4ODggMzAuNjgxTDQuNzM3OTcgMjUuMzI4M0MzLjc1NDAxIDI0Ljg2MSAzLjc1NDAxIDI0LjEzODggNC43Mzc5NyAyMy43MTM5TDguNzU5MzYgMjEuODQ0N0wxNi4yNDYgMjUuMzI4M0MxNy4yMjk5IDI1Ljc5NTYgMTguODEyOCAyNS43OTU2IDE5Ljc1NCAyNS4zMjgzTDI3LjI0MDYgMjEuODQ0N0wzMS4yNjIgMjMuNzEzOUMzMi4yNDYgMjQuMTgxMyAzMi4yNDYgMjQuOTAzNSAzMS4yNjIgMjUuMzI4M0wxOS43MTEyIDMwLjY4MUMxOC44MTI4IDMxLjEwNTkgMTcuMjI5OSAzMS4xMDU5IDE2LjI4ODggMzAuNjgxWiIgZmlsbD0iIzU1NTY1QiIvPgo8cGF0aCBvcGFjaXR5PSIwLjc1IiBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE2LjI1MTMgMjQuMDU3OUw0LjczNTcyIDE4LjY5OUMzLjc1NDc2IDE4LjIzMTEgMy43NTQ3NiAxNy41MDgxIDQuNzM1NzIgMTcuMDgyOEw4LjY1OTU2IDE1LjI1MzlMMTYuMjUxMyAxOC43ODRDMTcuMjMyMyAxOS4yNTE5IDE4LjgxMDQgMTkuMjUxOSAxOS43NDg3IDE4Ljc4NEwyNy4zNDA0IDE1LjI1MzlMMzEuMjY0MyAxNy4wODI4QzMyLjI0NTIgMTcuNTUwNiAzMi4yNDUyIDE4LjI3MzYgMzEuMjY0MyAxOC42OTlMMTkuNzQ4NyAyNC4wNTc5QzE4Ljc2NzcgMjQuNTI1OCAxNy4xODk2IDI0LjUyNTggMTYuMjUxMyAyNC4wNTc5WiIgZmlsbD0iIzU1NTY1QiIvPgo8cGF0aCBmaWxsLXJ1bGU9ImV2ZW5vZGQiIGNsaXAtcnVsZT0iZXZlbm9kZCIgZD0iTTE2LjI1MTMgMTcuNTAyNUw0LjczNTcyIDEyLjIyMDZDMy43NTQ3NiAxMS43NTk1IDMuNzU0NzYgMTEuMDQ2OSA0LjczNTcyIDEwLjYyNzdMMTYuMjUxMyA1LjM0NTg0QzE3LjIzMjMgNC44ODQ3MiAxOC44MTA0IDQuODg0NzIgMTkuNzQ4NyA1LjM0NTg0TDMxLjI2NDMgMTAuNjI3N0MzMi4yNDUyIDExLjA4ODggMzIuMjQ1MiAxMS44MDE0IDMxLjI2NDMgMTIuMjIwNkwxOS43NDg3IDE3LjUwMjVDMTguNzY3NyAxNy45MjE3IDE3LjE4OTYgMTcuOTIxNyAxNi4yNTEzIDE3LjUwMjVaIiBmaWxsPSIjNTU1NjVCIi8+Cjwvc3ZnPgo=");
+}

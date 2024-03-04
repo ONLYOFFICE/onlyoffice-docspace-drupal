@@ -24,6 +24,7 @@
  * 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
+use Drupal\Core\Field\FieldTypeCategoryManagerInterface;
 use Drupal\Core\Routing\RouteMatchInterface;
 
 /**
@@ -61,4 +62,12 @@ function onlyoffice_docspace_user_delete($account) {
   \Drupal::database()->delete('users_docspace')
     ->condition('uid', $account->id())
     ->execute();
+}
+
+
+/**
+ * Implements hook_field_type_category_info_alter().
+ */
+function onlyoffice_docspace_field_type_category_info_alter(&$definitions) {
+  $definitions[FieldTypeCategoryManagerInterface::FALLBACK_CATEGORY]['libraries'][] = 'onlyoffice_docspace/onlyoffice_docspace.onlyoffice-docspace-icon';
 }
