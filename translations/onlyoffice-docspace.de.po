@@ -48,7 +48,7 @@ msgstr "Anmeldung"
 msgid "Password"
 msgstr "Kennwort"
 
-msgid "The current user will be added to DocSpace with the <b>Room admin</b> role."
+msgid "The current Drupal user will be added to DocSpace with the <b>Room admin</b> role."
 msgstr "Der aktuelle Benutzer wird zu DocSpace mit der Rolle <b>Raumadministrator</b> hinzugefügt."
 
 msgid "DocSpace Users"

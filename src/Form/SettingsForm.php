@@ -187,7 +187,7 @@ class SettingsForm extends ConfigFormBase {
       '#theme' => 'status_messages',
       '#message_list' => [
         'warning' => [
-          $this->t('The current user will be added to DocSpace with the <b>Room admin</b> role.'),
+          $this->t('The current Drupal user will be added to DocSpace with the <b>Room admin</b> role.'),
         ],
       ],
       '#status_headings' => [
