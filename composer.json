@@ -26,7 +26,8 @@
     },
     "config": {
         "allow-plugins": {
-            "dealerdirect/phpcodesniffer-composer-installer": true
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "captainhook/plugin-composer": true
         }
     },
     "scripts": {
