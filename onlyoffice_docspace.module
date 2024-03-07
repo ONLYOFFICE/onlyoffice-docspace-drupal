@@ -64,7 +64,6 @@ function onlyoffice_docspace_user_delete($account) {
     ->execute();
 }
 
-
 /**
  * Implements hook_field_type_category_info_alter().
  */
