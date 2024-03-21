@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
 "POT-Creation-Date: 2022-03-03 11:00+0000\n"
-"PO-Revision-Date: 2023-11-08 21:25+0900\n"
+"PO-Revision-Date: 2024-03-21 15:24+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ja_JP\n"
@@ -30,6 +30,9 @@ msgstr "ONLYOFFICE DocSpaceのユーザー"
 msgid "ONLYOFFICE DocSpace Login"
 msgstr "ONLYOFFICE DocSpaceログイン"
 
+msgid "Administer ONLYOFFICE DocSpace connector"
+msgstr "ONLYOFFICE DocSpaceコネクタの管理"
+
 msgid "ONLYOFFICE DocSpace Connector settings"
 msgstr "ONLYOFFICE DocSpaceコネクタの設定"
 
@@ -45,8 +48,8 @@ msgstr "ログイン"
 msgid "Password"
 msgstr "パスワード"
 
-msgid "The current user will be added to DocSpace with the <b>Room admin</b> role."
-msgstr "現在のユーザーは<b>ルーム管理者</b>ロールでDocSpaceに追加されます。"
+msgid "The current Drupal user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "このDrupalのユーザーが<b>ルーム管理者</b>の役割でDocSpaceに追加されます。"
 
 msgid "DocSpace Users"
 msgstr "ONLYOFFICE DocSpaceのユーザー"
@@ -178,16 +181,13 @@ msgid "Pixels"
 msgstr "ピクセル"
 
 msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
-msgstr ""
+msgstr "このドメインはContent Security Policy (CSP)に設定されていません。<a href=\"@developer_tools\" target=\"_blank\">開発者ツール</a>のセクションで追加してください。"
 
-msgid "DocSapce Room"
-msgstr ""
+msgid "DocSpace Room"
+msgstr "DocSpaceのルーム"
 
-msgid "DocSapce File"
-msgstr ""
+msgid "DocSpace File"
+msgstr "DocSpaceのファイル"
 
 msgid "Access denied!"
-msgstr ""
-
-msgstr "Please log in to the site!"
-msgstr ""
+msgstr "アクセスが拒否されました！"

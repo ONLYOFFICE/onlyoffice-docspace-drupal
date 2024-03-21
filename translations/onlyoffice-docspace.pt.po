@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
 "POT-Creation-Date: 2022-03-03 11:00+0000\n"
-"PO-Revision-Date: 2023-11-01 17:05+0300\n"
+"PO-Revision-Date: 2024-03-21 14:11+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: pt_BR\n"
@@ -30,6 +30,9 @@ msgstr "Usuários do ONLYOFFICE DocSpace"
 msgid "ONLYOFFICE DocSpace Login"
 msgstr "Login do ONLYOFFICE DocSpace"
 
+msgid "Administer ONLYOFFICE DocSpace connector"
+msgstr "Administrar o conector do ONLYOFFICE DocSpace"
+
 msgid "ONLYOFFICE DocSpace Connector settings"
 msgstr "Configurações do conector ONLYOFFICE DocSpace"
 
@@ -45,8 +48,8 @@ msgstr "Login"
 msgid "Password"
 msgstr "Senha"
 
-msgid "The current user will be added to DocSpace with the <b>Room admin</b> role."
-msgstr "O usuário atual será adicionado ao DocSpace com a função de <b>Administrador da sala</b>."
+msgid "The current Drupal user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "O usuário atual do Drupal será adicionado ao DocSpace com a função de <b>Administrador da sala</b>."
 
 msgid "DocSpace Users"
 msgstr "Usuários do DocSpace"
@@ -180,14 +183,11 @@ msgstr "Píxels"
 msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
 msgstr "El dominio actual no está establecido en la configuración de la Política de seguridad de contenidos (CSP). Por favor, añádalo a través de <a href=\"@developer_tools\" target=\"_blank\">la sección Herramientas de desarrollo<a>."
 
-msgid "DocSapce Room"
-msgstr "DocSapce Sala"
+msgid "DocSpace Room"
+msgstr "Sala DocSpace"
 
-msgid "DocSapce File"
-msgstr "DocSapce Arquivo"
+msgid "DocSpace File"
+msgstr "Arquivo DocSpace"
 
 msgid "Access denied!"
 msgstr "Acesso negado!"
-
-msgstr "Please log in to the site!"
-msgstr "Por favor faça login no site!"
