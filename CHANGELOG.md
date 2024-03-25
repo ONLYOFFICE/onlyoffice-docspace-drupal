@@ -9,4 +9,3 @@
 - opening docspace in drupal
 - inserting a file when creating a page
 - inserting a room when creating a page
-
