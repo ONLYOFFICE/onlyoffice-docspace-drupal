@@ -22,7 +22,9 @@
         "drupal/core": "^9 || ^10"
     },
     "require-dev": {
-        "drupal/coder": "^8.3"
+        "drupal/coder": "^8.3",
+        "captainhook/plugin-composer": "^5.3.3",
+        "ramsey/conventional-commits": "^1.5.0"
     },
     "config": {
         "allow-plugins": {
