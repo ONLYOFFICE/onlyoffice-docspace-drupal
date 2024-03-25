@@ -191,3 +191,6 @@ msgstr "DocSpace Archivo"
 
 msgid "Access denied!"
 msgstr "¡Acceso denegado!"
+
+msgstr "Please log in to the site!"
+msgstr "¡Por favor, inicie sesión en el sitio!"

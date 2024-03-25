@@ -191,3 +191,6 @@ msgstr "DocSpaceのファイル"
 
 msgid "Access denied!"
 msgstr "アクセスが拒否されました！"
+
+msgstr "Please log in to the site!"
+msgstr ""

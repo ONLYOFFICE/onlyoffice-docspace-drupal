@@ -191,3 +191,6 @@ msgstr "Файл DocSpace"
 
 msgid "Access denied!"
 msgstr "Доступ запрещен!"
+
+msgstr "Please log in to the site!"
+msgstr "Пожалуйста, авторизуйтесь на сайте!"
