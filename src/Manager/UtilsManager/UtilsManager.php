@@ -151,8 +151,8 @@ class UtilsManager extends ManagerBase {
         'file-icon'   => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/file-icon.svg',
       ],
       'labels' => [
-        'room' => $this->t('DocSapce Room'),
-        'file' => $this->t('DocSapce File'),
+        'room' => $this->t('DocSpace Room'),
+        'file' => $this->t('DocSpace File'),
       ],
       'locale' => $this->getLocaleForDocspace(),
     ];

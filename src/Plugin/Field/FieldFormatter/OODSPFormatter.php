@@ -36,7 +36,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  * @FieldFormatter(
  *   id = "onlyoffice_docspace",
  *   label = @Translation("ONLYOFFICE DocSpace"),
- *   description = @Translation("Displaying ONLYOFFICE DocSapce."),
+ *   description = @Translation("Displaying ONLYOFFICE DocSpace."),
  *   field_types = {
  *     "onlyoffice_docspace"
  *   }
