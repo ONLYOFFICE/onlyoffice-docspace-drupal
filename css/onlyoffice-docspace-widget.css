@@ -1,0 +1,90 @@
+/**
+ *
+ * (c) Copyright Ascensio System SIA 2023
+ *
+ * This program is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU General Public License
+ * as published by the Free Software Foundation; either version 2
+ * of the License, or (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
+ *
+ */
+
+#oodspModalDialog {
+  padding: 0;
+  width: 400px!important;
+  height: 500px!important;
+  min-height: 150px !important;
+  max-height: calc(100vh - 120px) !important;
+  display: flex;
+  justify-content: center;
+  vertical-align: middle;
+}
+
+.ui-dialog:has(#oodspModalDialog) {
+  max-height: 92%;
+}
+
+#oodsp-selector-frame-container {
+  position: relative !important;;
+  width: 100% !important;;
+  height: 100% !important;;
+}
+
+#oodsp-selector-frame {
+  display: block;
+}
+
+.oodsp-container-inline {
+  display: inline-block;
+  max-width: 100%;
+}
+
+.oodsp-image {
+  margin: auto 20px 0px 0px;
+  border-radius: 18px;
+}
+
+.oodsp-fields {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+}
+
+.oodsp-fields input {
+  width: 100%;
+}
+
+.oodsp-container-items {
+  height: 100px !important;
+  display: flex !important;;
+  justify-content: center !important;
+  flex-direction: column !important;
+  vertical-align: middle !important;
+}
+
+.hidden {
+  display: none!important;
+}
+
+.oodsp-container-items p {
+  margin: 5px 0;
+}
+
+.oodsp-container-items img {
+  margin-left: 5px;
+  display: inline-block;
+  position: absolute;
+}
+
+.oodsp-container-items span.font-weight-normal {
+  font-weight: normal;
+}

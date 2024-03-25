@@ -1,0 +1,36 @@
+{
+    "name": "onlyoffice/onlyoffice-docspace-drupal",
+    "type": "drupal-module",
+    "description": "This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal.",
+    "keywords": ["onlyoffice-docspace", "drupal"],
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.onlyoffice.com",
+    "authors": [
+        {
+            "name": "Ascensio System SIA",
+            "email": "integration@onlyoffice.com",
+            "homepage": "https://www.onlyoffice.com/"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/ONLYOFFICE/onlyoffice-docspace-drupal/issues",
+        "source": "https://github.com/ONLYOFFICE/onlyoffice-docspace-drupal",
+        "email": "support@onlyoffice.com",
+        "forum": "https://forum.onlyoffice.com/"
+    },
+    "require": {
+        "drupal/core": "^9 || ^10"
+    },
+    "require-dev": {
+        "drupal/coder": "^8.3"
+    },
+    "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "captainhook/plugin-composer": true
+        }
+    },
+    "scripts": {
+        "phpcs": "vendor/bin/phpcs --standard=Drupal,DrupalPractice --extensions=php,module,inc,install,test,profile,theme,css,info,txt,md,yml --ignore=*/assets/*,*/vendor/*,css/onlyoffice-docspace.icon.theme.css ./"
+    }
+}

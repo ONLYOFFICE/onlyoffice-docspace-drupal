@@ -1,0 +1,17 @@
+# Schema for the configuration files of the ONLYOFFICE Connector module.
+onlyoffice_docspace.settings:
+  type: config_object
+  label: 'ONLYOFFICE DocSpace Connector settings'
+  mapping:
+    url:
+      type: string
+      label: 'DocSpace Service Address'
+    login:
+      type: string
+      label: 'Login'
+    passwordHash:
+      type: string
+      label: 'Password hash'
+    token:
+      type: string
+      label: 'Token'

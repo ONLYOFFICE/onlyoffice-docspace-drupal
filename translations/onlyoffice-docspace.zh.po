@@ -1,0 +1,196 @@
+# Russian translation of ONLYOFFICE DocSpace Connector
+# (c) Copyright Ascensio System SIA 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
+"POT-Creation-Date: 2022-03-03 11:00+0000\n"
+"PO-Revision-Date: 2024-03-21 13:59+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: zh_CN\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Generator: Poedit 3.4.1\n"
+
+msgid "This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal."
+msgstr "该模块允许在 Drupal 中使用 ONLYOFFICE 协作空间，它是一个基于房间的环境，可实现有效的文档协作。"
+
+msgid "The ONLYOFFICE DocSpace Connector allows using the room-based environment for effective document collaboration right within Drupal. Users are able to create Collaboration and Custom rooms with the pre-set access level, edit and co-author all types of office files."
+msgstr "ONLYOFFICE 协作空间连接器允许在 Drupal 中使用基于房间的环境进行有效的文档协作。用户能够创建具有预设访问级别的协作房间和自定义房间，共同编辑各种类型的办公文件。"
+
+msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=\":onlyoffice-docspace-drupal\">official project page</a>."
+msgstr "作为 Drupal 管理员，进入扩展 -> 添加新模块并上传插件存档。完成后，点击安装。要配置插件，请输入您的 ONLYOFFICE 协作空间地址、管理员登录名和密码。要了解更多详情，请访问<a href=\":onlyoffice-docspace-drupal\">官方项目页面</a>。"
+
+msgid "ONLYOFFICE DocSpace Users"
+msgstr "ONLYOFFICE 协作空间用户"
+
+msgid "ONLYOFFICE DocSpace Login"
+msgstr "登录 ONLYOFFICE 协作空间"
+
+msgid "Administer ONLYOFFICE DocSpace connector"
+msgstr "管理 ONLYOFFICE 协作空间连接器"
+
+msgid "ONLYOFFICE DocSpace Connector settings"
+msgstr "ONLYOFFICE 协作空间连接器设置"
+
+msgid "Manage ONLYOFFICE DocSpace Connector settings."
+msgstr "管理 ONLYOFFICE 协作空间连接器设置。"
+
+msgid "DocSpace Service Address"
+msgstr "协作空间服务地址"
+
+msgid "Login"
+msgstr "登录"
+
+msgid "Password"
+msgstr "密码"
+
+msgid "The current Drupal user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "当前 Drupal 用户将以<b>房间管理员</b>角色添加至协作空间中。"
+
+msgid "DocSpace Users"
+msgstr "协作空间用户"
+
+msgid "To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press"
+msgstr "如需在 ONLYOFFICE 协作空间中添加新用户并使用插件，请点击"
+
+msgid "Export Now"
+msgstr "立即导出"
+
+msgid "ONLYOFFICE DocSpace cannot be reached."
+msgstr "无法访问 ONLYOFFICE 协作空间。"
+
+msgid "Invalid credentials. Please try again!"
+msgstr "无效凭据。请重试！"
+
+msgid "Error getting data user. Please try again!"
+msgstr "获取用户数据时出错。请重试！"
+
+msgid "The specified user is not a DocSpace administrator!"
+msgstr "指定的用户不是协作空间管理员！"
+
+msgid "User @user_email already exists in DocSpace!"
+msgstr "用户 @user_email 已存在于协作空间中！"
+
+msgid "User @user_email successfully created in DocSpace with role Room Admin."
+msgstr "用户 @user_email 已在协作空间成功创建，角色为房间管理员。"
+
+msgid "Error create user @user_email in DocSpace! The limit of paid DocSpace users may have been reached."
+msgstr "在协作空间中创建用户 @user_email 时失败！协作空间的付费用户数可能已达到上限。"
+
+msgid "To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!"
+msgstr "如需在 ONLYOFFICE 协作空间中添加新用户，请选择多名用户并点击<b>邀请加入协作空间</b>。所有新用户都将以<b>普通用户</b>角色添加。如果您想更改角色，请前往“账户（Accounts）”。已提供<b>房间管理员</b>角色！"
+
+msgid "Invite to DocSpace"
+msgstr "邀请加入协作空间"
+
+msgid "DocSpace User Status"
+msgstr "协作空间用户状态"
+
+msgid "DocSpace User Type"
+msgstr "协作空间用户类型"
+
+msgid "Problem with the account synchronization between Drupal and ONLYOFFICE DocSpace"
+msgstr "Drupal 与 ONLYOFFICE 协作空间账户同步存在问题"
+
+msgid "Possible cause:"
+msgstr "可能原因："
+
+msgid "DocSpace account was not created via the DocSpace plugin for Drupal"
+msgstr "协作空间账户未通过 Drupal 协作空间插件创建"
+
+msgid "Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin."
+msgstr "无缝登录功能不可用。用户需要登录协作空间才能访问插件。"
+
+msgid "Password is empty!"
+msgstr "密码为空！"
+
+msgid "Owner"
+msgstr "所有者"
+
+msgid "DocSpace admin"
+msgstr "协作空间管理员"
+
+msgid "Power user"
+msgstr "高级用户"
+
+msgid "User"
+msgstr "普通用户"
+
+msgid "Room admin"
+msgstr "房间管理员"
+
+msgid "Error getting users from ONLYOFFICE DocSpace"
+msgstr "从 ONLYOFFICE 协作空间中获取用户时失败"
+
+msgid "Invitation failed for @count_errors/@count_users user(s)"
+msgstr "@count_errors/@count_users 名用户邀请失败"
+
+msgid "Invitation skipped for @count_skipped/@count_users user(s). User(s) with the indicated email(s) may already exist in DocSpace."
+msgstr "@count_skipped/@count_users 名用户邀请跳过。 拥有该邮件的用户可能已存在于协作空间中。"
+
+msgid "Invitation successfully sent to @count_invited/@count_users user(s)"
+msgstr "邀请已成功发送给 @count_invited/@count_users 名用户"
+
+msgid "Drupal requests access to your ONLYOFFICE DocSpace"
+msgstr "Drupal 请求访问您的 ONLYOFFICE 协作空间"
+
+msgid "Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:"
+msgstr "您的账户 <b>@user_email</b> 将与协作空间进行同步。请在下方的字段中输入协作空间密码："
+
+msgid "User authentication failed."
+msgstr "用户身份认证失败。"
+
+msgid "Portal unavailable! Please contact the administrator!"
+msgstr "门户不可用！请联系管理员！"
+
+msgid "Authorization unsuccessful!"
+msgstr "授权不成功！"
+
+msgid "Please contact the administrator."
+msgstr "请联系管理员。"
+
+msgid "Please go to <a href=\"@login_page\">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
+msgstr "请前往<a href=\"@login_page\">ONLYOFFICE 协作空间登录页面</a>并输入密码以恢复访问。"
+
+msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
+msgstr "前往设置以配置 ONLYOFFICE 协作空间连接器。"
+
+msgid "Select room"
+msgstr "选择房间"
+
+msgid "Select file"
+msgstr "选择文件"
+
+msgid "Remove"
+msgstr "移除"
+
+msgid "Width units"
+msgstr "宽度单位"
+
+msgid "Height units"
+msgstr "高度单位"
+
+msgid "Percents"
+msgstr "百分比"
+
+msgid "Pixels"
+msgstr "像素"
+
+msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
+msgstr "内容安全策略 (CSP) 设置中未设置当前域。请通过 <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a> 添加当区域。"
+
+msgid "DocSpace Room"
+msgstr "DocSpace 房间"
+
+msgid "DocSpace File"
+msgstr "DocSpace 文件"
+
+msgid "Access denied!"
+msgstr "访问被拒！"
+
+msgid "Please log in to the site!"
+msgstr "请登录网站！"

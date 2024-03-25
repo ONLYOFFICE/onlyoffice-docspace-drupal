@@ -1,0 +1,196 @@
+# Russian translation of ONLYOFFICE DocSpace Connector
+# (c) Copyright Ascensio System SIA 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
+"POT-Creation-Date: 2022-03-03 11:00+0000\n"
+"PO-Revision-Date: 2024-03-21 13:51+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ru_RU\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"X-Generator: Poedit 3.4.1\n"
+
+msgid "This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal."
+msgstr "Этот модуль позволяет использовать ONLYOFFICE DocSpace, комнатную среду для эффективной совместной работы с документами, прямо в Drupal."
+
+msgid "The ONLYOFFICE DocSpace Connector allows using the room-based environment for effective document collaboration right within Drupal. Users are able to create Collaboration and Custom rooms with the pre-set access level, edit and co-author all types of office files."
+msgstr "ONLYOFFICE DocSpace Connector позволяет использовать комнатную среду для эффективной совместной работы над документами прямо в Drupal. Пользователи могут создавать совместные и пользовательские комнаты с предустановленным уровнем доступа, редактировать и совместно редактировать все типы офисных файлов."
+
+msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=\":onlyoffice-docspace-drupal\">official project page</a>."
+msgstr "Как администратор Drupal, перейдите в меню Расширения -> Добавить новый модуль и загрузите архив плагина. После этого нажмите Продолжить. Для настройки плагина введите свой адрес ONLYOFFICE DocSpace, логин и пароль администратора. Узнайте больше на <a href=\":onlyoffice-docspace-drupal\">официальной странице проекта</a>."
+
+msgid "ONLYOFFICE DocSpace Users"
+msgstr "Пользователи ONLYOFFICE DocSpace"
+
+msgid "ONLYOFFICE DocSpace Login"
+msgstr "ONLYOFFICE DocSpace Войти"
+
+msgid "Administer ONLYOFFICE DocSpace connector"
+msgstr "Администрирование коннектора ONLYOFFICE DocSpace"
+
+msgid "ONLYOFFICE DocSpace Connector settings"
+msgstr "Настройки ONLYOFFICE DocSpace Connector"
+
+msgid "Manage ONLYOFFICE DocSpace Connector settings."
+msgstr "Управление настройками ONLYOFFICE DocSpace Connector."
+
+msgid "DocSpace Service Address"
+msgstr "Адрес службы DocSpace"
+
+msgid "Login"
+msgstr "Логин"
+
+msgid "Password"
+msgstr "Пароль"
+
+msgid "The current Drupal user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "Текущий пользователь Drupal будет добавлен в DocSpace с ролью <b>Администратор комнаты</b>."
+
+msgid "DocSpace Users"
+msgstr "Пользователи DocSpace"
+
+msgid "To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press"
+msgstr "Чтобы добавить новых пользователей в ONLYOFFICE DocSpace и начать работу в плагине, нажмите"
+
+msgid "Export Now"
+msgstr "Экспортировать сейчас"
+
+msgid "ONLYOFFICE DocSpace cannot be reached."
+msgstr "ONLYOFFICE DocSpace недоступен."
+
+msgid "Invalid credentials. Please try again!"
+msgstr "Недействительные учетные данные. Пожалуйста, попробуйте еще раз!"
+
+msgid "Error getting data user. Please try again!"
+msgstr "Ошибка получения данных пользователя. Пожалуйста, попробуйте еще раз!"
+
+msgid "The specified user is not a DocSpace administrator!"
+msgstr "Указанный пользователь не является администратором DocSpace!"
+
+msgid "User @user_email already exists in DocSpace!"
+msgstr "Пользователь @user_email уже существует в DocSpace!"
+
+msgid "User @user_email successfully created in DocSpace with role Room Admin."
+msgstr "Пользователь @user_email успешно создан в DocSpace с ролью Администратора Комнаты."
+
+msgid "Error create user @user_email in DocSpace! The limit of paid DocSpace users may have been reached."
+msgstr "Ошибка при создании пользователя @user_email в DocSpace! Возможно, достигнут лимит платных пользователей DocSpace."
+
+msgid "To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!"
+msgstr "Чтобы добавить новых пользователей в ONLYOFFICE DocSpace, выберите нескольких пользователей и нажмите <b>Пригласить в DocSpace</b>. Все новые пользователи будут добавляться с ролью <b>Пользователь</b>. Если вы хотите изменить роль, перейдите в Аккаунты. Роль <b>Администратор комнаты</b> платная!"
+
+msgid "Invite to DocSpace"
+msgstr "Пригласить в DocSpace"
+
+msgid "DocSpace User Status"
+msgstr "Статус пользователя DocSpace"
+
+msgid "DocSpace User Type"
+msgstr "Тип пользователя DocSpace"
+
+msgid "Problem with the account synchronization between Drupal and ONLYOFFICE DocSpace"
+msgstr "Проблема с синхронизацией аккаунтов между Drupal и ONLYOFFICE DocSpace"
+
+msgid "Possible cause:"
+msgstr "Возможная причина:"
+
+msgid "DocSpace account was not created via the DocSpace plugin for Drupal"
+msgstr "Учетная запись DocSpace не была создана с помощью плагина DocSpace для Drupal."
+
+msgid "Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin."
+msgstr "Бесшовный вход недоступен. Пользователям необходимо будет войти в DocSpace, чтобы получить доступ к плагину."
+
+msgid "Password is empty!"
+msgstr "Пароль пуст!"
+
+msgid "Owner"
+msgstr "Владелец"
+
+msgid "DocSpace admin"
+msgstr "Администратор DocSpace"
+
+msgid "Power user"
+msgstr "Опытный пользователь"
+
+msgid "User"
+msgstr "Пользователь"
+
+msgid "Room admin"
+msgstr "Администратор комнаты"
+
+msgid "Error getting users from ONLYOFFICE DocSpace"
+msgstr "Ошибка получения пользователей ONLYOFFICE DocSpace"
+
+msgid "Invitation failed for @count_errors/@count_users user(s)"
+msgstr "Приглашение закончилось с ошибкой для @count_errors/@count_users пользователя(ей)"
+
+msgid "Invitation skipped for @count_skipped/@count_users user(s). User(s) with the indicated email(s) may already exist in DocSpace."
+msgstr "Приглашение пропущено для @count_skipped/@count_users пользователя(ей). Пользователь(и) с указанным адресом электронной почты могут уже существовать в DocSpace."
+
+msgid "Invitation successfully sent to @count_invited/@count_users user(s)"
+msgstr "Приглашение успешно отправлено @count_invited/@count_users пользователю(ям)"
+
+msgid "Drupal requests access to your ONLYOFFICE DocSpace"
+msgstr "Drupal запрашивает доступ к вашему ONLYOFFICE DocSpace"
+
+msgid "Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:"
+msgstr "Ваша учетная запись <b>@user_email</b> будет синхронизирована с вашим DocSpace. Пожалуйста, введите свой пароль DocSpace в поле ниже:"
+
+msgid "User authentication failed."
+msgstr "Не удалось выполнить аутентификацию пользователя."
+
+msgid "Portal unavailable! Please contact the administrator!"
+msgstr "Портал недоступен! Пожалуйста, свяжитесь с администратором!"
+
+msgid "Authorization unsuccessful!"
+msgstr "Авторизация не удалась!"
+
+msgid "Please contact the administrator."
+msgstr "Пожалуйста, свяжитесь с администратором."
+
+msgid "Please go to <a href=\"@login_page\">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
+msgstr "Пожалуйста, перейдите на <a href=\"@login_page\">cтраницу входа ONLYOFFICE DocSpace</a> и введите свой пароль, чтобы восстановить доступ."
+
+msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
+msgstr "Перейдите в настройки, чтобы настроить коннектор ONLYOFFICE DocSpace."
+
+msgid "Select room"
+msgstr "Выбрать комнату"
+
+msgid "Select file"
+msgstr "Выбрать файл"
+
+msgid "Remove"
+msgstr "Удалить"
+
+msgid "Width units"
+msgstr "Единицы ширины"
+
+msgid "Height units"
+msgstr "Единицы высоты"
+
+msgid "Percents"
+msgstr "Проценты"
+
+msgid "Pixels"
+msgstr "Пиксели"
+
+msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
+msgstr "Текущий домен не указан в настройках политики безопасности контента (CSP). Пожалуйста, добавьте его через раздел <a href=\"@developer_tools\" target=\"_blank\">Инструменты разработчика</a>."
+
+msgid "DocSpace Room"
+msgstr "Комната DocSpace"
+
+msgid "DocSpace File"
+msgstr "Файл DocSpace"
+
+msgid "Access denied!"
+msgstr "Доступ запрещен!"
+
+msgstr "Please log in to the site!"
+msgstr "Пожалуйста, авторизуйтесь на сайте!"

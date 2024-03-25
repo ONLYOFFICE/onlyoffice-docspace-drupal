@@ -1,0 +1,46 @@
+onlyoffice_docspace.settings_form:
+  path: '/admin/config/system/onlyoffice-docspace-settings'
+  defaults:
+    _title: 'ONLYOFFICE DocSpace Connector settings'
+    _form: 'Drupal\onlyoffice_docspace\Form\SettingsForm'
+  requirements:
+    _permission: 'administer onlyoffice_docspace configuration'
+
+onlyoffice_docspace.users_form:
+  path: '/admin/config/system/onlyoffice-docspace-settings/users'
+  defaults:
+    _title: 'ONLYOFFICE DocSpace Users'
+    _form: 'Drupal\onlyoffice_docspace\Form\UsersForm'
+  requirements:
+    _permission: 'administer onlyoffice_docspace configuration'
+
+onlyoffice_docspace.page:
+  path: '/admin/content/onlyoffice-docspace'
+  options:
+    _admin_route: TRUE
+  defaults:
+    _controller: '\Drupal\onlyoffice_docspace\Controller\OODSPPageController::getOnlyofficeDocSpacePage'
+    _title: 'ONLYOFFICE DocSpace'
+    scheme: null
+  requirements:
+    _permission: 'administer site configuration'
+
+onlyoffice_docspace.page_login:
+  path: '/admin/content/onlyoffice-docspace/login'
+  options:
+    _admin_route: TRUE
+  defaults:
+    _form: 'Drupal\onlyoffice_docspace\Form\LoginForm'
+    _title: 'ONLYOFFICE DocSpace Login'
+    scheme: null
+  requirements:
+    _permission: 'access content'
+
+onlyoffice_docspace.credentilas:
+  path: '/credentilas'
+  defaults:
+    _controller: '\Drupal\onlyoffice_docspace\Controller\OODSPCredentialsController::credentials'
+  methods: [POST]
+  requirements:
+    # Don't use standard access restriction because document editor service use jwt authorization.
+    _access: 'TRUE'

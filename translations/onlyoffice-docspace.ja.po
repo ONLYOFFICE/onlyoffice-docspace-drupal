@@ -1,0 +1,196 @@
+# Russian translation of ONLYOFFICE DocSpace Connector
+# (c) Copyright Ascensio System SIA 2023
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
+"POT-Creation-Date: 2022-03-03 11:00+0000\n"
+"PO-Revision-Date: 2024-03-21 15:24+0300\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: ja_JP\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Poedit 3.4.1\n"
+
+msgid "This module allows using ONLYOFFICE DocSpace, a room-based environment for effective document collaboration, right within Drupal."
+msgstr "このモジュールは、ONLYOFFICE DocSpace、効率的なドキュメント・コラボレーションのためのルームベース環境をDrupal内で使用することを可能にします。"
+
+msgid "The ONLYOFFICE DocSpace Connector allows using the room-based environment for effective document collaboration right within Drupal. Users are able to create Collaboration and Custom rooms with the pre-set access level, edit and co-author all types of office files."
+msgstr "ONLYOFFICE DocSpaceコネクタは、Drupal内で効果的なドキュメントコラボレーションを行うためのルームベース環境を使用することができます。ユーザーはあらかじめ設定されたアクセスレベルでコラボレーションルームやカスタムルームを作成し、あらゆる種類のオフィスファイルを編集、共同編集することができます。"
+
+msgid "As a Drupal admin, go to Extend -> Add new module and upload the plugin archive. Once done, click Install. To configure the plugin, enter your ONLYOFFICE DocSpace address, administrator login and password. Learn more details on the <a href=\":onlyoffice-docspace-drupal\">official project page</a>."
+msgstr "Drupalの管理者として、「拡張」 -> 「新しいモジュールの追加」に進み、プラグインアーカイブをアップロードします。完了したら、インストールをクリックしてください。プラグインを設定するには、ONLYOFFICE DocSpaceアドレス、管理者ログイン、パスワードを入力してください。詳細は<a href=\":onlyoffice-docspace-drupal\">公式プロジェクト</a>ページをご覧ください。"
+
+msgid "ONLYOFFICE DocSpace Users"
+msgstr "ONLYOFFICE DocSpaceのユーザー"
+
+msgid "ONLYOFFICE DocSpace Login"
+msgstr "ONLYOFFICE DocSpaceログイン"
+
+msgid "Administer ONLYOFFICE DocSpace connector"
+msgstr "ONLYOFFICE DocSpaceコネクタの管理"
+
+msgid "ONLYOFFICE DocSpace Connector settings"
+msgstr "ONLYOFFICE DocSpaceコネクタの設定"
+
+msgid "Manage ONLYOFFICE DocSpace Connector settings."
+msgstr "ONLYOFFICE DocSpace Connectorの設定を管理します。"
+
+msgid "DocSpace Service Address"
+msgstr "DocSpaceサービスアドレス"
+
+msgid "Login"
+msgstr "ログイン"
+
+msgid "Password"
+msgstr "パスワード"
+
+msgid "The current Drupal user will be added to DocSpace with the <b>Room admin</b> role."
+msgstr "このDrupalのユーザーが<b>ルーム管理者</b>の役割でDocSpaceに追加されます。"
+
+msgid "DocSpace Users"
+msgstr "ONLYOFFICE DocSpaceのユーザー"
+
+msgid "To add new users to ONLYOFFICE DocSpace and to start working in plugin, please press"
+msgstr "ONLYOFFICE DocSpaceに新規ユーザーを追加し、プラグインでの作業を開始するには、以下のボタンを押してください"
+
+msgid "Export Now"
+msgstr "今すぐエクスポートする"
+
+msgid "ONLYOFFICE DocSpace cannot be reached."
+msgstr "ONLYOFFICE DocSpaceにアクセスできません。"
+
+msgid "Invalid credentials. Please try again!"
+msgstr "認証情報が無効です。もう一度お試しください！"
+
+msgid "Error getting data user. Please try again!"
+msgstr "ユーザーデータ取得エラー。もう一度お試しください！"
+
+msgid "The specified user is not a DocSpace administrator!"
+msgstr "指定されたユーザーはDocSpace管理者ではありません！"
+
+msgid "User @user_email already exists in DocSpace!"
+msgstr "ユーザ @user_email は DocSpace に既に存在します！"
+
+msgid "User @user_email successfully created in DocSpace with role Room Admin."
+msgstr "ユーザー@user_emailがDocSpaceにルーム管理者の役割で作成されました。"
+
+msgid "Error create user @user_email in DocSpace! The limit of paid DocSpace users may have been reached."
+msgstr "DocSpaceのユーザー@user_emailの作成でエラーが発生しました！DocSpaceの有料ユーザー数に達した可能性があります。"
+
+msgid "To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!"
+msgstr "ONLYOFFICE DocSpaceに新しいユーザーを追加するには、複数のユーザーを選択し、<b>DocSpaceに招待</b>を押してください。すべての新規ユーザーは<b>ユーザー</b>の役割で追加されます。<b>ルーム管理者</b>の役割は有料です！"
+
+msgid "Invite to DocSpace"
+msgstr "DocSpaceに招待する"
+
+msgid "DocSpace User Status"
+msgstr "DocSpaceユーザーのステータス"
+
+msgid "DocSpace User Type"
+msgstr "DocSpaceユーザーのタイプ"
+
+msgid "Problem with the account synchronization between Drupal and ONLYOFFICE DocSpace"
+msgstr "DrupalとONLYOFFICE DocSpace間のアカウント同期に関する問題"
+
+msgid "Possible cause:"
+msgstr "考えられる理由："
+
+msgid "DocSpace account was not created via the DocSpace plugin for Drupal"
+msgstr "Drupal用DocSpaceプラグインでDocSpaceアカウントが作成されていません"
+
+msgid "Seamless login is unavailable. Users will need to login into DocSpace to have access to the plugin."
+msgstr "シームレスログインは利用できません。プラグインにアクセスするには、DocSpaceにログインする必要があります。"
+
+msgid "Password is empty!"
+msgstr "パスワードは空です！"
+
+msgid "Owner"
+msgstr "所有者"
+
+msgid "DocSpace admin"
+msgstr "DocSpaceの管理者"
+
+msgid "Power user"
+msgstr "パワーユーザー"
+
+msgid "User"
+msgstr "ユーザー"
+
+msgid "Room admin"
+msgstr "ルームの管理者"
+
+msgid "Error getting users from ONLYOFFICE DocSpace"
+msgstr "ONLYOFFICE DocSpaceからのユーザー取得エラー"
+
+msgid "Invitation failed for @count_errors/@count_users user(s)"
+msgstr "@count_errors/@count_usersユーザーの招待に失敗しました。"
+
+msgid "Invitation skipped for @count_skipped/@count_users user(s). User(s) with the indicated email(s) may already exist in DocSpace."
+msgstr "@count_skipped/@count_usersユーザーの招待がスキップされました。指定されたメールアドレスを持つユーザーがすでにDocSpaceに存在する可能性があります。"
+
+msgid "Invitation successfully sent to @count_invited/@count_users user(s)"
+msgstr "@count_invited/@count_usersユーザーに招待メールが送信されました。"
+
+msgid "Drupal requests access to your ONLYOFFICE DocSpace"
+msgstr "DrupalがONLYOFFICE DocSpaceへのアクセスを要求します"
+
+msgid "Your account <b>@user_email</b> will be synced with your DocSpace. Please enter your DocSpace password in the field below:"
+msgstr "あなたのアカウント<b>@user_email</b>はDocSpaceと同期されます。下の欄にDocSpaceのパスワードを入力してください："
+
+msgid "User authentication failed."
+msgstr "ユーザー認証に失敗しました。"
+
+msgid "Portal unavailable! Please contact the administrator!"
+msgstr "ポータルが利用できません！管理者にご連絡ください！"
+
+msgid "Authorization unsuccessful!"
+msgstr "認証に失敗した！"
+
+msgid "Please contact the administrator."
+msgstr "管理者にご連絡ください。"
+
+msgid "Please go to <a href=\"@login_page\">ONLYOFFICE DocSpace Login page</a> and enter your password to restore access."
+msgstr "<a href=“@login_page”>ONLYOFFICE DocSpaceログインページ</a>にアクセスし、パスワードを入力してアクセスを回復してください。"
+
+msgid "Go to the settings to configure ONLYOFFICE DocSpace connector."
+msgstr "「設定」へ移動し、ONLYOFFICE DocSpaceコネクタの設定を行います。"
+
+msgid "Select room"
+msgstr "ルームの選択"
+
+msgid "Select file"
+msgstr "ファイルの選択"
+
+msgid "Remove"
+msgstr "削除"
+
+msgid "Width units"
+msgstr "幅の単位"
+
+msgid "Height units"
+msgstr "高さの単位"
+
+msgid "Percents"
+msgstr "パーセント"
+
+msgid "Pixels"
+msgstr "ピクセル"
+
+msgid "The current domain is not set in the Content Security Policy (CSP) settings. Please add it via <a href=\"@developer_tools\" target=\"_blank\">the Developer Tools section</a>."
+msgstr "このドメインはContent Security Policy (CSP)に設定されていません。<a href=\"@developer_tools\" target=\"_blank\">開発者ツール</a>のセクションで追加してください。"
+
+msgid "DocSpace Room"
+msgstr "DocSpaceのルーム"
+
+msgid "DocSpace File"
+msgstr "DocSpaceのファイル"
+
+msgid "Access denied!"
+msgstr "アクセスが拒否されました！"
+
+msgstr "Please log in to the site!"
+msgstr "サイトにログインしてください！"

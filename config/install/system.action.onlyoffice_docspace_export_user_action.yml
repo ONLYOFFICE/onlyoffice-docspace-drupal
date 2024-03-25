@@ -1,0 +1,7 @@
+langcode: en
+status: true
+id: onlyoffice_docspace_export_user_action
+label: 'Invite to DocSpace'
+type: onlyoffice_docspace_user
+plugin: onlyoffice_docspace_export_user_action
+configuration: {  }

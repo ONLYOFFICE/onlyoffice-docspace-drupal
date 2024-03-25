@@ -1,0 +1,12 @@
+services:
+  onlyoffice_docspace.utils_manager:
+    class: Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager
+    arguments: ['@extension.list.module', '@language_manager', '@path.current']
+    
+  onlyoffice_docspace.request_manager:
+    class: Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManager
+    arguments: ['@http_client']
+
+  onlyoffice_docspace.security_manager:
+    class: Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManager
+    arguments: ['@database']
