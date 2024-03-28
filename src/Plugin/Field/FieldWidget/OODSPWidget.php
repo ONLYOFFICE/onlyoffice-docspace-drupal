@@ -3,7 +3,7 @@
 namespace Drupal\onlyoffice_docspace\Plugin\Field\FieldWidget;
 
 /**
- * Copyright (c) Ascensio System SIA 2023.
+ * Copyright (c) Ascensio System SIA 2024.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
