@@ -232,6 +232,7 @@ class OODSPFormatter extends FormatterBase {
           'anonymous' => [
             'request' => FALSE,
           ],
+          'integrationMode' => 'embed',
         ];
       }
 
