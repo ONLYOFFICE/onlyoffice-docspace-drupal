@@ -104,9 +104,12 @@
     }
 
     const onCloseCallback = () => {
-      DocSpace.SDK.frames['oodsp-selector-frame'].destroyFrame();
       dialog.close();
     }
+
+    $(window).on('editor:dialogsave', () => {
+      DocSpace.SDK.frames['oodsp-selector-frame'].destroyFrame();
+    });
 
     modalConfig.mode = mode;
     switch (mode) {
