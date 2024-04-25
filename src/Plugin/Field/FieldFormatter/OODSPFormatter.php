@@ -227,6 +227,10 @@ class OODSPFormatter extends FormatterBase {
         'requestToken' => $item->request_token,
       ];
 
+      if ($config['mode'] == 'manager') {
+        $config['viewTableColumns'] = 'Name,Size,Type';
+      }
+
       if ($config['mode'] == 'editor') {
         $config['editorCustomization'] = [
           'anonymous' => [
