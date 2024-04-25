@@ -204,7 +204,6 @@ class OODSPFormatter extends FormatterBase {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $this->pageCacheKillSwitch->trigger();
-
     $element = [];
     $element = $this->utilsManager->buildComponent($element, $this->currentUser);
 
@@ -212,7 +211,8 @@ class OODSPFormatter extends FormatterBase {
 
     foreach ($items as $delta => $item) {
       $editorId = sprintf(
-        'onlyoffice-docpace-block-%s',
+        'oodsp-formater-%s-%s',
+        $item->getFieldDefinition()->getName(),
         $delta,
       );
 

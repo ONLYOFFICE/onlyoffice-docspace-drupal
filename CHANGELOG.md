@@ -1,5 +1,8 @@
 # Change Log
 
+##
+## Added 
+- ability to add multiple rooms/files to a page
 
 ## 1.0.0
 ## Added
