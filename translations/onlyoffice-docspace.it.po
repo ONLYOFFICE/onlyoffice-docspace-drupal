@@ -195,6 +195,15 @@ msgstr "Accesso negato!"
 msgstr "Please log in to the site!"
 msgstr "Ti preghiamo di effettuare il login al sito!"
 
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Light"
+msgstr "Chiaro"
+
+msgid "Dark"
+msgstr "Scuro"
+
 msgid "View"
 msgstr "Visualizzazione"
 

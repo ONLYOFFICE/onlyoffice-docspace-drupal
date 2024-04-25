@@ -3,7 +3,7 @@
 ##
 ## Added 
 - ability to add multiple rooms/files to a page
-- widget setting (view mode 'editor/embedded')
+- widget setting (view mode 'editor/embedded', theme 'Base/Dark')
 
 ##
 ## Changed

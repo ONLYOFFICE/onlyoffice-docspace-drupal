@@ -143,6 +143,7 @@ class OODSPFormatter extends FormatterBase {
       'height_unit' => 'px',
       'height' => 640,
       'editor_type' => 'embedded',
+      'theme' => 'Base',
     ] + parent::defaultSettings();
   }
 
@@ -153,6 +154,16 @@ class OODSPFormatter extends FormatterBase {
     return [
       'desktop' => $this->t('Editor'),
       'embedded' => $this->t('Embedded'),
+    ];
+  }
+
+  /**
+   * Returns editor type options.
+   */
+  protected function getThemeOptions() {
+    return [
+      'Base' => $this->t('Base'),
+      'Dark' => $this->t('Dark'),
     ];
   }
 
@@ -203,6 +214,12 @@ class OODSPFormatter extends FormatterBase {
         '#default_value' => $this->getSetting('editor_type'),
         '#options' => $this->getEditorTypeOptions(),
       ],
+      'theme' => [
+        '#type' => 'select',
+        '#title' => $this->t('Theme'),
+        '#default_value' => $this->getSetting('theme'),
+        '#options' => $this->getThemeOptions(),
+      ],
     ];
   }
 
@@ -214,6 +231,7 @@ class OODSPFormatter extends FormatterBase {
     $summary[] = $this->t('Width')->render() . ': ' . $this->getSetting('width') . $this->getSetting('width_unit');
     $summary[] = $this->t('Height')->render() . ': ' . $this->getSetting('height') . $this->getSetting('height_unit');
     $summary[] = $this->t('View')->render() . ': ' . $this->getEditorTypeOptions()[$this->getSetting('editor_type')];
+    $summary[] = $this->t('Theme')->render() . ': ' . $this->getThemeOptions()[$this->getSetting('theme')];
     return $summary;
   }
 
@@ -237,6 +255,7 @@ class OODSPFormatter extends FormatterBase {
       $editorWidth = $this->getSetting('width') . $this->getSetting('width_unit');
       $editorHeight = $this->getSetting('height') . $this->getSetting('height_unit');
       $editorType = $this->getSetting('editor_type');
+      $theme = $this->getSetting('theme');
 
       $config = [
         'frameId' => $editorId,
@@ -244,6 +263,7 @@ class OODSPFormatter extends FormatterBase {
         'mode' => $item->type,
         'editorGoBack' => FALSE,
         'requestToken' => $item->request_token,
+        'theme' => $theme,
       ];
 
       if ($config['mode'] == 'manager') {
