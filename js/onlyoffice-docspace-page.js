@@ -25,7 +25,8 @@
         showMenu: true,
         showFilter: true,
         showHeader: true,
-        locale: drupalSettings.OODSP_Settings.locale
+        locale: drupalSettings.OODSP_Settings.locale,
+        showSignOut: false
       });
     }
   );
