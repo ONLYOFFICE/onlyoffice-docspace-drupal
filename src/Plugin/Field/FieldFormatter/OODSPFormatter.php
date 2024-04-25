@@ -142,7 +142,18 @@ class OODSPFormatter extends FormatterBase {
       'width' => 100,
       'height_unit' => 'px',
       'height' => 640,
+      'editor_type' => 'embedded',
     ] + parent::defaultSettings();
+  }
+
+  /**
+   * Returns editor type options.
+   */
+  protected function getEditorTypeOptions() {
+    return [
+      'desktop' => $this->t('Editor'),
+      'embedded' => $this->t('Embedded'),
+    ];
   }
 
   /**
@@ -186,6 +197,12 @@ class OODSPFormatter extends FormatterBase {
         '#min' => 0,
         '#required' => TRUE,
       ],
+      'editor_type' => [
+        '#type' => 'select',
+        '#title' => $this->t('View'),
+        '#default_value' => $this->getSetting('editor_type'),
+        '#options' => $this->getEditorTypeOptions(),
+      ],
     ];
   }
 
@@ -196,6 +213,7 @@ class OODSPFormatter extends FormatterBase {
     $summary = parent::settingsSummary();
     $summary[] = $this->t('Width')->render() . ': ' . $this->getSetting('width') . $this->getSetting('width_unit');
     $summary[] = $this->t('Height')->render() . ': ' . $this->getSetting('height') . $this->getSetting('height_unit');
+    $summary[] = $this->t('View')->render() . ': ' . $this->getEditorTypeOptions()[$this->getSetting('editor_type')];
     return $summary;
   }
 
@@ -218,6 +236,7 @@ class OODSPFormatter extends FormatterBase {
 
       $editorWidth = $this->getSetting('width') . $this->getSetting('width_unit');
       $editorHeight = $this->getSetting('height') . $this->getSetting('height_unit');
+      $editorType = $this->getSetting('editor_type');
 
       $config = [
         'frameId' => $editorId,
@@ -238,6 +257,7 @@ class OODSPFormatter extends FormatterBase {
           ],
           'integrationMode' => 'embed',
         ];
+        $config['editorType'] = $editorType;
       }
 
       if (!empty($item->request_token)) {

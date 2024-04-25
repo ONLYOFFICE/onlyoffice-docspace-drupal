@@ -194,3 +194,12 @@ msgstr "Accès refusé !"
 
 msgstr "Please log in to the site!"
 msgstr "Veuillez vous connecter sur le site !"
+
+msgid "View"
+msgstr "Affichage"
+
+msgid "Embedded"
+msgstr "Incorporé"
+
+msgid "Editor"
+msgstr "Éditeur"

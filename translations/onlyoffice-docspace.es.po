@@ -194,3 +194,12 @@ msgstr "¡Acceso denegado!"
 
 msgstr "Please log in to the site!"
 msgstr "¡Por favor, inicie sesión en el sitio!"
+
+msgid "View"
+msgstr "Vista"
+
+msgid "Embedded"
+msgstr "Incorporada"
+
+msgid "Editor"
+msgstr "Editor"

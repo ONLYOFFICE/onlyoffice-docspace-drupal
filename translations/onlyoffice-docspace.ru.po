@@ -194,3 +194,12 @@ msgstr "Доступ запрещен!"
 
 msgstr "Please log in to the site!"
 msgstr "Пожалуйста, авторизуйтесь на сайте!"
+
+msgid "View"
+msgstr "Вид"
+
+msgid "Embedded"
+msgstr "Встроенный"
+
+msgid "Editor"
+msgstr "Редактор"
