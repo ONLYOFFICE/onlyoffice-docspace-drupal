@@ -26,7 +26,8 @@
         showFilter: true,
         showHeader: true,
         locale: drupalSettings.OODSP_Settings.locale,
-        showSignOut: false
+        showSignOut: false,
+        theme: "Base"
       });
     }
   );
