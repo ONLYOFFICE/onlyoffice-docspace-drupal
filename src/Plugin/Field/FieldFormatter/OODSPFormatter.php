@@ -227,6 +227,14 @@ class OODSPFormatter extends FormatterBase {
         'requestToken' => $item->request_token,
       ];
 
+      if ($config['mode'] == 'editor') {
+        $config['editorCustomization'] = [
+          'anonymous' => [
+            'request' => FALSE,
+          ],
+        ];
+      }
+
       if (!empty($item->request_token)) {
         $config['rootPath'] = '/rooms/share';
       }
