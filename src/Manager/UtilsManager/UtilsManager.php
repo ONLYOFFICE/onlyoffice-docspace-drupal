@@ -135,7 +135,9 @@ class UtilsManager extends ManagerBase {
       'currentUser' => $currentUser,
       'isPublic' => $isAnonymous,
       'isAnonymous' => $isAnonymous,
-      'url' => rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/',
+      'url' => !empty($this->config('onlyoffice_docspace.settings')->get('url'))
+        ? rtrim($this->config('onlyoffice_docspace.settings')->get('url'), "/") . '/'
+        : '',
       'ajaxUrl' => Url::fromRoute('onlyoffice_docspace.credentilas')->setAbsolute()->toString(),
       'loginUrl' => Url::fromRoute('onlyoffice_docspace.page_login')->setAbsolute()->toString(),
       'adminUrl' => Url::fromRoute('onlyoffice_docspace.page')->setAbsolute()->toString(),

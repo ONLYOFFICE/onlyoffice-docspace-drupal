@@ -10,6 +10,7 @@
 - hide request name for anonymous
 - structure of tables with files (Name,Size,Type)
 - base theme in admin panel for docspace
+- fix warning on configuration page
 
 ## 1.0.0
 ## Added
