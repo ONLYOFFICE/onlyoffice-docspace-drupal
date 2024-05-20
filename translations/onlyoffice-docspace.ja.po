@@ -195,6 +195,15 @@ msgstr "アクセスが拒否されました！"
 msgstr "Please log in to the site!"
 msgstr "サイトにログインしてください！"
 
+msgid "Theme"
+msgstr ""
+
+msgid "Light"
+msgstr ""
+
+msgid "Dark"
+msgstr ""
+
 msgid "View"
 msgstr ""
 

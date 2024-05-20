@@ -195,6 +195,15 @@ msgstr "Accès refusé !"
 msgstr "Please log in to the site!"
 msgstr "Veuillez vous connecter sur le site !"
 
+msgid "Theme"
+msgstr "Thème"
+
+msgid "Light"
+msgstr "Clair"
+
+msgid "Dark"
+msgstr "Sombre"
+
 msgid "View"
 msgstr "Affichage"
 

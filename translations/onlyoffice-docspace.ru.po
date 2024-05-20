@@ -195,6 +195,15 @@ msgstr "Доступ запрещен!"
 msgstr "Please log in to the site!"
 msgstr "Пожалуйста, авторизуйтесь на сайте!"
 
+msgid "Theme"
+msgstr "Тема"
+
+msgid "Light"
+msgstr "Светлая"
+
+msgid "Dark"
+msgstr "Темная"
+
 msgid "View"
 msgstr "Вид"
 
