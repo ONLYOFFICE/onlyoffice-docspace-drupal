@@ -227,6 +227,19 @@ class OODSPFormatter extends FormatterBase {
         'requestToken' => $item->request_token,
       ];
 
+      if ($config['mode'] == 'manager') {
+        $config['viewTableColumns'] = 'Name,Size,Type';
+      }
+
+      if ($config['mode'] == 'editor') {
+        $config['editorCustomization'] = [
+          'anonymous' => [
+            'request' => FALSE,
+          ],
+          'integrationMode' => 'embed',
+        ];
+      }
+
       if (!empty($item->request_token)) {
         $config['rootPath'] = '/rooms/share';
       }
