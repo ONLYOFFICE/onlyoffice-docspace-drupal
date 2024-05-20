@@ -194,3 +194,12 @@ msgstr "Acesso negado!"
 
 msgstr "Please log in to the site!"
 msgstr "Por favor faça login no site!"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "Embedded"
+msgstr "Incorporado"
+
+msgid "Editor"
+msgstr "Editor"

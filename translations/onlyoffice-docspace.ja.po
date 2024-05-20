@@ -194,3 +194,12 @@ msgstr "アクセスが拒否されました！"
 
 msgstr "Please log in to the site!"
 msgstr "サイトにログインしてください！"
+
+msgid "View"
+msgstr ""
+
+msgid "Embedded"
+msgstr ""
+
+msgid "Editor"
+msgstr ""

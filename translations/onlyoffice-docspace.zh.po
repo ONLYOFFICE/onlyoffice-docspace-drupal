@@ -194,3 +194,12 @@ msgstr "访问被拒！"
 
 msgid "Please log in to the site!"
 msgstr "请登录网站！"
+
+msgid "View"
+msgstr "视图"
+
+msgid "Embedded"
+msgstr "嵌入式"
+
+msgid "Editor"
+msgstr "编辑器"
