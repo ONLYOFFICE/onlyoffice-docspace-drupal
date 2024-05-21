@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: ONLYOFFICE DocSpace Connector\n"
 "POT-Creation-Date: 2022-03-03 11:00+0000\n"
-"PO-Revision-Date: 2024-03-21 15:24+0300\n"
+"PO-Revision-Date: 2024-05-21 09:30+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ja_JP\n"
@@ -192,23 +192,20 @@ msgstr "DocSpaceのファイル"
 msgid "Access denied!"
 msgstr "アクセスが拒否されました！"
 
-msgstr "Please log in to the site!"
-msgstr "サイトにログインしてください！"
-
 msgid "Theme"
-msgstr ""
+msgstr "テーマ"
 
 msgid "Light"
-msgstr ""
+msgstr "ライト"
 
 msgid "Dark"
-msgstr ""
+msgstr "ダーク"
 
 msgid "View"
-msgstr ""
+msgstr "ビュー"
 
 msgid "Embedded"
-msgstr ""
+msgstr "埋め込み"
 
 msgid "Editor"
-msgstr ""
+msgstr "エディタ"
