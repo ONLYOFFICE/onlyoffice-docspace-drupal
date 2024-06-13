@@ -162,7 +162,7 @@ class OODSPFormatter extends FormatterBase {
    */
   protected function getThemeOptions() {
     return [
-      'Base' => $this->t('Base'),
+      'Base' => $this->t('Light'),
       'Dark' => $this->t('Dark'),
     ];
   }
