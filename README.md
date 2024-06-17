@@ -18,8 +18,6 @@ the following parameters:
 
 When you click on the Save button, a user with the **Room admin** role will be
 created in ONLYOFFICE DocSpace, with the same data as the current Drupal user.
-A public user (Drupal Viewer) will be also added to DocSpace with the View Only
-access. 
 
 ## Exporting users to DocSpace
 
@@ -87,8 +85,7 @@ are determined depending on the availability of the DocSpace account:
 For example, if a user was invited to the room in advance with the Room admin
 rights, they will see the Drupal page with the published room available for
 editing.
-- If user does not have a DocSpace account: a Drupal Viewer account is used
-to access the room/file for viewing if an anonymous users can view the content.
+- If user does not have a DocSpace account: he can view only Public Room.
 
 Please note the following specifics for DocSpace rooms published on Drupal
 pages:
