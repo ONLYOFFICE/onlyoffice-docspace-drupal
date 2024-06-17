@@ -85,7 +85,7 @@ are determined depending on the availability of the DocSpace account:
 For example, if a user was invited to the room in advance with the Room admin
 rights, they will see the Drupal page with the published room available for
 editing.
-- If user does not have a DocSpace account: he can view only Public Room.
+- If a user does not have a DocSpace account: he can view only Public Rooms.
 
 Please note the following specifics for DocSpace rooms published on Drupal
 pages:
