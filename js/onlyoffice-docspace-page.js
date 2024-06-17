@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,9 @@
         showMenu: true,
         showFilter: true,
         showHeader: true,
-        locale: drupalSettings.OODSP_Settings.locale
+        locale: drupalSettings.OODSP_Settings.locale,
+        showSignOut: false,
+        theme: "Base"
       });
     }
   );

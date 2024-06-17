@@ -3,7 +3,7 @@
 namespace Drupal\onlyoffice_docspace\Plugin\Field\FieldFormatter;
 
 /**
- * Copyright (c) Ascensio System SIA 2023.
+ * Copyright (c) Ascensio System SIA 2024.
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -142,7 +142,29 @@ class OODSPFormatter extends FormatterBase {
       'width' => 100,
       'height_unit' => 'px',
       'height' => 640,
+      'editor_type' => 'embedded',
+      'theme' => 'Base',
     ] + parent::defaultSettings();
+  }
+
+  /**
+   * Returns editor type options.
+   */
+  protected function getEditorTypeOptions() {
+    return [
+      'desktop' => $this->t('Editor'),
+      'embedded' => $this->t('Embedded'),
+    ];
+  }
+
+  /**
+   * Returns editor type options.
+   */
+  protected function getThemeOptions() {
+    return [
+      'Base' => $this->t('Light'),
+      'Dark' => $this->t('Dark'),
+    ];
   }
 
   /**
@@ -186,6 +208,18 @@ class OODSPFormatter extends FormatterBase {
         '#min' => 0,
         '#required' => TRUE,
       ],
+      'editor_type' => [
+        '#type' => 'select',
+        '#title' => $this->t('View'),
+        '#default_value' => $this->getSetting('editor_type'),
+        '#options' => $this->getEditorTypeOptions(),
+      ],
+      'theme' => [
+        '#type' => 'select',
+        '#title' => $this->t('Theme'),
+        '#default_value' => $this->getSetting('theme'),
+        '#options' => $this->getThemeOptions(),
+      ],
     ];
   }
 
@@ -196,6 +230,8 @@ class OODSPFormatter extends FormatterBase {
     $summary = parent::settingsSummary();
     $summary[] = $this->t('Width')->render() . ': ' . $this->getSetting('width') . $this->getSetting('width_unit');
     $summary[] = $this->t('Height')->render() . ': ' . $this->getSetting('height') . $this->getSetting('height_unit');
+    $summary[] = $this->t('View')->render() . ': ' . $this->getEditorTypeOptions()[$this->getSetting('editor_type')];
+    $summary[] = $this->t('Theme')->render() . ': ' . $this->getThemeOptions()[$this->getSetting('theme')];
     return $summary;
   }
 
@@ -204,7 +240,6 @@ class OODSPFormatter extends FormatterBase {
    */
   public function viewElements(FieldItemListInterface $items, $langcode) {
     $this->pageCacheKillSwitch->trigger();
-
     $element = [];
     $element = $this->utilsManager->buildComponent($element, $this->currentUser);
 
@@ -212,12 +247,15 @@ class OODSPFormatter extends FormatterBase {
 
     foreach ($items as $delta => $item) {
       $editorId = sprintf(
-        'onlyoffice-docpace-block-%s',
+        'oodsp-formater-%s-%s',
+        $item->getFieldDefinition()->getName(),
         $delta,
       );
 
       $editorWidth = $this->getSetting('width') . $this->getSetting('width_unit');
       $editorHeight = $this->getSetting('height') . $this->getSetting('height_unit');
+      $editorType = $this->getSetting('editor_type');
+      $theme = $this->getSetting('theme');
 
       $config = [
         'frameId' => $editorId,
@@ -225,7 +263,22 @@ class OODSPFormatter extends FormatterBase {
         'mode' => $item->type,
         'editorGoBack' => FALSE,
         'requestToken' => $item->request_token,
+        'theme' => $theme,
       ];
+
+      if ($config['mode'] == 'manager') {
+        $config['viewTableColumns'] = 'Name,Size,Type';
+      }
+
+      if ($config['mode'] == 'editor') {
+        $config['editorCustomization'] = [
+          'anonymous' => [
+            'request' => FALSE,
+          ],
+          'integrationMode' => 'embed',
+        ];
+        $config['editorType'] = $editorType;
+      }
 
       if (!empty($item->request_token)) {
         $config['rootPath'] = '/rooms/share';

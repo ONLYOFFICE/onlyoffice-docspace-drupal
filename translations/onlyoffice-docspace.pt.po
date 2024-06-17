@@ -1,5 +1,5 @@
 # Russian translation of ONLYOFFICE DocSpace Connector
-# (c) Copyright Ascensio System SIA 2023
+# (c) Copyright Ascensio System SIA 2024
 #
 msgid ""
 msgstr ""
@@ -194,3 +194,21 @@ msgstr "Acesso negado!"
 
 msgstr "Please log in to the site!"
 msgstr "Por favor faça login no site!"
+
+msgid "Theme"
+msgstr "Tema"
+
+msgid "Light"
+msgstr "Claro"
+
+msgid "Dark"
+msgstr "Escuro"
+
+msgid "View"
+msgstr "Ver"
+
+msgid "Embedded"
+msgstr "Incorporado"
+
+msgid "Editor"
+msgstr "Editor"

@@ -1,5 +1,16 @@
 # Change Log
 
+## 1.1.0
+## Added 
+- ability to add multiple rooms/files to a page
+- widget setting (view mode 'editor/embedded', theme 'Base/Dark')
+
+## Changed
+- hide sign out button on page docspace
+- hide request name for anonymous
+- structure of tables with files (Name,Size,Type)
+- base theme in admin panel for docspace
+- fix warning on configuration page
 
 ## 1.0.0
 ## Added

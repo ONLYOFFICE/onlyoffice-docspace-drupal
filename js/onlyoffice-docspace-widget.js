@@ -1,5 +1,5 @@
 /*
- * (c) Copyright Ascensio System SIA 2023
+ * (c) Copyright Ascensio System SIA 2024
  *
  * This program is free software; you can redistribute it and/or
  * modify it under the terms of the GNU General Public License
@@ -25,7 +25,8 @@
     width: "100%",
     height: "100%",
     selectorType: 'roomsOnly',
-    locale: drupalSettings.OODSP_Settings.locale
+    locale: drupalSettings.OODSP_Settings.locale,
+    theme: "Base"
   }
 
   $selectButtons.on('click', function (event) {
@@ -103,9 +104,12 @@
     }
 
     const onCloseCallback = () => {
-      DocSpace.SDK.frames['oodsp-selector-frame'].destroyFrame();
       dialog.close();
     }
+
+    $(window).on('editor:dialogsave', () => {
+      DocSpace.SDK.frames['oodsp-selector-frame'].destroyFrame();
+    });
 
     modalConfig.mode = mode;
     switch (mode) {
