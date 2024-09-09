@@ -59,9 +59,13 @@
       }
 
       if (event[0].icon) {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event[0].icon));
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]')
+          .attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event[0].icon))
+          .attr('data-default-src', drupalSettings.OODSP_Settings.images['room-icon']);
       } else {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['room-icon']);
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]')
+          .attr('src', drupalSettings.OODSP_Settings.images['room-icon'])
+          .attr('data-default-src', drupalSettings.OODSP_Settings.images['room-icon']);
       }
 
       $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .value').text(drupalSettings.OODSP_Settings.labels['room']);
@@ -90,9 +94,13 @@
       }
 
       if (event.icon)
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event.icon));
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]')
+          .attr('src', Drupal.OODSP_Utils.getAbsoluteUrl(event.icon))
+          .attr('data-default-src', drupalSettings.OODSP_Settings.images['file-icon']);
       else {
-        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]').attr('src', drupalSettings.OODSP_Settings.images['file-icon']);
+        $('img[data-drupal-selector="' + widgetId + '-fields-field-image"]')
+          .attr('src', drupalSettings.OODSP_Settings.images['file-icon'])
+          .attr('data-default-src', drupalSettings.OODSP_Settings.images['file-icon']);
       }
 
       $('div[data-drupal-selector="' + widgetId + '-fields-field-items-type"] .value').text(drupalSettings.OODSP_Settings.labels['file']);

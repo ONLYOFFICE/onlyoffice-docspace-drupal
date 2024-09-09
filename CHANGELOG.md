@@ -3,7 +3,7 @@
 ##
 ## Changed 
 - DocSpace JS SDK version 1.0.1 
-
+- fix a bug with endless loading of the content editing page with OODSPWidget
 ## 1.1.0
 ## Added 
 - ability to add multiple rooms/files to a page
