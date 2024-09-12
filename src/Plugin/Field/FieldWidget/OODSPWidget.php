@@ -277,7 +277,7 @@ class OODSPWidget extends WidgetBase {
       'editor' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/file-icon.svg',
     ];
 
-    return isset($images[$type]) ? $images[$type] : NULL;
+    return $images[$type] ?? NULL;
   }
 
   /**
@@ -292,7 +292,7 @@ class OODSPWidget extends WidgetBase {
       'editor' => $this->t('DocSpace File'),
     ];
 
-    return isset($titles[$type]) ? $titles[$type] : NULL;
+    return $titles[$type] ?? NULL;
   }
 
   /**
