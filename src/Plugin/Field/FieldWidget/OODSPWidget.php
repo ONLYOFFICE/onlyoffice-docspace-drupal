@@ -183,11 +183,12 @@ class OODSPWidget extends WidgetBase {
           '#type' => 'html_tag',
           '#tag' => 'img',
           '#attributes' => [
-            'src' => $this->getAbsoluteDocSpaceUrl($items[$delta]->image ?? ''),
+            'src' => $items[$delta]->image ? $this->getAbsoluteDocSpaceUrl($items[$delta]->image) : '',
             'width' => '100',
             'height' => '100',
             'class' => ['oodsp-image'],
-            'onerror' => 'if (this.src != "' . $this->getDefaultWidgetImage($items[$delta]->type) . '") this.src = "' . $this->getDefaultWidgetImage($items[$delta]->type) . '";',
+            'data-default-src' => $this->getDefaultWidgetImage($items[$delta]->type),
+            'onerror' => 'if (this.dataset.defaultSrc && this.src != this.dataset.defaultSrc) this.src = this.dataset.defaultSrc;',
           ],
           '#weight' => -12,
         ],
@@ -276,7 +277,7 @@ class OODSPWidget extends WidgetBase {
       'editor' => '/' . $this->extensionListModule->getPath('onlyoffice_docspace') . '/images/file-icon.svg',
     ];
 
-    return $images[$type];
+    return $images[$type] ?? NULL;
   }
 
   /**
@@ -286,12 +287,12 @@ class OODSPWidget extends WidgetBase {
    *   The item type.
    */
   private function getTitleType($type) {
-    $images = [
+    $titles = [
       'manager' => $this->t('DocSpace Room'),
       'editor' => $this->t('DocSpace File'),
     ];
 
-    return $images[$type];
+    return $titles[$type] ?? NULL;
   }
 
   /**
