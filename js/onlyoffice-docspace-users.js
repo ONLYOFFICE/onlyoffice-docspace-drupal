@@ -22,6 +22,7 @@
       function (e) {
         DocSpace.SDK.initSystem(
           {
+            src: DocSpace.SDK.src,
             frameId: 'oodsp-system-frame'
           }
         );

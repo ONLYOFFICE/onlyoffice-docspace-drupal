@@ -37,6 +37,7 @@
           Drupal.showLoader();
 
           DocSpace.SDK.initSystem({
+            src: DocSpace.SDK.src,
             frameId: "oodsp-settings-frame",
             events: {
               "onAppReady": async function () {

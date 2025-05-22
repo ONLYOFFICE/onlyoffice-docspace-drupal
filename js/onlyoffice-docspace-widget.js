@@ -139,7 +139,9 @@
     Drupal.OODSP_Utils.initLoginManager(
       'oodsp-selector-frame',
       function() {
-        DocSpace.SDK.initFrame(modalConfig);
+        DocSpace.SDK.initFrame(
+          Object.assign( modalConfig, { src: DocSpace.SDK.src } )
+        );
       }
     );
     dialog.showModal();
