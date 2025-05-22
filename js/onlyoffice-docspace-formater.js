@@ -23,48 +23,63 @@
     locale: drupalSettings.OODSP_Settings.locale,
   };
 
+  const oodspConfigs = [];
+  const oodspPublicConfigs = [];
+
+  for (var frameId in drupalSettings.OODSPFormatterData) {
+    if (drupalSettings.OODSPFormatterData[frameId].requestToken &&
+      drupalSettings.OODSPFormatterData[frameId].requestToken.length > 0) {
+      oodspPublicConfigs.push(
+        Object.assign(
+          drupalSettings.OODSPFormatterData[frameId],
+          defaultConfig
+        )
+      );
+    } else {
+      oodspConfigs.push(
+        Object.assign(
+          drupalSettings.OODSPFormatterData[frameId],
+          defaultConfig
+        )
+      );
+    }
+  }
+
   DocspaceIntegrationSdk.initScript("oodsp-api-js", drupalSettings.OODSP_Settings.url).then(
     function() {
-      const firstElement = Object.values(drupalSettings.OODSPFormatterData)[0];
+      const countElements = oodspConfigs.length;
 
-      for (var frameId in drupalSettings.OODSPFormatterData) {
-        drupalSettings.OODSPFormatterData[frameId] = Object.assign( drupalSettings.OODSPFormatterData[frameId], defaultConfig );
+      _initFrames(oodspPublicConfigs);
 
-        if (firstElement.frameId == frameId) {
-          if (drupalSettings.OODSP_Settings.isAnonymous) {
-            DocspaceIntegrationSdk.logout(
-              firstElement.frameId,
-              function () {
-                _initAllFrames(Object.values(drupalSettings.OODSPFormatterData), true);
-              }
-            );
-          } else {
-            DocspaceIntegrationSdk.loginByPasswordHash(
-              firstElement.frameId,
-              drupalSettings.OODSP_Settings.currentUser,
-              function () {
-                return Drupal.OODSP_Utils.getPasswordHash()
-              },
-              function () {
-                _initAllFrames(Object.values(drupalSettings.OODSPFormatterData), false);
-              },
-              function () {
-                DocspaceIntegrationSdk.logout(
-                  firstElement.frameId,
-                  function () {
-                    _initAllFrames(Object.values(drupalSettings.OODSPFormatterData), true);
-                  }
-                );
-              }
-            );
+      for ( let i = 0; i < countElements; i++ ) {
+        if ( i === 0 ) {
+          if (drupalSettings.OODSP_Settings.isAnonymous ||
+            !drupalSettings.OODSP_Settings.currentUser 
+          ) {
+            _showAuthorizationError(oodspConfigs);
+            return;
           }
+
+          DocspaceIntegrationSdk.loginByPasswordHash(
+            oodspConfigs[ i ].frameId,
+            drupalSettings.OODSP_Settings.currentUser,
+            function () {
+              return Drupal.OODSP_Utils.getPasswordHash()
+            },
+            function () {
+              _initFrames(oodspConfigs);
+            },
+            function () {
+              _showAuthorizationError(oodspConfigs);
+            }
+          );
         } else {
           DocSpace.SDK.initSystem({
-              src: DocSpace.SDK.src,
-              frameId: frameId,
-              width: "100%",
-              height: "100%",
-              waiting: true
+            src: DocSpace.SDK.src,
+            frameId: oodspConfigs[ i ].frameId,
+            width: "100%",
+            height: "100%",
+            waiting: true
           });
         }
       }
@@ -77,27 +92,25 @@
     }
   );
 
-  const _initAllFrames = (oodspConfigs, requiredRequestToken) => {
-    for (var config of oodspConfigs) {
-      if (requiredRequestToken
-        && (!config.hasOwnProperty('requestToken') || config.requestToken.length <= 0)) {
-
-        if (DocSpace.SDK.frames[config.frameId] != null) {
-          DocSpace.SDK.frames[config.frameId].destroyFrame();
-        }
-
-        Drupal.OODSP_Utils.renderError(config.frameId, {
-          header: drupalSettings.OODSP_Settings.messages.unauthorizedHeader,
-          message: drupalSettings.OODSP_Settings.messages.unauthorizedMessage,
-        });
-
-        continue;
-      }
-
+  const _initFrames = (configs) => {
+    for (const config of configs) {
       config.src = DocSpace.SDK.src;
 
-      DocSpace.SDK.frames[config.frameId].initFrame(config);
+      DocSpace.SDK.initFrame(config);
     }
-  }
+  };
+
+  const _showAuthorizationError = (configs) => {
+    for (const config of configs) {
+      if (DocSpace.SDK.frames[config.frameId]) {
+        DocSpace.SDK.frames[config.frameId].destroyFrame();
+    }
+
+    Drupal.OODSP_Utils.renderError(config.frameId, {
+        header: drupalSettings.OODSP_Settings.messages.unauthorizedHeader,
+        message: drupalSettings.OODSP_Settings.messages.unauthorizedMessage,
+      });
+    }
+  };
 
 })(Drupal);

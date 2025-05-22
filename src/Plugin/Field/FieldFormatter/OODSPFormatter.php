@@ -281,6 +281,7 @@ class OODSPFormatter extends FormatterBase {
       }
 
       if (!empty($item->request_token)) {
+        $config['mode'] = 'public-room';
         $config['rootPath'] = '/rooms/share';
       }
 

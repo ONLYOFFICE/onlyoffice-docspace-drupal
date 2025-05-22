@@ -3,6 +3,7 @@
 ##
 ## Changed
 - docspace-sdk-js v2.0.0
+- improved loading speed of public room
 
 ## 1.1.1
 ## Changed 
