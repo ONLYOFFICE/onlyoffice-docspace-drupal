@@ -21,6 +21,7 @@
     "oodsp-manager-frame",
     function() {
       DocSpace.SDK.initManager({
+        src: DocSpace.SDK.src,
         frameId: "oodsp-manager-frame",
         showMenu: true,
         showFilter: true,

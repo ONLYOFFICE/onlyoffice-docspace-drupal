@@ -60,6 +60,7 @@
           }
         } else {
           DocSpace.SDK.initSystem({
+              src: DocSpace.SDK.src,
               frameId: frameId,
               width: "100%",
               height: "100%",
@@ -92,6 +93,8 @@
 
         continue;
       }
+
+      config.src = DocSpace.SDK.src;
 
       DocSpace.SDK.frames[config.frameId].initFrame(config);
     }

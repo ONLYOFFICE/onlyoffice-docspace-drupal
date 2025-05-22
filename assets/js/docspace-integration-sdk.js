@@ -81,6 +81,7 @@
 
     const loginByPasswordHash = function (frameId, email, onRequestPasswordHash, onSuccessLogin, onUnSuccessLogin, onAppError) {
         DocSpace.SDK.initSystem({
+            src: DocSpace.SDK.src,
             frameId: frameId,
             width: "100%",
             height: "100%",
@@ -123,6 +124,7 @@
 
     const logout = function (frameId, onLogout, onAppError) {
         DocSpace.SDK.initSystem({
+            src: DocSpace.SDK.src,
             frameId: frameId,
             width: "100%",
             height: "100%",
@@ -159,6 +161,11 @@
         script.onload = () => {
             // Remove attribute loading after loading is complete.
             script.removeAttribute("loading");
+
+            if (window.DocSpace && window.DocSpace.SDK) {
+                DocSpace.SDK.src = url.endsWith('/') ? url.slice(0, -1) : url;
+            }
+
             resolve(null);
         };
         script.onerror = (error) => {

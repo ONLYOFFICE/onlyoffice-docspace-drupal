@@ -25,6 +25,7 @@
     .then(function (e) {
       DocSpace.SDK.initSystem(
         {
+          src: DocSpace.SDK.src,
           frameId: frameId,
           events: {
             onAppReady: async function () {
