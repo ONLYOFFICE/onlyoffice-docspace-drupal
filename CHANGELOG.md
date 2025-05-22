@@ -1,5 +1,9 @@
 # Change Log
 
+##
+## Changed
+- docspace-sdk-js v2.0.0
+
 ## 1.1.1
 ## Changed 
 - DocSpace JS SDK version 1.0.1 
