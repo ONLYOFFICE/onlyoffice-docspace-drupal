@@ -76,10 +76,10 @@ msgid "User @user_email already exists in DocSpace!"
 msgstr "¡El usuario @user_email ya existe en DocSpace!"
 
 msgid "User @user_email successfully created in DocSpace with role Room Admin."
-msgstr "Пользователь @user_email успешно создан в DocSpace с ролью Администратора Комнаты."
+msgstr "El usuario @user_email se ha creado correctamente en DocSpace con el rol Administrador de sala."
 
 msgid "Error create user @user_email in DocSpace! The limit of paid DocSpace users may have been reached."
-msgstr "El usuario @user_email se ha creado correctamente en DocSpace con el rol Administrador de sala."
+msgstr "Error al crear el usuario @user_email en DocSpace. Es posible que se haya alcanzado el límite de usuarios de pago de DocSpace.
 
 msgid "To add new users to ONLYOFFICE DocSpace select multiple users and press <b>Invite to DocSpace</b>. All new users will be added with <b>User</b> role, if you want to change the role go to Accounts. Role <b>Room admin</b> is paid!"
 msgstr "Para añadir nuevos usuarios a ONLYOFFICE DocSpace seleccione varios usuarios y pulse <b>Invitar a DocSpace</b>. Todos los usuarios nuevos serán añadidos con el rol <b>Usuario</b>, si quiere cambiar el rol vaya a Cuentas. ¡El rol <b>Administrador de sala</b> es de pago!"
