@@ -101,4 +101,3 @@ are determined depending on the availability of the DocSpace account:
 * **🐞 Found a bug?** Please report it by creating an [issue](https://github.com/ONLYOFFICE/onlyoffice-docspace-drupal/issues).
 * **❓ Have a question?** Ask our community and developers on the [ONLYOFFICE Forum](https://community.onlyoffice.com).
 * **👨‍💻 Need help for developers?** Check our [API documentation](https://api.onlyoffice.com).
-* **💡 Want to suggest a feature?** Share your ideas on our [feedback platform](https://feedback.onlyoffice.com/forums/966080-your-voice-matters).
