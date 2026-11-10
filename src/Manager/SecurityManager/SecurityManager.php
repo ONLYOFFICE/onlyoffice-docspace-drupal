@@ -68,7 +68,7 @@ class SecurityManager extends ManagerBase implements SecurityManagerInterface {
    * {@inheritdoc}
    */
   public function setPasswordHash($user_id, $password_hash) {
-    $this->database->merge('users_docspace')->key(['uid' => $user_id])->fields(
+    $this->database->merge('users_docspace')->key('uid', $user_id)->fields(
       [
         'uid' => $user_id,
         'user_pass' => $password_hash,
