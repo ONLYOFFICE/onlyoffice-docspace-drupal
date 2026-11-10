@@ -81,7 +81,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
         $responseDocSpaceUser = $this->getDocSpaceUser($currentUrl, $currentLogin, $currentToken);
 
         if (!$responseDocSpaceUser['error']) {
-          if (!$responseDocSpaceUser['data']['isAdmin']) {
+          if (empty($responseDocSpaceUser['data']['isAdmin']) && empty($responseDocSpaceUser['data']['isOwner'])) {
             // Error user is not admin.
             $result['error'] = self::FORBIDDEN;
             return $result;
@@ -115,7 +115,7 @@ class RequestManager extends ManagerBase implements RequestManagerInterface {
       return $responseDocSpaceUser;
     }
 
-    if (!$responseDocSpaceUser['data']['isAdmin']) {
+    if (empty($responseDocSpaceUser['data']['isAdmin']) && empty($responseDocSpaceUser['data']['isOwner'])) {
       // Error user is not admin.
       $result['error'] = self::FORBIDDEN;
       return $result;
