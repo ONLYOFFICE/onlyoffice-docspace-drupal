@@ -19,6 +19,8 @@ onlyoffice_docspace.page:
   dependencies:
     - core/drupal
     - core/drupalSettings
+    - onlyoffice_docspace/onlyoffice_docspace.docspace-integration-sdk
+    - onlyoffice_docspace/onlyoffice_docspace.utils
 
 onlyoffice_docspace.login:
   css:
@@ -41,6 +43,8 @@ onlyoffice_docspace.widget:
     - core/drupal
     - core/drupalSettings
     - core/drupal.message
+    - onlyoffice_docspace/onlyoffice_docspace.docspace-integration-sdk
+    - onlyoffice_docspace/onlyoffice_docspace.utils
 
 onlyoffice_docspace.settings:
   css:
@@ -76,6 +80,8 @@ onlyoffice_docspace.formater:
   dependencies:
     - core/drupal
     - core/drupalSettings
+    - onlyoffice_docspace/onlyoffice_docspace.docspace-integration-sdk
+    - onlyoffice_docspace/onlyoffice_docspace.utils
 
 onlyoffice_docspace.onlyoffice-docspace-icon:
   version: VERSION
