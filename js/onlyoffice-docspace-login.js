@@ -72,11 +72,6 @@
         return;
       }
 
-      if (hash === null || hash.length === "") {
-        messages.clear();
-        messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
-      }
-
       DocSpace.SDK.frames[frameId].login(drupalSettings.OODSP_Settings.currentUser, hash)
         .then(function (response) {
               if(response.status && response.status !== 200) {
