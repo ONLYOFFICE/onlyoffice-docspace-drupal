@@ -2,7 +2,7 @@
 
 ##
 ## Changed
-- docspace-sdk-js v2.0.0
+- docspace-sdk-js v2.2.0
 
 ## 1.1.1
 ## Changed 
