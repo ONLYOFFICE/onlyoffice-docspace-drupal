@@ -87,12 +87,20 @@
             height: "100%",
             events: {
                 onAppReady: async function() {
-                    const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
+                    let userInfo = null;
+
+                    try {
+                        userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
+                    } catch (e) {}
 
                     if (userInfo && userInfo.email === email){
                         onSuccessLogin();
                     } else {
-                        const passwordHash = await onRequestPasswordHash(email);
+                        let passwordHash = null;
+
+                        try {
+                            passwordHash = await onRequestPasswordHash(email);
+                        } catch (e) {}
 
                         if (passwordHash == null || passwordHash.length <= 0) {
                             DocSpace.SDK.frames[frameId].destroyFrame();
@@ -109,8 +117,10 @@
                                 }
 
                                 onSuccessLogin(passwordHash);
-                            }
-                        );
+                            }, function() {
+                                DocSpace.SDK.frames[frameId]?.destroyFrame();
+                                onUnSuccessLogin();
+                            });
                     } 
                 },
                 onAppError: async function() {
@@ -130,15 +140,19 @@
             height: "100%",
             events: {
                 onAppReady: async function() {
-                    const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
+                    let userInfo = null;
+
+                    try {
+                        userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
+                    } catch (e) {}
 
                     if (userInfo){
-                        DocSpace.SDK.frames[frameId].logout().then(function() {
-                            onLogout();
-                        });
-                    } else {
-                        onLogout();
+                        try {
+                            await DocSpace.SDK.frames[frameId].logout();
+                        } catch (e) {}
                     }
+
+                    onLogout();
                 },
                 onAppError: async function() {
                     if (onAppError) {

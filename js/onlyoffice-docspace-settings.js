@@ -41,12 +41,22 @@
             frameId: "oodsp-settings-frame",
             events: {
               "onAppReady": async function () {
-                const hashSettings = await DocSpace.SDK.frames['oodsp-settings-frame'].getHashSettings();
+                let hash = null;
+                let hashCurrentUser = null;
 
-                const hash = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings);
+                try {
+                  const hashSettings = await DocSpace.SDK.frames['oodsp-settings-frame'].getHashSettings();
+
+                  hash = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings);
+                  hashCurrentUser = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(generatePass(), hashSettings);
+                } catch (e) {
+                  Drupal.hideLoader();
+                  messages.clear();
+                  messages.add(Drupal.t('ONLYOFFICE DocSpace cannot be reached.'), {type: 'error'});
+                  return;
+                }
+
                 $('input[name="passwordHash"]').val(hash);
-
-                const hashCurrentUser = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(generatePass(), hashSettings);
                 $('input[name="currentUserPasswordHash"]').val(hashCurrentUser);
 
                 $('#edit-password').val(randomString(password.length));

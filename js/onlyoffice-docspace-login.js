@@ -29,7 +29,12 @@
           frameId: frameId,
           events: {
             onAppReady: async function () {
-              const userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
+              let userInfo = null;
+
+              try {
+                userInfo = await DocSpace.SDK.frames[frameId].getUserInfo();
+              } catch (e) {}
+
               if (userInfo && userInfo.email === drupalSettings.OODSP_Settings.currentUser) {
                 var redirect = drupalSettings.OODSP_Settings.adminUrl;
 
@@ -56,8 +61,16 @@
     if (passwordHash.trim().length <= 0) {
       event.preventDefault();
       const pass = $('#edit-pass').val();
-      const hashSettings = await DocSpace.SDK.frames[frameId].getHashSettings();
-      const hash = await DocSpace.SDK.frames[frameId].createHash(pass.trim(), hashSettings);
+      let hash = null;
+
+      try {
+        const hashSettings = await DocSpace.SDK.frames[frameId].getHashSettings();
+        hash = await DocSpace.SDK.frames[frameId].createHash(pass.trim(), hashSettings);
+      } catch (e) {
+        messages.clear();
+        messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
+        return;
+      }
 
       if (hash === null || hash.length === "") {
         messages.clear();
@@ -75,7 +88,11 @@
                 $loginForm.submit();
               }
           }
-      );
+        )
+        .catch(function () {
+          messages.clear();
+          messages.add(Drupal.t('User authentication failed.'), {type: 'error'});
+        });
     }
   });
 

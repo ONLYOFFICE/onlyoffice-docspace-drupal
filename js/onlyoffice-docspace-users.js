@@ -37,17 +37,26 @@
       event.preventDefault();
       Drupal.showLoader();
 
-      const hashSettings = await DocSpace.SDK.frames['oodsp-system-frame'].getHashSettings();
+      const $users = $('td.table-select input:checked');
+      const hashes = [];
 
-      const $users = $('td.table-select input');
+      try {
+        const hashSettings = await DocSpace.SDK.frames['oodsp-system-frame'].getHashSettings();
 
-      for (var user of $users) {
-        if ($(user).is(':checked')) {
-          const hash = await DocSpace.SDK.frames['oodsp-system-frame'].createHash(generatePass(), hashSettings);
-
-          $(user).val($(user).val() + "$$" + hash);
+        for (var i = 0; i < $users.length; i++) {
+          hashes.push(await DocSpace.SDK.frames['oodsp-system-frame'].createHash(generatePass(), hashSettings));
         }
+      } catch (e) {
+        Drupal.hideLoader();
+        const messages = new Drupal.Message();
+        messages.clear();
+        messages.add(Drupal.t('ONLYOFFICE DocSpace cannot be reached.'), {type: 'error'});
+        return;
       }
+
+      $users.each(function (index, user) {
+        $(user).val($(user).val() + "$$" + hashes[index]);
+      });
 
       $usersForm.attr('hashGenerated', true);
       $usersForm.submit();
