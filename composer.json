@@ -19,7 +19,7 @@
         "forum": "https://forum.onlyoffice.com/"
     },
     "require": {
-        "drupal/core": "^9 || ^10 || ^11"
+        "drupal/core": "^10 || ^11 || ^12"
     },
     "require-dev": {
         "drupal/coder": "^8.3",

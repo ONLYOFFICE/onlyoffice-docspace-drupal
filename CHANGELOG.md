@@ -3,9 +3,11 @@
 ##
 ## Added
 - compatibility with Drupal 11
+- compatibility with Drupal 12
 
 ## Changed
 - docspace-sdk-js v2.2.0
+- dropped compatibility with Drupal 9
 
 ## 1.1.1
 ## Changed 
