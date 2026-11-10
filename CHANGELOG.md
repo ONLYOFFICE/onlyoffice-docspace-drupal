@@ -1,6 +1,9 @@
 # Change Log
 
 ##
+## Added
+- compatibility with Drupal 11
+
 ## Changed
 - docspace-sdk-js v2.2.0
 
