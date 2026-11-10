@@ -78,7 +78,7 @@
                     {type: 'error'}
                   );
                 } else {
-                  addNotice( e, 'error' );
+                  messages.add(e, {type: 'error'});
                 }
               }
             }
