@@ -22,6 +22,7 @@
   var $oodspDialog = $('<div id="oodspModalDialog"><div id="oodsp-selector-frame"></div></div>').appendTo('body');
   var modalConfig = {
     frameId: 'oodsp-selector-frame',
+    src: drupalSettings.OODSP_Settings.url.replace(/\/$/, ''),
     width: "100%",
     height: "100%",
     selectorType: 'roomsOnly',
@@ -139,9 +140,8 @@
     Drupal.OODSP_Utils.initLoginManager(
       'oodsp-selector-frame',
       function() {
-        DocSpace.SDK.initFrame(
-          Object.assign( modalConfig, { src: DocSpace.SDK.src } )
-        );
+        DocSpace.SDK.frames[modalConfig.frameId]?.destroyFrame();
+        DocSpace.SDK.initFrame(modalConfig);
       }
     );
     dialog.showModal();

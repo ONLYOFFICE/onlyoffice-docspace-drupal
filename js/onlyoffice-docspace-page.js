@@ -20,6 +20,7 @@
   Drupal.OODSP_Utils.initLoginManager(
     "oodsp-manager-frame",
     function() {
+      DocSpace.SDK.frames["oodsp-manager-frame"]?.destroyFrame();
       DocSpace.SDK.initManager({
         src: DocSpace.SDK.src,
         frameId: "oodsp-manager-frame",

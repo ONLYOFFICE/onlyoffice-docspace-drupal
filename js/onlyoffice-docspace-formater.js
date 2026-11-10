@@ -96,7 +96,8 @@
 
       config.src = DocSpace.SDK.src;
 
-      DocSpace.SDK.frames[config.frameId].initFrame(config);
+      DocSpace.SDK.frames[config.frameId]?.destroyFrame();
+      DocSpace.SDK.initFrame(config);
     }
   }
 
