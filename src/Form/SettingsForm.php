@@ -22,6 +22,7 @@ namespace Drupal\onlyoffice_docspace\Form;
  */
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Config\TypedConfigManagerInterface;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\Core\Url;
@@ -68,6 +69,8 @@ class SettingsForm extends ConfigFormBase {
    *
    * @param \Drupal\Core\Config\ConfigFactoryInterface $config_factory
    *   The factory for configuration objects.
+   * @param \Drupal\Core\Config\TypedConfigManagerInterface $typed_config_manager
+   *   The typed config manager.
    * @param \Drupal\onlyoffice_docspace\Manager\RequestManager\RequestManagerInterface $request_manager
    *   The aggregator fetcher plugin manager.
    * @param \Drupal\onlyoffice_docspace\Manager\SecurityManager\SecurityManagerInterface $security_manager
@@ -75,8 +78,8 @@ class SettingsForm extends ConfigFormBase {
    * @param \Drupal\onlyoffice_docspace\Manager\UtilsManager\UtilsManager $utils_manager
    *   The ONLYOFFICE DocSpace Utils manager.
    */
-  public function __construct(ConfigFactoryInterface $config_factory, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, UtilsManager $utils_manager) {
-    parent::__construct($config_factory);
+  public function __construct(ConfigFactoryInterface $config_factory, TypedConfigManagerInterface $typed_config_manager, RequestManagerInterface $request_manager, SecurityManagerInterface $security_manager, UtilsManager $utils_manager) {
+    parent::__construct($config_factory, $typed_config_manager);
     $this->requestManager = $request_manager;
     $this->securityManager = $security_manager;
     $this->utilsManager = $utils_manager;
@@ -89,6 +92,7 @@ class SettingsForm extends ConfigFormBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('config.factory'),
+      $container->get('config.typed'),
       $container->get('onlyoffice_docspace.request_manager'),
       $container->get('onlyoffice_docspace.security_manager'),
       $container->get('onlyoffice_docspace.utils_manager')
