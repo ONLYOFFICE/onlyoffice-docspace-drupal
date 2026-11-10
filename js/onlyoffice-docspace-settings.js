@@ -39,16 +39,17 @@
           DocSpace.SDK.initSystem({
             src: DocSpace.SDK.src,
             frameId: "oodsp-settings-frame",
+            methodTimeout: 5000,
             events: {
               "onAppReady": async function () {
                 let hash = null;
                 let hashCurrentUser = null;
 
                 try {
-                  const hashSettings = await DocSpace.SDK.frames['oodsp-settings-frame'].getHashSettings();
+                  const hashSettings = await callWithRetry(() => DocSpace.SDK.frames['oodsp-settings-frame'].getHashSettings());
 
-                  hash = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings);
-                  hashCurrentUser = await DocSpace.SDK.frames['oodsp-settings-frame'].createHash(generatePass(), hashSettings);
+                  hash = await callWithRetry(() => DocSpace.SDK.frames['oodsp-settings-frame'].createHash(password, hashSettings));
+                  hashCurrentUser = await callWithRetry(() => DocSpace.SDK.frames['oodsp-settings-frame'].createHash(generatePass(), hashSettings));
                 } catch (e) {
                   Drupal.hideLoader();
                   messages.clear();
@@ -64,6 +65,10 @@
                 $settingsForm.submit();
               },
               'onAppError': function (e) {
+                if (e === "Method call timed out") {
+                  return;
+                }
+
                 Drupal.hideLoader();
                 messages.clear();
 
@@ -96,6 +101,18 @@
       return true;
     }
   });
+
+  const callWithRetry = async function (call, attempts = 3) {
+    for (let attempt = 1; ; attempt++) {
+      try {
+        return await call();
+      } catch (e) {
+        if (attempt >= attempts || e.code !== 'TIMEOUT') {
+          throw e;
+        }
+      }
+    }
+  };
 
   const randomString = function (i) {
     var rnd = '';
