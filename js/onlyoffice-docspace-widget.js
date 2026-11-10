@@ -142,7 +142,7 @@
       'oodsp-selector-frame',
       function() {
         DocSpace.SDK.frames[modalConfig.frameId]?.destroyFrame();
-        DocSpace.SDK.initFrame(modalConfig);
+        DocSpace.SDK.init(modalConfig);
       }
     );
     dialog.showModal();
