@@ -29,6 +29,10 @@
   vertical-align: middle;
 }
 
+#oodspModalDialog[data-mode="room-selector"] {
+  padding-top: 16px;
+}
+
 .ui-dialog:has(#oodspModalDialog) {
   max-height: 92%;
 }

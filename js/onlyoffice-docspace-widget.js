@@ -121,6 +121,7 @@
     });
 
     modalConfig.mode = mode;
+    $oodspDialog.attr('data-mode', mode);
     switch (mode) {
       case 'room-selector':
         modalConfig.events = {
