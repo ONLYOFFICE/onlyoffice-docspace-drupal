@@ -43,6 +43,7 @@ onlyoffice_docspace.widget:
     - core/drupal
     - core/drupalSettings
     - core/drupal.message
+    - core/drupal.dialog
     - onlyoffice_docspace/onlyoffice_docspace.docspace-integration-sdk
     - onlyoffice_docspace/onlyoffice_docspace.utils
 
