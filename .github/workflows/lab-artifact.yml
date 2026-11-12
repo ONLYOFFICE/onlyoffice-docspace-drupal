@@ -28,6 +28,7 @@ jobs:
           rm ./LICENSE
           rm ./composer.lock
           rm ./3rd-Party.license
+          rm -f ./CLAUDE.md
       - name: Remove Copyrights
         run: |
           for f in $(find . -name '*.js' -or -name '*.css'); 

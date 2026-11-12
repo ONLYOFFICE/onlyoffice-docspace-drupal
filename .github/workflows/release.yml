@@ -31,6 +31,7 @@ jobs:
           rm -rf ./.github/
           rm -rf ./.git/
           rm ./.gitignore
+          rm -f ./CLAUDE.md
           cd $cwd
       - name: Pack Artifact
         run: zip -r onlyoffice-docspace-drupal-${{ steps.info.outputs.version }}.zip onlyoffice-docspace-drupal
